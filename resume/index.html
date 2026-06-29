@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ben Junnel Oro - Resume</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#f0f2f5;color:#1e293b;line-height:1.5;}
+.page{max-width:800px;margin:20px auto;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.08);border-radius:12px;overflow:hidden;}
+@media print{body{background:#fff;}.page{box-shadow:none;margin:0;border-radius:0;max-width:100%;}.no-print{display:none!important;}}
+
+/* Header */
+.header{background:linear-gradient(135deg,#1e293b 0%,#334155 100%);color:#fff;padding:36px 40px 28px;position:relative;overflow:hidden;}
+.header::after{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(99,102,241,.15);}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px;}
+.header .title{font-size:15px;font-weight:500;color:#a5b4fc;margin-bottom:14px;}
+.contact-row{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:#cbd5e1;}
+.contact-row span{display:flex;align-items:center;gap:5px;}
+.dot{width:4px;height:4px;border-radius:50%;background:#6366f1;display:inline-block;}
+
+/* Content */
+.content{padding:28px 40px 36px;}
+.section{margin-bottom:24px;}
+.section:last-child{margin-bottom:0;}
+.section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:#6366f1;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e0e7ff;display:flex;align-items:center;gap:8px;}
+.section-title::before{content:'';width:3px;height:14px;background:linear-gradient(180deg,#6366f1,#a78bfa);border-radius:2px;}
+
+/* Summary */
+.summary{font-size:13px;color:#475569;line-height:1.7;}
+
+/* Skills */
+.skills-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-tag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;background:#f1f5f9;color:#334155;border:1px solid #e2e8f0;}
+.skill-tag.primary{background:#eef2ff;color:#4338ca;border-color:#c7d2fe;}
+
+/* Projects */
+.project{margin-bottom:18px;padding:14px 16px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;}
+.project:last-child{margin-bottom:0;}
+.project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.project-name{font-size:14px;font-weight:700;color:#1e293b;}
+.project-tech{font-size:11px;color:#6366f1;font-weight:600;}
+.project-desc{font-size:12px;color:#64748b;margin-bottom:6px;font-style:italic;}
+.project ul{margin:0;padding-left:18px;}
+.project li{font-size:12px;color:#475569;margin-bottom:3px;line-height:1.5;}
+.project-link{font-size:11px;color:#6366f1;text-decoration:none;font-weight:600;margin-top:4px;display:inline-block;}
+
+/* Experience */
+.exp-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;}
+.exp-title{font-size:14px;font-weight:700;}
+.exp-date{font-size:11px;color:#94a3b8;font-weight:500;}
+.exp-company{font-size:12px;color:#6366f1;font-weight:600;margin-bottom:6px;}
+.exp-list{margin:0;padding-left:18px;}
+.exp-list li{font-size:12px;color:#475569;margin-bottom:3px;}
+.highlight{background:#fef3c7;padding:0 3px;border-radius:2px;font-weight:600;color:#92400e;}
+
+/* Education */
+.edu-row{display:flex;justify-content:space-between;align-items:baseline;}
+.edu-school{font-size:13px;font-weight:700;}
+.edu-year{font-size:11px;color:#94a3b8;}
+.edu-degree{font-size:12px;color:#64748b;}
+
+/* Certs */
+.cert-list{display:flex;flex-wrap:wrap;gap:6px;}
+.cert{font-size:11px;padding:4px 10px;background:#f0fdf4;color:#166534;border-radius:6px;border:1px solid #bbf7d0;font-weight:500;}
+
+/* Download button */
+.download-bar{text-align:center;padding:16px;background:#f8fafc;border-top:1px solid #e2e8f0;}
+.btn-dl{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;box-shadow:0 2px 10px rgba(99,102,241,.3);transition:transform .15s;}
+.btn-dl:hover{transform:translateY(-1px);}
+</style>
+</head>
+<body>
+
+<div class="page" id="resume">
+    <div class="header">
+        <h1>BEN JUNNEL B. ORO</h1>
+        <div class="title">Backend Developer</div>
+        <div class="contact-row">
+            <span>0945-588-6644</span>
+            <span class="dot"></span>
+            <span>benjunneloro@gmail.com</span>
+            <span class="dot"></span>
+            <span>Talisay City, Cebu</span>
+            <span class="dot"></span>
+            <span>github.com/benjunnel11</span>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="section">
+            <div class="section-title">Summary</div>
+            <p class="summary">Computer Engineering graduate who built and deployed a production multi-device POS system used daily across 2 retail stores. Strong backend skills in PHP, MySQL, and JavaScript with hands-on experience in cloud database sync, REST API design, and distributed systems. OJT at an emergency response ICT company with outstanding performance rating.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Technical Skills</div>
+            <div class="skills-grid">
+                <span class="skill-tag primary">PHP</span>
+                <span class="skill-tag primary">JavaScript</span>
+                <span class="skill-tag primary">MySQL / SQL</span>
+                <span class="skill-tag primary">Java</span>
+                <span class="skill-tag">React.js</span>
+                <span class="skill-tag">Spring Boot</span>
+                <span class="skill-tag">TiDB Cloud</span>
+                <span class="skill-tag">Firebase</span>
+                <span class="skill-tag">REST API</span>
+                <span class="skill-tag">Git / GitHub</span>
+                <span class="skill-tag">C / C++</span>
+                <span class="skill-tag">Arduino</span>
+                <span class="skill-tag">HTML / CSS</span>
+                <span class="skill-tag">XAMPP</span>
+                <span class="skill-tag">Figma</span>
+                <span class="skill-tag">ZeroTier VPN</span>
+                <span class="skill-tag">ESC/POS Printing</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Projects</div>
+
+            <div class="project">
+                <div class="project-header">
+                    <span class="project-name">Oro Store POS System</span>
+                    <span class="project-tech">PHP, MySQL, JavaScript, TiDB Cloud</span>
+                </div>
+                <div class="project-desc">Production point-of-sale system deployed across 2 retail stores with real daily transactions.</div>
+                <ul>
+                    <li>Built multi-device sync architecture &mdash; cloud stock sync via TiDB Cloud, device-to-device HTTP API, offline queue with auto-flush</li>
+                    <li>Designed 20+ database tables with role-based access control (admin, manager, cashier, kiosk)</li>
+                    <li>Developed GCash payment integration, credit/delivery tracking, and kiosk self-service with priority queue</li>
+                    <li>Implemented thermal receipt printing via RawBT ESC/POS, client-side caching (localStorage + TTL), and server-side session caching</li>
+                    <li>Added rate limiting, environment-based credential management, and activity logging</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <span class="project-name">BidBay &mdash; Live Auction Platform</span>
+                    <span class="project-tech">React.js, JavaScript, CSS</span>
+                </div>
+                <div class="project-desc">Real-time auction web application with live bidding functionality.</div>
+                <ul>
+                    <li>Built interactive bidding UI with React components and real-time state management</li>
+                    <li>Deployed to GitHub Pages for public access</li>
+                </ul>
+                <a class="project-link" href="https://benjunnel11.github.io/bidbay-live-auction/" target="_blank">Live Demo &rarr;</a>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <span class="project-name">SariXpress</span>
+                    <span class="project-tech">Java, Spring Boot, JavaScript</span>
+                </div>
+                <div class="project-desc">Sari-sari store management system with Java backend and web frontend.</div>
+                <ul>
+                    <li>Built REST API backend with Spring Boot and Maven</li>
+                    <li>Developed product management and transaction features</li>
+                </ul>
+                <a class="project-link" href="https://github.com/benjunnel11/SariXpress" target="_blank">GitHub &rarr;</a>
+            </div>
+
+            <div class="project">
+                <div class="project-header">
+                    <span class="project-name">SnackSwap &mdash; Reverse Vending Machine</span>
+                    <span class="project-tech">Arduino, C++, IoT Sensors</span>
+                </div>
+                <div class="project-desc">Capstone thesis &mdash; IoT recycling machine that rewards snacks/water for recyclable bottles and cans.</div>
+                <ul>
+                    <li>Programmed Arduino Mega to process data from 5 sensor types (ultrasonic, inductive, capacitive, IR, weight) for material validation</li>
+                    <li>Built real-time monitoring for inventory, water levels, and trash bin status</li>
+                    <li>Designed point-based reward system with LCD user interface</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Experience</div>
+            <div class="exp-header">
+                <span class="exp-title">OJT &mdash; Tech Support & System Maintenance</span>
+                <span class="exp-date">Feb &ndash; Apr 2025 (246 hrs)</span>
+            </div>
+            <div class="exp-company">EmergiNet &mdash; Emergency Response ICT Solutions</div>
+            <ul class="exp-list">
+                <li>Assisted in rollout of emergency response app across multiple cities in Bohol</li>
+                <li>Contributed to Software Requirements Specification (SRS) documentation</li>
+                <li>Performed system diagnostics, troubleshooting, and client tech support</li>
+                <li>Rated <span class="highlight">Outstanding (5/5)</span> across all categories by supervisor</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Education</div>
+            <div class="edu-row">
+                <span class="edu-school">Cebu Institute of Technology &ndash; University</span>
+                <span class="edu-year">2021 &ndash; 2025</span>
+            </div>
+            <div class="edu-degree">Bachelor of Science in Computer Engineering</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Certifications</div>
+            <div class="cert-list">
+                <span class="cert">Introduction to Ethical Hacking</span>
+                <span class="cert">Planning & Designing Custom Software with AI</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="download-bar no-print">
+    <button class="btn-dl" onclick="window.print()">Download as PDF</button>
+</div>
+
+</body>
+</html>

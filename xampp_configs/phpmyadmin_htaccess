@@ -1,0 +1,2 @@
+# Only allow phpMyAdmin from localhost
+Require local

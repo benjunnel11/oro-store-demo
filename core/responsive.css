@@ -1,0 +1,115 @@
+/* Global font scaling + disable zoom */
+
+html { font-size: 18px; touch-action: manipulation; }
+body { font-size: 16px !important; line-height: 1.5; }
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Everything bigger */
+p, span, div, li, td, th, label, a { font-size: inherit; }
+h1 { font-size: 26px !important; }
+h2 { font-size: 22px !important; }
+h3 { font-size: 19px !important; }
+h4 { font-size: 17px !important; }
+
+/* Products */
+.product-item-cashier, .product-item-stock { padding: 14px 12px !important; font-size: 16px !important; }
+.product-name-cashier { font-size: 17px !important; font-weight: 600 !important; }
+.product-price-cashier { font-size: 16px !important; }
+.product-stock-cashier { font-size: 15px !important; }
+
+/* Cart */
+.receipt-item td, .receipt-item div, .receipt-item-name, .receipt-item-qty { font-size: 15px !important; }
+
+/* Totals */
+.tot-row { font-size: 17px !important; padding: 12px 14px !important; }
+.tot-row.grand { font-size: 22px !important; padding: 18px 16px !important; }
+
+/* Inputs */
+input[type="text"], input[type="number"], input[type="password"], input[type="search"], input[type="email"], select, textarea { font-size: 16px !important; padding: 10px 12px !important; }
+.search-container input, .search-section input { font-size: 17px !important; padding: 12px 14px !important; }
+
+/* Buttons */
+button, .btn, .test-btn, .btn-confirm, .btn-primary, .btn-secondary, .btn-warning, .btn-danger { font-size: 15px !important; padding: 10px 18px !important; }
+
+/* Shortcuts bar */
+.shortcut-bar { font-size: 13px !important; padding: 6px 10px !important; }
+.sc-key { font-size: 13px !important; padding: 8px 12px !important; }
+.sc-key kbd { font-size: 12px !important; }
+
+/* Tables */
+td, th { font-size: 14px !important; padding: 10px 8px !important; }
+table { font-size: 14px !important; }
+
+/* Sidebar */
+.sidebar-link { font-size: 15px !important; padding: 11px 16px !important; }
+.sidebar-brand h2 { font-size: 20px !important; }
+.nav-group-label { font-size: 12px !important; }
+.badge-count { font-size: 11px !important; }
+
+/* Cards and stats */
+.stat-value { font-size: 22px !important; }
+.stat-label { font-size: 13px !important; }
+.stat-sub { font-size: 12px !important; }
+.nc-val { font-size: 20px !important; }
+.nc-label { font-size: 14px !important; }
+
+/* Modals */
+.modal-content { font-size: 15px !important; }
+.modal-content h2 { font-size: 20px !important; }
+.modal-content label { font-size: 14px !important; }
+
+/* Tags */
+.ptag, .type-badge, .status-badge, .payment-badge { font-size: 12px !important; padding: 3px 8px !important; }
+
+/* Alerts */
+.alert, .alert-success, .alert-error { font-size: 14px !important; padding: 12px 16px !important; }
+
+/* Touch device — even bigger */
+@media (pointer: coarse) {
+    html { font-size: 20px !important; }
+    body { font-size: 18px !important; }
+    .product-item-cashier, .product-item-stock { padding: 16px 14px !important; min-height: 56px !important; font-size: 18px !important; }
+    .product-name-cashier { font-size: 20px !important; }
+    .product-price-cashier { font-size: 18px !important; }
+    .product-stock-cashier { font-size: 17px !important; }
+    .receipt-item td, .receipt-item div, .receipt-item-name, .receipt-item-qty { font-size: 18px !important; }
+    .tot-row { font-size: 20px !important; }
+    .tot-row.grand { font-size: 26px !important; padding: 20px !important; }
+    button, .btn, .test-btn, .btn-confirm { font-size: 18px !important; min-height: 52px !important; padding: 14px 24px !important; }
+    input[type="text"], input[type="number"], input[type="password"], input[type="search"], select, textarea { font-size: 18px !important; min-height: 52px !important; padding: 14px 16px !important; }
+    .search-container input, .search-section input { font-size: 19px !important; min-height: 56px !important; }
+    td, th { font-size: 16px !important; padding: 12px 10px !important; }
+    .sidebar-link { font-size: 17px !important; padding: 14px 18px !important; }
+    .shortcut-bar { font-size: 14px !important; }
+    .sc-key { font-size: 14px !important; padding: 10px 14px !important; min-height: 44px !important; }
+    h1 { font-size: 28px !important; }
+    h2 { font-size: 24px !important; }
+    h3 { font-size: 20px !important; }
+    .modal-content { font-size: 17px !important; }
+    .stat-value { font-size: 26px !important; }
+    .nc-val { font-size: 24px !important; }
+}
+
+/* Touch device — hide keyboard-only shortcuts, keep action buttons */
+@media (pointer: coarse) {
+    .shortcut-bar .sc-key kbd { display: none !important; }
+    .shortcut-bar { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+    /* Back-to-cashier button — handled per page now */
+
+    /* Hide shortcuts that are useless on touch — Esc, Home, Del, Ins, Tab, F12 */
+    .shortcut-bar .sc-key[onclick*="scEsc"],
+    .shortcut-bar .sc-key[onclick*="scHome"],
+    .shortcut-bar .sc-key[onclick*="scDel"],
+    .shortcut-bar .sc-key[onclick*="scIns"],
+    .shortcut-bar .sc-key[onclick*="handleDel"],
+    .shortcut-bar .sc-key[onclick*="handleIns"],
+    .shortcut-bar .sc-key[onclick*="handleEsc"],
+    .shortcut-bar .sc-key[onclick*="switchPanel"],
+    .shortcut-bar .sc-key[onclick*="switchTab"],
+    .shortcut-bar .sc-key[onclick*="window.close"] { display: none !important; }
+}
+
+/* Small phone */
+@media (max-width: 600px) {
+    .shortcut-bar { display: none !important; }
+}

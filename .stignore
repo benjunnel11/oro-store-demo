@@ -1,0 +1,29 @@
+// Syncthing ignore file — don't sync these device-specific files
+
+// Credentials and device-specific config
+sync/config.php
+sync/.local_env
+sync/.cloud_env
+core/db_config.php
+.htpasswd
+
+// All log files
+sync/*.log
+cashier/*.log
+transactions/*.log
+*.log
+
+// Sync temp files and queues
+sync/.main_server
+sync/.last_cleanup
+sync/*_queue.json
+sync/*.vbs
+
+// Conflict files
+*.sync-conflict-*
+*.sync-tmp
+.sync-conflict-*
+
+// Old and backups
+old/
+backups/

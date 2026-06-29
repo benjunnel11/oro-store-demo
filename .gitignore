@@ -1,0 +1,6 @@
+*.log
+*.sync-conflict-*
+*.sync-tmp
+old/
+backups/
+node_modules/

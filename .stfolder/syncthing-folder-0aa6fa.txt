@@ -1,0 +1,5 @@
+# This directory is a Syncthing folder marker.
+# Do not delete.
+
+folderID: jrvmd-frciq
+created: 2026-06-23T10:54:12+08:00

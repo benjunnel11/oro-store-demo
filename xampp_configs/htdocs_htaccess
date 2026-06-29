@@ -1,0 +1,20 @@
+Options -Indexes
+
+# Block everything except oro-store and localhost access
+# Piso wifi customers see nothing when they type your IP
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Allow localhost full access
+    RewriteCond %{REMOTE_ADDR} ^127\.0\.0\.1$ [OR]
+    RewriteCond %{REMOTE_ADDR} ^::1$
+    RewriteRule .* - [L]
+
+    # Allow ZeroTier network to access oro-store
+    RewriteCond %{REMOTE_ADDR} ^10\.219\.18\.
+    RewriteCond %{REQUEST_URI} ^/oro-store/
+    RewriteRule .* - [L]
+
+    # Block everything else
+    RewriteCond %{REQUEST_URI} !^/oro-store/
+    RewriteRule .* - [F,L]
+</IfModule>

@@ -1,0 +1,115 @@
+/* new_product_style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    max-width: 480px;
+}
+
+label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #6c63ff;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+#individual-selling-options {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    border-radius: 8px;
+}
+
+#individual-selling-options label {
+    margin-top: 0;
+    font-weight: 600;
+}
+
+#individual-selling-options select,
+#individual-selling-options input[type="number"] {
+    width: calc(100% - 32px);
+    display: inline-block;
+    margin-right: 8px;
+}
+
+#add-category-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+#add-category-btn:hover {
+    background-color: #5949e2;
+}
+
+button[type="submit"] {
+    margin-top: 25px;
+    background-color: #6c63ff;
+    color: white;
+    padding: 14px 0;
+    border: none;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #5949e2;
+}

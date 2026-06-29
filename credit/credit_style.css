@@ -1,0 +1,245 @@
+/* ══════════════════════════════════════════════════════════════════════
+   credit_style.css  — extends cashier_styles.css
+   Import cashier_styles.css FIRST, then this file.
+   This file only adds credit-specific overrides and components.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Credit mode indicator banner ───────────────────────────────────── */
+.credit-mode-indicator {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+    padding: 11px 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: .5px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #1e40af;
+}
+
+/* ── Credit info modal — left-aligned form layout ───────────────────── */
+.credit-info-modal .modal-content {
+    min-width: 460px;
+    text-align: left;
+}
+
+.credit-form-group {
+    margin-bottom: 14px;
+}
+
+.credit-form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    margin-bottom: 5px;
+}
+
+/* Override the centered modal input style for credit form fields */
+.credit-form-group input,
+.credit-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--c-border);
+    border-radius: var(--radius);
+    color: var(--c-text);
+    font-size: 13px;
+    outline: none;
+    transition: border-color .15s;
+    box-sizing: border-box;
+    text-align: left;
+    margin: 0;
+    background: #fff;
+    /* reset modal-content's large font-size override */
+    font-size: 14px;
+}
+
+.credit-form-group input:focus,
+.credit-form-group textarea:focus {
+    border-color: var(--c-blue);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+}
+
+.credit-form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ── Credit details page ─────────────────────────────────────────────── */
+.credits-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.customers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.customer-card {
+    background: var(--c-white);
+    border: 2px solid var(--c-border);
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s, border-color .15s;
+    position: relative;
+}
+
+.customer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.customer-card.selected {
+    border-color: var(--c-blue);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+.customer-card.status-unpaid  { border-left: 5px solid var(--c-red); }
+.customer-card.status-partial { border-left: 5px solid #f59e0b; }
+.customer-card.status-paid    { border-left: 5px solid var(--c-green); }
+
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.customer-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--c-text);
+}
+
+.customer-due {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--c-red);
+}
+
+.customer-contact {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c-blue);
+    margin-bottom: 4px;
+}
+
+.customer-address {
+    font-size: 12px;
+    color: var(--c-muted);
+    margin-bottom: 10px;
+}
+
+.customer-info { margin-bottom: 10px; }
+
+.customer-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.customer-info-label { color: var(--c-muted); font-weight: 500; }
+.customer-info-value { color: var(--c-text); font-weight: 700; }
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* ── Credit item list (customer credits modal) ───────────────────────── */
+.customer-credits-modal .modal-content {
+    min-width: 700px;
+    max-width: 90%;
+}
+
+.credit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--c-border);
+    transition: background .12s;
+    cursor: pointer;
+}
+
+.credit-item:hover { background: #f8f9fa; }
+
+.credit-item.selected-credit {
+    background: var(--c-blue-bg);
+    border-left: 3px solid var(--c-blue);
+}
+
+.credit-item.paid {
+    background: #f8f9fa;
+    opacity: .7;
+}
+
+.credit-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: var(--c-blue);
+}
+
+.credit-transaction { font-weight: 700; margin-bottom: 3px; font-size: 13px; }
+.credit-date        { font-size: 12px; color: var(--c-muted); }
+.credit-amount      { font-size: 17px; font-weight: 700; color: var(--c-text); }
+
+.credit-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* status classes reuse cashier's colour palette */
+.status-unpaid  { background: var(--c-red); }
+.status-partial { background: #f59e0b; }
+.status-paid    { background: var(--c-green); }
+
+.credit-due {
+    font-size: 13px;
+    color: var(--c-red);
+    font-weight: 700;
+}
+
+/* ── Credits summary strip ───────────────────────────────────────────── */
+.credits-summary {
+    background: var(--c-white);
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--c-blue);
+    margin-top: 14px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: var(--c-text);
+}
+
+.summary-row.grand-total {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--c-blue);
+    padding-top: 10px;
+    border-top: 2px solid var(--c-border);
+    margin-top: 4px;
+    margin-bottom: 0;
+}

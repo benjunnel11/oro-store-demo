@@ -1,0 +1,61 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Courier New',monospace; background:#f0f0f0; display:flex; justify-content:center; padding:10px; }
+.receipt-container { width:58mm; background:#fff; padding:4px 6px; box-shadow:0 2px 8px rgba(0,0,0,.2); }
+
+@media print {
+    body { background:#fff; padding:0; display:block; }
+    .receipt-container { width:58mm; box-shadow:none; padding:2px 4px; }
+    .no-print { display:none !important; }
+    @page { size:58mm auto; margin:0; }
+}
+
+/* Header */
+.receipt-header { text-align:center; border-bottom:1px dashed #000; padding-bottom:4px; margin-bottom:4px; }
+.store-name { font-size:14px; font-weight:700; letter-spacing:1px; }
+.store-address { font-size:8px; color:#444; }
+
+/* Transaction ID */
+.transaction-combined { text-align:center; padding:3px; margin-bottom:4px; border:1px solid #000; }
+.transaction-id-inline { font-weight:700; font-size:11px; }
+.transaction-type-inline { font-weight:700; font-size:9px; padding:1px 4px; border-radius:2px; margin-left:4px; }
+.type-sale { background:#d4edda; color:#155724; }
+.type-delivery { background:#fff3cd; color:#856404; }
+.type-credit { background:#cce5ff; color:#004085; }
+.type-reprint,.type-reedit { background:#f8d7da; color:#721c24; }
+
+/* Info */
+.transaction-info { font-size:8px; margin-bottom:4px; border-bottom:1px dashed #000; padding-bottom:4px; }
+.transaction-info div { display:flex; justify-content:space-between; margin-bottom:1px; }
+.info-label { color:#666; }
+.info-value { font-weight:700; text-align:right; max-width:55%; overflow:hidden; }
+
+/* Items */
+.items-section { margin-bottom:4px; font-size:9px; }
+.items-header { font-weight:700; text-align:center; padding:2px 0; border-top:1px solid #000; border-bottom:1px solid #000; margin-bottom:3px; font-size:9px; }
+.item-row { margin-bottom:3px; padding-bottom:2px; border-bottom:1px dotted #ccc; }
+.item-row:last-child { border-bottom:none; }
+.item-name { font-weight:700; font-size:9px; }
+.item-details { display:flex; justify-content:space-between; font-size:9px; }
+.item-qty-price { color:#333; }
+
+/* Totals */
+.totals-section { border-top:1px dashed #000; padding-top:4px; margin-top:4px; }
+.total-row { display:flex; justify-content:space-between; font-size:9px; margin-bottom:2px; }
+.total-row.grand-total { font-size:13px; font-weight:700; border-top:1px solid #000; padding-top:4px; margin-top:3px; }
+
+/* Footer */
+.receipt-footer { text-align:center; margin-top:4px; padding-top:4px; border-top:1px dashed #000; font-size:7px; }
+.thank-you { font-weight:700; font-size:9px; margin-bottom:3px; }
+.footer-message { color:#666; margin-bottom:2px; }
+.tax-disclaimer { font-weight:700; font-size:7px; color:#721c24; padding:3px; margin:4px 0; border:1px solid #ccc; }
+
+/* Re-edit/reprint */
+.reedit-indicator { font-size:8px; text-align:center; padding:3px; border:1px solid #ffc107; margin-bottom:4px; background:#fff3cd; color:#856404; font-weight:700; }
+
+/* Button */
+.print-button { width:100%; padding:12px; background:#28a745; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; margin-top:10px; }
+.print-button:hover { background:#218838; }
+
+.instructions { background:#fff3cd; border:1px solid #ffc107; padding:8px; margin-bottom:10px; border-radius:4px; font-size:12px; font-family:sans-serif; }
+.instructions strong { display:block; margin-bottom:4px; color:#856404; }
+.instructions kbd { background:#fff; border:1px solid #856404; border-radius:2px; padding:1px 4px; font-family:monospace; font-size:11px; }

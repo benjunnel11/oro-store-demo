@@ -1,0 +1,46 @@
+Options -Indexes
+
+# Cache static assets — Hermit/browser will store these locally
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType text/javascript "access plus 7 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/gif "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/x-icon "access plus 30 days"
+    ExpiresByType application/font-woff2 "access plus 30 days"
+    ExpiresByType font/woff2 "access plus 30 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=604800, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(png|jpg|jpeg|gif|svg|ico|woff2)$">
+        Header set Cache-Control "public, max-age=2592000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# Block sensitive files
+<FilesMatch "\.(sql|log|bak|ini|sh|md|htpasswd)$">
+    Require all denied
+</FilesMatch>
+
+# Allow bat file download
+<Files "setup_cloud_sync_task.bat">
+    Require all granted
+</Files>
+
+<FilesMatch "^(db_config|config)\.php$">
+    Require all denied
+</FilesMatch>
+
+<Files ".main_server">
+    Require all denied
+</Files>

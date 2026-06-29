@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="36" fill="url(#bg)"/>
+  <text x="96" y="95" text-anchor="middle" font-family="Arial,sans-serif" font-size="90" font-weight="900" fill="#ffffff">O</text>
+  <rect x="46" y="112" width="100" height="3" rx="1.5" fill="rgba(255,255,255,0.4)"/>
+  <text x="96" y="140" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="rgba(255,255,255,0.95)" letter-spacing="4">STORE</text>
+  <text x="96" y="162" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-weight="600" fill="rgba(255,255,255,0.5)" letter-spacing="2">POS SYSTEM</text>
+</svg>
