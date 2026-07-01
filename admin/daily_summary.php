@@ -1,8 +1,8 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 
 $date = $_GET['date'] ?? date('Y-m-d');
@@ -107,7 +107,7 @@ function arrow($current, $previous) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Daily Summary - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .ds-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
         .ds-card { background:#fff; border-radius:12px; padding:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
@@ -303,5 +303,17 @@ function arrow($current, $previous) {
 </div>
 
 </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Daily Summary', array (
+  'Features' => 
+  array (
+    0 => 'End-of-day report with total sales, expenses, and profit',
+    1 => 'Breakdown by payment method (cash, GCash, credit, delivery)',
+    2 => 'Top selling products list',
+    3 => 'Cash register reconciliation',
+  ),
+));
+?>
 </body>
 </html>

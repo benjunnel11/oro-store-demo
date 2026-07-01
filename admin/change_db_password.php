@@ -3,7 +3,7 @@ date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 $message = '';
 $error = '';
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 <head>
 <meta charset="UTF-8">
 <title>Change Database Password</title>
-<link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+<link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
 <style>
     .cp-container{max-width:500px;margin:40px auto;padding:0 20px;}
     .cp-card{background:#fff;border-radius:10px;padding:28px;border:1px solid #e2e8f0;}
@@ -109,5 +109,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     </div>
 </div>
 </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Change DB Password', array (
+  'Features' => 
+  array (
+    0 => 'Change the MySQL database password from browser',
+    1 => 'Updates both MySQL user and the .local_env config file',
+    2 => 'Requires current password verification',
+  ),
+));
+?>
 </body>
 </html>

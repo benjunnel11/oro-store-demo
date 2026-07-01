@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -177,7 +177,7 @@ $cat_labels = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Activity Log - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .log-stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
         .log-stat {
@@ -403,7 +403,7 @@ $cat_labels = [
                 <label>&nbsp;</label>
                 <div style="display:flex;gap:6px;">
                     <button type="submit" class="btn btn-primary btn-sm">Filter</button>
-                    <a href="/oro-store/admin/activity_log.php" class="btn btn-secondary btn-sm">Reset</a>
+                    <a href="/oro-store-demo/admin/activity_log.php" class="btn btn-secondary btn-sm">Reset</a>
                 </div>
             </div>
         </form>
@@ -564,5 +564,17 @@ function setRange(range) {
     }
 }
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Activity Log', array (
+  'Features' => 
+  array (
+    0 => 'All system actions logged with timestamp, user, and details',
+    1 => 'Categories: Auth, Product, Transaction, System',
+    2 => 'Filter by date range and category',
+    3 => 'Shows IP address and user agent for security auditing',
+  ),
+));
+?>
 </body>
 </html>

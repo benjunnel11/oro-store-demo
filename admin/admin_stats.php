@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
@@ -6,7 +6,7 @@ require_once __DIR__ . '/../core/product_stock_helper.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -155,7 +155,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Product Statistics - Admin Panel</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .stats-filters {
             background: white;
@@ -382,7 +382,7 @@ $conn->close();
         <!-- Filters Section -->
         <div class="stats-filters">
             <h2 style="margin: 0 0 20px 0;">📊 Statistics Filters</h2>
-            <form method="GET" action="/oro-store/admin/admin_stats.php">
+            <form method="GET" action="/oro-store-demo/admin/admin_stats.php">
                 <div class="filter-group">
                     <label>🛒 Times Bought Period</label>
                     <select name="times_bought" onchange="this.form.submit()">
@@ -536,7 +536,7 @@ $conn->close();
                                 </span>
                             </td>
                             <td style="text-align: center;">
-                                <a href="/oro-store/admin/admin_view_details.php?id=<?php echo $stat['id']; ?>" class="view-details-btn">
+                                <a href="/oro-store-demo/admin/admin_view_details.php?id=<?php echo $stat['id']; ?>" class="view-details-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -618,5 +618,17 @@ $conn->close();
             }
         }
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Statistics', array (
+  'Features' => 
+  array (
+    0 => 'Sales trends and analytics charts',
+    1 => 'Revenue and profit over time',
+    2 => 'Product performance rankings',
+    3 => 'Store comparison (multi-device)',
+  ),
+));
+?>
 </body>
 </html>

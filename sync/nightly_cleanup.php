@@ -50,7 +50,7 @@ $results['sync_pushed'] = $sync_result['pushed'] ?? 0;
 $results['sync_pulled'] = $sync_result['pulled'] ?? 0;
 
 // Verify Device A is reachable
-$verify_url = "http://$device_a_ip/oro-store/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD);
+$verify_url = "http://$device_a_ip/oro-store-demo/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD);
 $ctx = stream_context_create(['http' => ['timeout' => 5]]);
 $verify = @file_get_contents($verify_url, false, $ctx);
 $verify_data = $verify ? json_decode($verify, true) : null;
@@ -103,7 +103,7 @@ logMessage("[$device] Wiped $wiped records from " . count($wipe_tables) . " tabl
 // ═══════════════════════════════════════
 logMessage("[$device] Step 3: Pulling stock and essentials from Device A...");
 
-$pull_url = "http://$device_a_ip/oro-store/sync/pull_stock.php?key=" . urlencode(SYNC_PASSWORD);
+$pull_url = "http://$device_a_ip/oro-store-demo/sync/pull_stock.php?key=" . urlencode(SYNC_PASSWORD);
 $ctx = stream_context_create(['http' => ['timeout' => 30]]);
 $raw = @file_get_contents($pull_url, false, $ctx);
 $stock_data = $raw ? json_decode($raw, true) : null;

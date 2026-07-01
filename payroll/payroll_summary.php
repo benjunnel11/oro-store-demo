@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -351,8 +351,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Payroll Summary – Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-    <link rel="stylesheet" href="/oro-store/payroll/payroll_summary_styles.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/payroll/payroll_summary_styles.css">
 </head>
 <body>
 
@@ -729,5 +729,17 @@ $conn->close();
 </script>
 
 
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Payroll Summary', array (
+  'Features' => 
+  array (
+    0 => 'Period summary of employee wages and deductions',
+    1 => 'Filter by date range',
+    2 => 'Total payroll cost breakdown',
+    3 => 'Export/print-ready layout',
+  ),
+));
+?>
 </body>
 </html>

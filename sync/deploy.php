@@ -62,7 +62,7 @@ if ($action === 'push') {
     if (!$target_ip) { echo json_encode(['success' => false, 'message' => 'No target IP']); exit; }
 
     // Step 1: Create package
-    $pkg_url = 'http://127.0.0.1/oro-store/sync/deploy.php?action=package';
+    $pkg_url = 'http://127.0.0.1/oro-store-demo/sync/deploy.php?action=package';
     $pkg_raw = @file_get_contents($pkg_url);
     $pkg = json_decode($pkg_raw, true);
     if (!$pkg || !$pkg['success']) {
@@ -70,7 +70,7 @@ if ($action === 'push') {
     }
 
     // Step 2: Tell branch to pull and apply
-    $deploy_url = "http://$target_ip/oro-store/sync/deploy.php?action=pull&source_ip=" . urlencode($_SERVER['SERVER_ADDR'] ?? '10.219.18.80') . "&key=" . urlencode(SYNC_PASSWORD);
+    $deploy_url = "http://$target_ip/oro-store-demo/sync/deploy.php?action=pull&source_ip=" . urlencode($_SERVER['SERVER_ADDR'] ?? '10.219.18.80') . "&key=" . urlencode(SYNC_PASSWORD);
     $ctx = stream_context_create(['http' => ['timeout' => 60]]);
     $result_raw = @file_get_contents($deploy_url, false, $ctx);
 
@@ -101,7 +101,7 @@ if ($action === 'pull') {
     if (!$source_ip) { echo json_encode(['success' => false, 'message' => 'No source IP']); exit; }
 
     // Download zip from Device A
-    $zip_url = "http://$source_ip/oro-store/sync/deploy.php?action=download&key=" . urlencode(SYNC_PASSWORD);
+    $zip_url = "http://$source_ip/oro-store-demo/sync/deploy.php?action=download&key=" . urlencode(SYNC_PASSWORD);
     $zip_data = @file_get_contents($zip_url);
     if (!$zip_data || strlen($zip_data) < 100) {
         echo json_encode(['success' => false, 'message' => 'Failed to download package from Device A']); exit;

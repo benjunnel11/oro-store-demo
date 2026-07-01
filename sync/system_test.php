@@ -119,7 +119,7 @@ if (!empty($products)) {
 
     if ($stock_before > 0) {
         // Test receive_stock
-        $r = httpPost("http://127.0.0.1/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
+        $r = httpPost("http://127.0.0.1/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
             ['action' => 'receive_stock', 'product_id' => $pid, 'store_id' => 1, 'quantity' => 1, 'price' => 100, 'purchase_price' => 80]);
         $d = json_decode($r, true);
         if ($d && !empty($d['success'])) {
@@ -130,7 +130,7 @@ if (!empty($products)) {
         } else { fail("receive_stock API", $r); }
 
         // Test reduce_stock
-        $r = httpPost("http://127.0.0.1/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
+        $r = httpPost("http://127.0.0.1/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
             ['action' => 'reduce_stock', 'product_id' => $pid, 'store_id' => 1, 'quantity' => 1]);
         $d = json_decode($r, true);
         if ($d && !empty($d['success'])) {
@@ -149,14 +149,14 @@ if (!empty($products)) {
 logTest("\n--- TEST 5: Sync System ---");
 
 // Test sync_api status
-$r = httpGet("http://127.0.0.1/oro-store/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD));
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD));
 $d = json_decode($r, true);
 if ($d && !empty($d['success'])) {
     pass("Sync API status (device: {$d['device_id']}, pending: {$d['pending_changes']})");
 } else { fail("Sync API status", $r); }
 
 // Test diagnose
-$r = httpGet("http://127.0.0.1/oro-store/sync/diagnose.php");
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/diagnose.php");
 $d = json_decode($r, true);
 if ($d && is_array($d)) {
     foreach ($d as $step) {
@@ -166,7 +166,7 @@ if ($d && is_array($d)) {
 } else { fail("Diagnose endpoint", $r); }
 
 // Test sync execution
-$r = httpGet("http://127.0.0.1/oro-store/sync/http_sync.php?run=1");
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/http_sync.php?run=1");
 $d = json_decode($r, true);
 if ($d) {
     pass("Sync executed (pushed: {$d['pushed']}, pulled: {$d['pulled']}, errors: " . count($d['errors'] ?? []) . ")");
@@ -189,7 +189,7 @@ if ($device_b_ip) {
     }
 
     // Sync API on Device B
-    $r = httpGet("http://$device_b_ip/oro-store/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD));
+    $r = httpGet("http://$device_b_ip/oro-store-demo/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD));
     $d = json_decode($r, true);
     if ($d && !empty($d['success'])) {
         pass("Device B sync API (device: {$d['device_id']}, pending: {$d['pending_changes']})");
@@ -198,13 +198,13 @@ if ($device_b_ip) {
     }
 
     // Stock transfer to Device B
-    $r = httpPost("http://$device_b_ip/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
+    $r = httpPost("http://$device_b_ip/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
         ['action' => 'receive_stock', 'product_id' => $products[0]['id'] ?? 1, 'store_id' => 3, 'quantity' => 1, 'price' => 100, 'purchase_price' => 80]);
     $d = json_decode($r, true);
     if ($d && !empty($d['success'])) {
         pass("Stock transfer to Device B (stock: {$d['new_stock']})");
         // Revert on Device B
-        httpPost("http://$device_b_ip/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
+        httpPost("http://$device_b_ip/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
             ['action' => 'reduce_stock', 'product_id' => $products[0]['id'] ?? 1, 'store_id' => 3, 'quantity' => 1]);
         pass("Device B stock reverted");
     } else {
@@ -212,7 +212,7 @@ if ($device_b_ip) {
     }
 
     // Pull history from Device B
-    $r = httpGet("http://$device_b_ip/oro-store/sync/pull_history.php?action=get_history&period=today&key=" . urlencode(SYNC_PASSWORD));
+    $r = httpGet("http://$device_b_ip/oro-store-demo/sync/pull_history.php?action=get_history&period=today&key=" . urlencode(SYNC_PASSWORD));
     $d = json_decode($r, true);
     if ($d && !empty($d['success'])) {
         $table_count = count($d['tables'] ?? []);
@@ -228,7 +228,7 @@ if ($device_b_ip) {
 // TEST 7: Pull History & Fetch
 // ═══════════════════════════════════════
 logTest("\n--- TEST 7: Pull History ---");
-$r = httpGet("http://127.0.0.1/oro-store/sync/pull_history.php?action=get_history&period=today&key=" . urlencode(SYNC_PASSWORD));
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/pull_history.php?action=get_history&period=today&key=" . urlencode(SYNC_PASSWORD));
 $d = json_decode($r, true);
 if ($d && !empty($d['success'])) {
     $total_records = 0;
@@ -243,7 +243,7 @@ if ($d && !empty($d['success'])) {
 // TEST 8: Pull Stock
 // ═══════════════════════════════════════
 logTest("\n--- TEST 8: Pull Stock ---");
-$r = httpGet("http://127.0.0.1/oro-store/sync/pull_stock.php?key=" . urlencode(SYNC_PASSWORD));
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/pull_stock.php?key=" . urlencode(SYNC_PASSWORD));
 $d = json_decode($r, true);
 if ($d && !empty($d['success'])) {
     foreach ($d['tables'] ?? [] as $t => $rows) {
@@ -257,7 +257,7 @@ if ($d && !empty($d['success'])) {
 // ═══════════════════════════════════════
 logTest("\n--- TEST 9: Proxy ---");
 if ($device_b_ip) {
-    $r = httpGet("http://127.0.0.1/oro-store/sync/proxy.php?ip=$device_b_ip&action=status");
+    $r = httpGet("http://127.0.0.1/oro-store-demo/sync/proxy.php?ip=$device_b_ip&action=status");
     $d = json_decode($r, true);
     if ($d && !empty($d['success'])) {
         pass("Proxy to Device B");
@@ -275,14 +275,14 @@ if ($device_b_ip) {
 logTest("\n--- TEST 10: Security ---");
 
 // Test unauthorized sync API
-$r = httpGet("http://127.0.0.1/oro-store/sync/sync_api.php?action=status&key=wrong_password");
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/sync_api.php?action=status&key=wrong_password");
 $d = json_decode($r, true);
 if ($d && isset($d['error'])) {
     pass("Sync API rejects wrong password");
 } else { fail("Sync API should reject wrong password"); }
 
 // Test config.php blocked
-$r = httpGet("http://127.0.0.1/oro-store/sync/config.php");
+$r = httpGet("http://127.0.0.1/oro-store-demo/sync/config.php");
 if (!$r || strpos($r, 'Forbidden') !== false || strpos($r, '403') !== false || empty(trim($r))) {
     pass("config.php blocked from browser");
 } else {
@@ -290,7 +290,7 @@ if (!$r || strpos($r, 'Forbidden') !== false || strpos($r, '403') !== false || e
 }
 
 // Test db_config.php blocked
-$r = httpGet("http://127.0.0.1/oro-store/core/db_config.php");
+$r = httpGet("http://127.0.0.1/oro-store-demo/core/db_config.php");
 if (!$r || strpos($r, 'Forbidden') !== false || strpos($r, '403') !== false || empty(trim($r))) {
     pass("db_config.php blocked from browser");
 } else {

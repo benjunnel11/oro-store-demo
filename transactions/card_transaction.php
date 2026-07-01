@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ob_start();
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
@@ -138,13 +138,13 @@ $conn->close();
         .toast.success{background:#16a34a;color:#fff;}
         .toast.error{background:#dc2626;color:#fff;}
     </style>
-    <link rel="stylesheet" href="/oro-store/core/responsive.css">
-    <script src="/oro-store/core/custom_alert.js"></script>
+    <link rel="stylesheet" href="/oro-store-demo/core/responsive.css">
+    <script src="/oro-store-demo/core/custom_alert.js"></script>
 </head>
 <body>
 
 <div class="shortcut-bar">
-    <a href="/oro-store/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a>
+    <a href="/oro-store-demo/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a>
     <span class="sc-key sc-green" onclick="submitATM()"><kbd>Enter</kbd> Submit</span>
     <span class="sc-key sc-red" onclick="window.close()"><kbd>Esc</kbd> Close</span>
     <span class="sc-key" onclick="resetForm()"><kbd>Del</kbd> Clear</span>
@@ -294,7 +294,7 @@ function submitATM() {
     fd.append('service_charge', charge);
     fd.append('bank_account_id', document.getElementById('bank-account').value);
 
-    fetch('/oro-store/transactions/card_transaction.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/transactions/card_transaction.php', { method: 'POST', body: fd })
     .then(r => r.json()).then(data => {
         if (data.success) {
             showToast(`Done! Ref: ${data.reference} | ₱${data.amount} | Charge: ₱${data.charge}`, 'success');
@@ -324,5 +324,17 @@ document.getElementById('amount').addEventListener('keydown', function(e) {
 
 calc();
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('ATM / Card Transaction', array (
+  'How It Works' => 
+  array (
+    0 => 'Process ATM withdrawal or card payment transactions',
+    1 => 'Enter amount and card details',
+    2 => 'Fee auto-calculated based on settings',
+    3 => 'Transaction saved and receipt printable',
+  ),
+));
+?>
 </body>
 </html>

@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -116,8 +116,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Edit Product</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
 </head>
 <body>
@@ -175,7 +175,7 @@ $conn->close();
 
         // Generate random unique barcode
         document.getElementById('random-btn').addEventListener('click', function() {
-            fetch('/oro-store/products/edit_product.php?action=generate_barcode&id=<?php echo $productId; ?>')
+            fetch('/oro-store-demo/products/edit_product.php?action=generate_barcode&id=<?php echo $productId; ?>')
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -234,7 +234,7 @@ $conn->close();
                 stock: productStock || '0'
             });
 
-            window.open('/oro-store/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
+            window.open('/oro-store-demo/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
         });
 
         // Open history in new tab
@@ -247,5 +247,16 @@ $conn->close();
         }
     </script>
     </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Edit Product', array (
+  'Features' => 
+  array (
+    0 => 'Update product details: name, price, cost, description',
+    1 => 'Change category and brand assignments',
+    2 => 'Modify barcode and individual selling settings',
+  ),
+));
+?>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
@@ -11,7 +11,7 @@ $currentUser = getCurrentUser();
 // If you have a dedicated role-check helper (e.g. isManager()) in auth_check.php,
 // swap it in here instead for a more explicit check.
 if (!$currentUser || empty($currentUser['store_id'])) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -329,7 +329,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Store Products - Manager Panel</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         /* Scoped styles for the products table on this page only */
         .mp-toolbar {
@@ -1171,7 +1171,7 @@ $conn->close();
         function npAddCategory() {
             const name = prompt('Enter new category name:');
             if (!name || !name.trim()) return;
-            fetch('/oro-store/products/new_product.php', {
+            fetch('/oro-store-demo/products/new_product.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: 'action=add_category&category_name=' + encodeURIComponent(name.trim())
@@ -1246,7 +1246,7 @@ $conn->close();
 
         // ── Barcode generation ──
         function npGenerateBarcode() {
-            fetch('/oro-store/products/new_product.php?action=generate_barcode')
+            fetch('/oro-store-demo/products/new_product.php?action=generate_barcode')
                 .then(r => r.json())
                 .then(d => { if (d.error) alert(d.error); else document.getElementById('npBarcode').value = d.barcode; })
                 .catch(err => alert('Error: ' + err));
@@ -1275,5 +1275,16 @@ $conn->close();
             if (el) el.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
         });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Manager Products', array (
+  'Features' => 
+  array (
+    0 => 'View and manage products for assigned store',
+    1 => 'Edit store-specific prices and stock',
+    2 => 'Cannot modify global product settings',
+  ),
+));
+?>
 </body>
 </html>

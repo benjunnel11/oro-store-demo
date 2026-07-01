@@ -23,7 +23,7 @@ if ($action === 'clear_synced') {
 }
 
 if ($action === 'remote_status') {
-    $url = 'http://' . REMOTE_IP . '/oro-store/sync/sync_api.php?action=status&key=' . urlencode(SYNC_PASSWORD);
+    $url = 'http://' . REMOTE_IP . '/oro-store-demo/sync/sync_api.php?action=status&key=' . urlencode(SYNC_PASSWORD);
     $ctx = stream_context_create(['http' => ['timeout' => 5, 'header' => "X-Sync-Key: " . SYNC_PASSWORD . "\r\n"]]);
     $raw = @file_get_contents($url, false, $ctx);
     if ($raw) {

@@ -130,7 +130,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCash Transactions</title>
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
 </head>
 <body>
     <div class="gcash-container">
@@ -303,7 +303,7 @@ $conn->close();
                 formData.append('total', total);
                 formData.append('reference', reference);
 
-                fetch('/oro-store/transactions/gcash.php', {
+                fetch('/oro-store-demo/transactions/gcash.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -327,7 +327,7 @@ $conn->close();
                 formData.append('total', total);
                 formData.append('reference', reference);
 
-                fetch('/oro-store/transactions/gcash.php', {
+                fetch('/oro-store-demo/transactions/gcash.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -374,7 +374,7 @@ $conn->close();
                 originalTransactionId: originalTransactionId
             };
 
-            const receiptWindow = window.open('/oro-store/print/print_gcash_receipt.php', '_blank', 'width=400,height=600');
+            const receiptWindow = window.open('/oro-store-demo/print/print_gcash_receipt.php', '_blank', 'width=400,height=600');
             
             if (receiptWindow) {
                 receiptWindow.addEventListener('load', function() {
@@ -406,7 +406,7 @@ $conn->close();
 
         // Load GCash history
         function loadGCashHistory() {
-            fetch('/oro-store/transactions/gcash.php?action=get_gcash_transactions')
+            fetch('/oro-store-demo/transactions/gcash.php?action=get_gcash_transactions')
                 .then(response => response.json())
                 .then(data => {
                     const tbody = document.getElementById('history-tbody');
@@ -455,7 +455,7 @@ $conn->close();
 
         // View GCash details
         function viewGCashDetails(id) {
-            fetch(`/oro-store/transactions/gcash.php?action=get_gcash_details&id=${id}`)
+            fetch(`/oro-store-demo/transactions/gcash.php?action=get_gcash_details&id=${id}`)
                 .then(response => response.json())
                 .then(data => {
                     selectedTransaction = data.transaction;

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print Receipt - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/print/print_receipt.css">
+    <link rel="stylesheet" href="/oro-store-demo/print/print_receipt.css">
 </head>
 <body>
     <div class="no-print instructions" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <div><strong>📋 Instructions:</strong> Press <kbd>Enter</kbd> to complete and print, or <kbd>Esc</kbd> to cancel</div>
-        <button onclick="window.location.href='/oro-store/cashier/cashier.php'" style="padding:12px 24px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;">← Cashier</button>
+        <button onclick="window.location.href='/oro-store-demo/cashier/cashier.php'" style="padding:12px 24px;background:#3b82f6;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;">← Cashier</button>
     </div>
 
     <div class="receipt-container">
@@ -260,7 +260,7 @@ function completeAndPrint() {
         formData.append('change_amount', receiptData.change || 0);
         formData.append('reprint_reason', 'Manual reprint from cashier');
         
-        fetch('/oro-store/cashier/cashier.php', {
+        fetch('/oro-store-demo/cashier/cashier.php', {
             method: 'POST',
             body: formData
         })
@@ -336,7 +336,7 @@ function completeAndPrint() {
                     formData.append('change_amount', receiptData.amountPaid - receiptData.total);
                 }
 
-                fetch('/oro-store/cashier/cashier.php', {
+                fetch('/oro-store-demo/cashier/cashier.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -384,7 +384,7 @@ function completeAndPrint() {
                 formData.append('customer_contact', receiptData.creditInfo.customerContact);
                 formData.append('customer_address', receiptData.creditInfo.customerAddress || '');
 
-                fetch('/oro-store/credit/credit.php', {
+                fetch('/oro-store-demo/credit/credit.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -432,7 +432,7 @@ function completeAndPrint() {
                 formData.append('recipient_name', receiptData.deliveryInfo.recipientName);
                 formData.append('recipient_address', receiptData.deliveryInfo.recipientAddress);
 
-                fetch('/oro-store/delivery/delivery.php', {
+                fetch('/oro-store-demo/delivery/delivery.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -482,7 +482,7 @@ function completeAndPrint() {
                 formData.append('change_amount', receiptData.amountPaid ? (receiptData.amountPaid - receiptData.total) : 0);
                 formData.append('subtotal', receiptData.subtotal || receiptData.total);
 
-                fetch('/oro-store/cashier/cashier.php', {
+                fetch('/oro-store-demo/cashier/cashier.php', {
                     method: 'POST',
                     body: formData
                 })

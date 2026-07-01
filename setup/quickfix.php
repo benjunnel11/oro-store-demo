@@ -18,5 +18,5 @@ foreach ($queries as $query) {
 $conn->close();
 
 echo "✓ Fixed $total activity logs - they now have the 💼 PAYROLL badge!<br><br>";
-echo "<a href='/oro-store/admin/admin_panel.php'>← Go back to Admin Panel</a>";
+echo "<a href='/oro-store-demo/admin/admin_panel.php'>← Go back to Admin Panel</a>";
 ?>

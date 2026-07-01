@@ -1,6 +1,6 @@
 <?php
 // sync/sync.php
-// Run via browser: http://localhost/oro-store/sync/sync.php
+// Run via browser: http://localhost/oro-store-demo/sync/sync.php
 // Or via cron:     php C:\xampp\htdocs\oro-store\sync\sync.php
 //
 // This script:

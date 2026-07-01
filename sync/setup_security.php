@@ -7,7 +7,7 @@
  */
 require_once __DIR__ . '/../core/auth_check.php';
 if (!isSuperAdmin()) {
-    header("Location: /oro-store/admin/admin_panel.php");
+    header("Location: /oro-store-demo/admin/admin_panel.php");
     exit;
 }
 
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             <button type="submit" class="btn">Set MySQL Password</button>
         </form>
 
-        <a href="/oro-store/admin/connection.php" class="back-link">Back to Connection Manager</a>
+        <a href="/oro-store-demo/admin/connection.php" class="back-link">Back to Connection Manager</a>
     </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
@@ -59,14 +59,14 @@ if (defined('LOCAL_DEVICE_ID') && LOCAL_DEVICE_ID !== 'DEVICE_A') {
     if ($__da && $__row = $__da->fetch_assoc()) $__device_a_ip = $__row['device_ip'];
 
     if ($__device_a_ip) {
-        $__count_url = "http://$__device_a_ip/oro-store/sync/pull_history.php?action=get_count&period=$__period$__dev_filter&key=" . urlencode(SYNC_PASSWORD);
+        $__count_url = "http://$__device_a_ip/oro-store-demo/sync/pull_history.php?action=get_count&period=$__period$__dev_filter&key=" . urlencode(SYNC_PASSWORD);
         $__remote_raw = @file_get_contents($__count_url, false, stream_context_create(['http' => ['timeout' => 3]]));
         $__remote = $__remote_raw ? json_decode($__remote_raw, true) : null;
         $__remote_count = ($__remote && !empty($__remote['success'])) ? intval($__remote['count']) : -1;
 
         if ($__remote_count > $__local_count) {
             // Device A has more data — fetch the missing ones
-            @file_get_contents("http://127.0.0.1/oro-store/sync/pull_history.php?run=1&period=$__period$__dev_filter",
+            @file_get_contents("http://127.0.0.1/oro-store-demo/sync/pull_history.php?run=1&period=$__period$__dev_filter",
                 false, stream_context_create(['http' => ['timeout' => 15]]));
         }
     }
@@ -830,9 +830,9 @@ $conn->close();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Transaction History – Oro Store</title>
-<link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-<link rel="stylesheet" href="/oro-store/style.css">
-<link rel="stylesheet" href="/oro-store/transactions/transaction_history_styles.css">
+<link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+<link rel="stylesheet" href="/oro-store-demo/style.css">
+<link rel="stylesheet" href="/oro-store-demo/transactions/transaction_history_styles.css">
 <style>
 /* ── Angkat-specific additions ────────────────────────────── */
 .type-angkat{background:#f3e8ff;color:#7c3aed;border:1px solid #c4b5fd;}
@@ -926,7 +926,7 @@ $conn->close();
         var btn=device==='all'?document.getElementById('fetch-all-btn'):document.getElementById('fetch-server-btn');
         btn.textContent='Fetching...';btn.disabled=true;
         var devParam=device==='all'?'':'&device='+device;
-        fetch('/oro-store/sync/pull_history.php?run=1&period=<?php echo $period; ?>'+devParam)
+        fetch('/oro-store-demo/sync/pull_history.php?run=1&period=<?php echo $period; ?>'+devParam)
         .then(function(r){return r.json()}).then(function(d){
             if(d.success){
                 btn.textContent='Fetched '+d.inserted+' records';
@@ -1336,7 +1336,7 @@ function filterStockTable() {
     <div class="stat-card"><h3>Total Profit</h3><p class="stat-value" style="color:<?php echo $stats['total_profit']>=0?'#28a745':'#dc3545';?>">₱<?php echo number_format($stats['total_profit'],2);?></p><span class="stat-label">Before expenses</span></div>
     <div class="stat-card"><h3>Expenses</h3><p class="stat-value" style="color:#dc3545;">₱<?php echo number_format($total_expenses,2);?></p><span class="stat-label">This period</span></div>
     <div class="stat-card"><h3>Take-Home</h3><p class="stat-value" style="color:<?php echo $take_home>=0?'#28a745':'#dc3545';?>">₱<?php echo number_format($take_home,2);?></p><span class="stat-label">Profit - Expenses</span></div>
-    <div class="stat-card warning" onclick="window.open('/oro-store/transactions/edited_transactions.php','_blank')"><h3>⚠️ Edited</h3><p class="stat-value"><?php echo $stats['edited_transactions'];?></p><span class="stat-label">Requires Review</span></div>
+    <div class="stat-card warning" onclick="window.open('/oro-store-demo/transactions/edited_transactions.php','_blank')"><h3>⚠️ Edited</h3><p class="stat-value"><?php echo $stats['edited_transactions'];?></p><span class="stat-label">Requires Review</span></div>
     <div class="stat-card" onclick="document.getElementById('filter-payment').value='stock_in';applyFilters();" style="cursor:pointer;"><h3>📦 Supply In</h3><p class="stat-value"><?php echo $stats['total_supply_count'];?></p><span class="stat-label">₱<?php echo number_format($stats['total_supply_cost'],0);?> total cost</span></div>
 </div>
 
@@ -1449,7 +1449,7 @@ function applyFilters() {
         device:         deviceEl ? deviceEl.value : 'all',
         view_as:        viewAs
     });
-    fetch('/oro-store/transactions/transaction_history.php?' + p)
+    fetch('/oro-store-demo/transactions/transaction_history.php?' + p)
         .then(r => r.json())
         .then(data => { currentTransactions = data; breakdownMode ? displayBreakdown(data) : displayTransactions(data); })
         .catch(e => { console.error(e); alert('Error loading transactions'); });
@@ -1722,7 +1722,7 @@ function viewDetails(id, isAngkat) {
 
 /* ── Stock Receipt detail viewer ──────────────────────────── */
 function viewStockReceipt(id) {
-    fetch(`/oro-store/stock/add_stock.php?action=get_receipt_items&receipt_id=${id}`)
+    fetch(`/oro-store-demo/stock/add_stock.php?action=get_receipt_items&receipt_id=${id}`)
     .then(r=>r.json()).then(items => {
         let totalCost=0, totalSell=0;
         let rows = items.map(it => {
@@ -1990,5 +1990,25 @@ function exportToCSV(){
 function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDetailsModal(); });
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Transaction History', array (
+  'Features' => 
+  array (
+    0 => 'View all sales transactions with date, type, total, and status',
+    1 => 'Filter by period: Today, This Week, This Month, Custom',
+    2 => 'View As: switch between devices to see other store transactions',
+    3 => 'Types: Sale (cash), Delivery, Credit, GCash, ATM',
+    4 => 'Statuses: Completed, Voided, Edited, Re-edited, Pending',
+  ),
+  'Actions' => 
+  array (
+    0 => 'Click a row to view full transaction details with items',
+    1 => 'GCash details modal for GCash service rows',
+    2 => 'Inventory stats filtered by viewed device',
+    3 => 'Supply and expense totals shown per period',
+  ),
+));
+?>
 </body>
 </html>

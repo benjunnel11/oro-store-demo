@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -163,7 +163,7 @@ function buildPageUrl($p) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Delivery Management - Admin Panel</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .status-pending {
             background: #fef3c7;
@@ -355,7 +355,7 @@ function buildPageUrl($p) {
                 <?php if ($filterStatus !== '' || !empty($filterDateFrom) || !empty($filterDateTo) || !empty($filterSearch) || $filterStore !== ''): ?>
                     <div class="filter-group" style="flex: 0 0 auto; min-width: auto;">
                         <label>&nbsp;</label>
-                        <a href="/oro-store/delivery/delivery_management.php" class="btn btn-secondary">Clear</a>
+                        <a href="/oro-store-demo/delivery/delivery_management.php" class="btn btn-secondary">Clear</a>
                     </div>
                 <?php endif; ?>
             </form>
@@ -547,7 +547,7 @@ function buildPageUrl($p) {
         footer.style.display = 'none';
         body.innerHTML = '<div style="padding:30px;text-align:center;color:#94a3b8;">Loading...</div>';
 
-        fetch(`/oro-store/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`)
+        fetch(`/oro-store-demo/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`)
             .then(r => r.json())
             .then(data => {
                 if (!data.length) { body.innerHTML = '<p style="color:#94a3b8;padding:20px;">No items found.</p>'; return; }
@@ -630,7 +630,7 @@ function buildPageUrl($p) {
         const fd = new FormData();
         fd.append('action', 'mark_complete');
         fd.append('delivery_id', currentDeliveryId);
-        fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+        fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
             .then(r => r.json())
             .then(d => {
                 if (d.success) { closeDeliveryDetailModal(); location.reload(); }
@@ -641,5 +641,17 @@ function buildPageUrl($p) {
     function fmt(n) { return parseFloat(n || 0).toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
     function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Delivery Management', array (
+  'Features' => 
+  array (
+    0 => 'View all deliveries with status tracking',
+    1 => 'Filter: Pending, On Delivery, Completed, Cancelled',
+    2 => 'Update delivery status',
+    3 => 'Track delivery amounts and payment collection',
+  ),
+));
+?>
 </body>
 </html>

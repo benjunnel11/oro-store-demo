@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/sync_helper.php';
@@ -430,7 +430,7 @@ $conn->close();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Delivery Details<?php echo $userStore ? ' — ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-<link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+<link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
 <style>
     /* ── Page Layout ── */
     .dd-container {
@@ -1060,8 +1060,8 @@ $conn->close();
     .dd-receipt-customer { font-weight:700; font-size:13px; color:#1e293b; margin:8px 0 4px; padding-top:6px; border-top:2px solid #1e293b; }
     .dd-receipt-txn { font-size:10px; color:#64748b; margin-bottom:2px; }
 </style>
-<script src="/oro-store/core/custom_alert.js"></script>
-<script src="/oro-store/core/bt_print.js?v=20250627"></script>
+<script src="/oro-store-demo/core/custom_alert.js"></script>
+<script src="/oro-store-demo/core/bt_print.js?v=20250627"></script>
 </head>
 <body>
 <?php
@@ -1075,10 +1075,10 @@ else { ?>
 .main-content{margin-left:0 !important;padding-top:56px !important;}</style>
 <div class="cashier-topnav">
     <span class="nav-title"><?php echo htmlspecialchars($currentUser['full_name']); ?> &middot; Cashier</span>
-    <a href="/oro-store/cashier/cashier.php">Cashier</a>
-    <a href="/oro-store/credit/credit_details.php">Credit</a>
-    <a href="/oro-store/delivery/delivery_details.php" class="active">Delivery</a>
-    <a href="/oro-store/angkat/angkat_details.php">Angkat</a>
+    <a href="/oro-store-demo/cashier/cashier.php">Cashier</a>
+    <a href="/oro-store-demo/credit/credit_details.php">Credit</a>
+    <a href="/oro-store-demo/delivery/delivery_details.php" class="active">Delivery</a>
+    <a href="/oro-store-demo/angkat/angkat_details.php">Angkat</a>
 </div>
 <?php }
 ?>
@@ -1090,8 +1090,8 @@ else { ?>
         <div class="dd-header">
             <h1>Delivery Details<?php echo $userStore ? ' <span style="font-size:14px;font-weight:500;color:#64748b">&mdash; ' . htmlspecialchars($userStore['store_name']) . '</span>' : ''; ?></h1>
             <div class="dd-header-right">
-                <button class="btn btn-secondary" onclick="location.href='/oro-store/delivery/delivery.php'">+ New Delivery</button>
-                <button class="btn btn-primary" onclick="location.href='/oro-store/cashier/cashier.php'">&larr; Cashier</button>
+                <button class="btn btn-secondary" onclick="location.href='/oro-store-demo/delivery/delivery.php'">+ New Delivery</button>
+                <button class="btn btn-primary" onclick="location.href='/oro-store-demo/cashier/cashier.php'">&larr; Cashier</button>
             </div>
         </div>
 
@@ -1687,7 +1687,7 @@ function markAllCompleteForRecipient() {
         const fd = new FormData();
         fd.append('action', 'mark_complete');
         fd.append('delivery_id', id);
-        fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+        fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
             .then(r => r.json())
             .then(d => {
                 completed++;
@@ -1706,7 +1706,7 @@ function viewDeliveryDetails(deliveryId) {
     document.getElementById('detailsContent').innerHTML = '<div style="padding:30px;text-align:center;color:#94a3b8;font-size:13px">Loading…</div>';
     document.getElementById('modalTitle').innerHTML = 'Delivery Details';
 
-    fetch(`/oro-store/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`)
+    fetch(`/oro-store-demo/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`)
         .then(r => r.json())
         .then(data => {
             if (!data.length) {
@@ -1803,7 +1803,7 @@ function confirmLacking() {
     if (isNaN(qty) || qty < 0) { alert('Invalid quantity'); return; }
     const fd = new FormData();
     fd.append('action', 'mark_lacking'); fd.append('item_id', currentItemId); fd.append('lacking_qty', qty);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(r => r.json()).then(d => { if (d.success) { closeLackingModal(); viewDeliveryDetails(currentDeliveryId); } else alert('Error: ' + d.error); });
 }
 
@@ -1824,7 +1824,7 @@ function confirmEditQty() {
     if (isNaN(qty) || qty < 0) { alert('Invalid quantity'); return; }
     const fd = new FormData();
     fd.append('action', 'update_quantity'); fd.append('item_id', currentItemId); fd.append('new_qty', qty);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(r => r.json()).then(d => { if (d.success) { closeEditQtyModal(); viewDeliveryDetails(currentDeliveryId); } else alert('Error: ' + d.error); });
 }
 
@@ -1834,7 +1834,7 @@ function closeCompleteModal()       { document.getElementById('completeModal').c
 function confirmComplete() {
     const fd = new FormData();
     fd.append('action', 'mark_complete'); fd.append('delivery_id', currentDeliveryId);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(r => r.json()).then(d => {
             if (d.success) { alert('Delivery marked as complete!'); closeCompleteModal(); closeDetailsModal(); }
             else alert('Error: ' + d.error);
@@ -1975,7 +1975,7 @@ function saveBatch() {
     fd.append('delivery_ids', JSON.stringify(ids));
     fd.append('total_items', totalItems);
     fd.append('total_amount', totalAmount);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.success) {
@@ -2002,7 +2002,7 @@ function removeFromBatch(deliveryId) {
     fd.append('action', 'remove_from_batch');
     fd.append('batch_id', _currentBatchId);
     fd.append('delivery_id', deliveryId);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.success) {
@@ -2022,7 +2022,7 @@ function completeBatch() {
     var fd = new FormData();
     fd.append('action', 'complete_batch');
     fd.append('batch_id', _currentBatchId);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.success) {
@@ -2037,7 +2037,7 @@ function cancelBatch() {
     var fd = new FormData();
     fd.append('action', 'cancel_batch');
     fd.append('batch_id', _currentBatchId);
-    fetch('/oro-store/delivery/delivery_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/delivery/delivery_details.php', { method: 'POST', body: fd })
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.success) {
@@ -2220,5 +2220,36 @@ document.addEventListener('keydown', e => {
     }
 });
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Delivery Details', [
+    'How It Works' => [
+        'Left panel shows all delivery orders grouped by customer',
+        'Check boxes to select orders for batch operations',
+        'Selected orders appear in the right panel',
+        'Filter by status: All, Pending, On Delivery, Completed, Cancelled',
+    ],
+    'Batch System' => [
+        'Select multiple orders and save as a batch',
+        'Load saved batches to resume later',
+        'Mark entire batch as Complete or Cancel',
+        'Batch number shown on on_delivery orders',
+        'Completed/cancelled orders have disabled checkboxes',
+    ],
+    'Printing' => [
+        'Print selected orders via RawBT thermal printer',
+        'Prints per-customer receipts with item details',
+        'Product totals summary at the end',
+        'Shows delivery fee per item',
+    ],
+    'Status Tags' => [
+        'Pending — awaiting delivery',
+        'On Delivery — assigned to a batch, in transit',
+        'Completed — delivered and confirmed',
+        'Lacking — partially delivered',
+        'Cancelled — order was cancelled',
+    ],
+]);
+?>
 </body>
 </html>

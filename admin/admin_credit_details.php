@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/sync_helper.php';
@@ -461,8 +461,8 @@ tbody tr:hover .row-arrow{transform:translateX(4px);color:var(--purple)}
     <button class="btn btn-warn" onclick="openCreditChargeModal()" style="display:flex;align-items:center;gap:6px">
       💳 <span>Credit Charges</span>
     </button>
-    <button class="btn btn-secondary" onclick="location.href='/oro-store/credit/credit.php'">+ New Credit</button>
-    <button class="btn btn-primary" onclick="location.href='/oro-store/cashier/cashier.php'">← Cashier</button>
+    <button class="btn btn-secondary" onclick="location.href='/oro-store-demo/credit/credit.php'">+ New Credit</button>
+    <button class="btn btn-primary" onclick="location.href='/oro-store-demo/cashier/cashier.php'">← Cashier</button>
   </div>
 </div>
 
@@ -989,5 +989,15 @@ document.addEventListener('keydown', e => {
 /* ── Initial sort ── */
 sortTable(7); // sort by amount due desc
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Admin Credit Details', array (
+  'Features' => 
+  array (
+    0 => 'Admin view of all credit details across stores',
+    1 => 'Same as Credit Details but with multi-store visibility',
+  ),
+));
+?>
 </body>
 </html>

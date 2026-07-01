@@ -306,7 +306,7 @@ ob_end_clean();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cash Register Management<?php echo $userStore ? ' - ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -845,7 +845,7 @@ ob_end_clean();
             formData.append('amount', amount);
             formData.append('reason', reason);
             
-            fetch('/oro-store/transactions/other_transaction.php', {
+            fetch('/oro-store-demo/transactions/other_transaction.php', {
                 method: 'POST',
                 body: formData
             })
@@ -875,7 +875,7 @@ ob_end_clean();
             const formData = new FormData();
             formData.append('action', 'get_transactions');
             
-            fetch('/oro-store/transactions/other_transaction.php', {
+            fetch('/oro-store-demo/transactions/other_transaction.php', {
                 method: 'POST',
                 body: formData
             })
@@ -958,7 +958,7 @@ ob_end_clean();
             formData.append('action', 'convert_to_stock');
             formData.append('transaction_id', transactionId);
             
-            fetch('/oro-store/transactions/other_transaction.php', {
+            fetch('/oro-store-demo/transactions/other_transaction.php', {
                 method: 'POST',
                 body: formData
             })
@@ -972,7 +972,7 @@ ob_end_clean();
                     sessionStorage.setItem('stockBudgetTransactionId', data.transaction_id);
                     
                     // Redirect to add stock page
-                    window.location.href = '/oro-store/stock/add_stock.php';
+                    window.location.href = '/oro-store-demo/stock/add_stock.php';
                 } else {
                     alert('Error: ' + (data.error || 'Failed to convert transaction'));
                 }
@@ -1024,5 +1024,15 @@ ob_end_clean();
         // Initialize
         init();
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Other Transactions', array (
+  'Features' => 
+  array (
+    0 => 'Handles stock budget cash out and return',
+    1 => 'Expense recording for operational costs',
+  ),
+));
+?>
 </body>
 </html>

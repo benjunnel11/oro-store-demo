@@ -1,16 +1,16 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/config.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 
 // POST: Fix firewall
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'fix_firewall') {
     $output = shell_exec('netsh advfirewall firewall add rule name="Oro Store Web Server" dir=in action=allow protocol=TCP localport=80 profile=any 2>&1');
     $_SESSION['conn_msg'] = 'Firewall rule added: ' . trim($output);
-    header("Location: /oro-store/admin/connection.php");
+    header("Location: /oro-store-demo/admin/connection.php");
     exit;
 }
 
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 
     $_SESSION['conn_msg'] = 'Setup complete! ' . implode(' | ', $setup_results);
-    header("Location: /oro-store/admin/connection.php");
+    header("Location: /oro-store-demo/admin/connection.php");
     exit;
 }
 
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $ip_conn->close();
     }
     $_SESSION['conn_msg'] = 'Store IPs saved!';
-    header("Location: /oro-store/admin/connection.php");
+    header("Location: /oro-store-demo/admin/connection.php");
     exit;
 }
 
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         $_SESSION['conn_msg'] = 'Settings saved! This device is now ' . $new_device_id;
     }
-    header("Location: /oro-store/admin/connection.php");
+    header("Location: /oro-store-demo/admin/connection.php");
     exit;
 }
 
@@ -229,7 +229,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Connection Manager - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <?php include_once __DIR__ . '/../core/pwa.php'; ?>
     <style>
         .conn-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
@@ -330,13 +330,13 @@ $device_icon = $_dev_letter;
         <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Share these with devices on your network:</p>
         <?php foreach ($local_ips as $ip): ?>
         <div class="conn-url">
-            <button class="copy-btn" onclick="copyUrl('http://<?php echo $ip; ?>/oro-store/')">Copy</button>
-            http://<?php echo $ip; ?>/oro-store/
+            <button class="copy-btn" onclick="copyUrl('http://<?php echo $ip; ?>/oro-store-demo/')">Copy</button>
+            http://<?php echo $ip; ?>/oro-store-demo/
         </div>
         <?php endforeach; ?>
         <div class="conn-url" style="background:#1e293b;">
-            <button class="copy-btn" onclick="copyUrl('http://localhost/oro-store/')">Copy</button>
-            http://localhost/oro-store/ <span style="color:#94a3b8;font-size:11px;">(this PC only)</span>
+            <button class="copy-btn" onclick="copyUrl('http://localhost/oro-store-demo/')">Copy</button>
+            http://localhost/oro-store-demo/ <span style="color:#94a3b8;font-size:11px;">(this PC only)</span>
         </div>
 
         <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
@@ -364,8 +364,8 @@ $device_icon = $_dev_letter;
     <?php if ($tailscale_ip): ?>
     <div class="conn-row"><span class="label">Tailscale IP</span><span class="val"><?php echo $tailscale_ip; ?></span></div>
     <div class="conn-url" style="background:#0f2a1a;color:#22c55e;">
-        <button class="copy-btn" onclick="copyUrl('http://<?php echo $tailscale_ip; ?>/oro-store/')">Copy</button>
-        http://<?php echo $tailscale_ip; ?>/oro-store/ <span style="color:#4ade80;font-size:11px;">(encrypted remote access)</span>
+        <button class="copy-btn" onclick="copyUrl('http://<?php echo $tailscale_ip; ?>/oro-store-demo/')">Copy</button>
+        http://<?php echo $tailscale_ip; ?>/oro-store-demo/ <span style="color:#4ade80;font-size:11px;">(encrypted remote access)</span>
     </div>
     <div style="font-size:11px;color:#16a34a;margin-top:4px;">
         ✓ Any device with Tailscale on your account can access this URL from anywhere in the world. Traffic is encrypted end-to-end.
@@ -387,8 +387,8 @@ $device_icon = $_dev_letter;
     <?php if ($zerotier_ip): ?>
     <div class="conn-row"><span class="label">ZeroTier IP</span><span class="val"><?php echo $zerotier_ip; ?></span></div>
     <div class="conn-url" style="background:#1a1a0f;color:#f59e0b;">
-        <button class="copy-btn" onclick="copyUrl('http://<?php echo $zerotier_ip; ?>/oro-store/')">Copy</button>
-        http://<?php echo $zerotier_ip; ?>/oro-store/ <span style="color:#fbbf24;font-size:11px;">(encrypted remote access)</span>
+        <button class="copy-btn" onclick="copyUrl('http://<?php echo $zerotier_ip; ?>/oro-store-demo/')">Copy</button>
+        http://<?php echo $zerotier_ip; ?>/oro-store-demo/ <span style="color:#fbbf24;font-size:11px;">(encrypted remote access)</span>
     </div>
     <div style="font-size:11px;color:#f59e0b;margin-top:4px;">
         ✓ Any device joined to your ZeroTier network can access this URL. 25 devices free. Traffic is encrypted.
@@ -420,7 +420,7 @@ $device_icon = $_dev_letter;
             <li>Install Tailscale on your phone/laptop too</li>
             <li>Login with the same Google/Microsoft account on both</li>
             <li>Tailscale gives this PC an IP like <code style="background:#f1f5f9;padding:2px 6px;border-radius:3px;">100.x.x.x</code></li>
-            <li>On the remote device, open: <code style="background:#f1f5f9;padding:2px 6px;border-radius:3px;">http://100.x.x.x/oro-store/</code></li>
+            <li>On the remote device, open: <code style="background:#f1f5f9;padding:2px 6px;border-radius:3px;">http://100.x.x.x/oro-store-demo/</code></li>
         </ol>
         <div style="margin-top:8px;padding:8px;background:#eff6ff;border-radius:6px;font-size:11px;color:#1e40af;">
             Tailscale creates an encrypted tunnel — your data never touches the public internet. It's the safest way to connect remotely without exposing your server.
@@ -593,7 +593,7 @@ $conn2->close();
                     <input type="hidden" name="action" value="setup_sync">
                     <button type="submit" class="test-btn" style="background:#2563eb;font-size:13px;padding:10px 24px;white-space:nowrap;" onclick="this.textContent='Setting up...';this.disabled=true;this.form.submit();">Setup Device</button>
                 </form>
-                <a href="/oro-store/sync/setup_firewall.bat" download class="test-btn" style="background:#dc2626;font-size:13px;padding:10px 24px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;">Download Firewall Fix</a>
+                <a href="/oro-store-demo/sync/setup_firewall.bat" download class="test-btn" style="background:#dc2626;font-size:13px;padding:10px 24px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;">Download Firewall Fix</a>
                 <button class="test-btn" style="background:#7c3aed;font-size:13px;padding:10px 24px;white-space:nowrap;" onclick="installTriggers(this)" id="trigger-btn">Install Sync Triggers</button>
             </div>
         </div>
@@ -610,7 +610,7 @@ $conn2->close();
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
                 <button class="test-btn" style="background:#dc2626;font-size:13px;padding:10px 24px;white-space:nowrap;" onclick="runCleanup(this)" id="cleanup-btn">Run Cleanup Now</button>
-                <a href="/oro-store/sync/setup_nightly_cleanup.bat" download class="test-btn" style="background:#7c3aed;font-size:13px;padding:10px 24px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;">Schedule at Midnight</a>
+                <a href="/oro-store-demo/sync/setup_nightly_cleanup.bat" download class="test-btn" style="background:#7c3aed;font-size:13px;padding:10px 24px;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;">Schedule at Midnight</a>
             </div>
         </div>
         <div id="cleanup-result" style="margin-top:8px;font-size:12px;display:none;"></div>
@@ -833,7 +833,7 @@ function testConnection() {
     el.style.background = '#f1f5f9';
     el.style.color = '#475569';
 
-    fetch('/oro-store/auth/login.php', { method: 'HEAD' })
+    fetch('/oro-store-demo/auth/login.php', { method: 'HEAD' })
     .then(r => {
         if (r.ok) {
             el.className = 'test-result ok';
@@ -858,7 +858,7 @@ function pingDevice() {
     const fd = new FormData();
     fd.append('action', 'network_diag');
     fd.append('target_ip', ip);
-    fetch('/oro-store/admin/connection.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/admin/connection.php', { method: 'POST', body: fd })
     .then(r => r.json()).then(data => {
         if (data.ping_success) {
             el.className = 'test-result ok';
@@ -881,7 +881,7 @@ function toggleAutoSync() {
         localStorage.setItem('oro_auto_sync', '1');
         autoSyncInterval = setInterval(() => {
             status.textContent = 'Syncing...';
-            fetch('/oro-store/sync/http_sync.php?run=1').then(r => r.json()).then(data => {
+            fetch('/oro-store-demo/sync/http_sync.php?run=1').then(r => r.json()).then(data => {
                 const now = new Date().toLocaleTimeString('en-PH', {hour:'numeric',minute:'2-digit',hour12:true});
                 if (data.errors && data.errors.length > 0) {
                     status.textContent = 'Last: ' + now + ' (failed)';
@@ -910,7 +910,7 @@ function runSync() {
     el.style.display = 'block'; el.style.background = '#f1f5f9'; el.style.color = '#475569';
     el.textContent = 'Connecting to remote store...';
 
-    fetch('/oro-store/sync/http_sync.php?run=1')
+    fetch('/oro-store-demo/sync/http_sync.php?run=1')
     .then(r => r.json()).then(data => {
         if (data.errors && data.errors.length > 0) {
             el.className = 'test-result fail';
@@ -931,7 +931,7 @@ function checkRemote() {
     el.style.display = 'block'; el.style.background = '#f1f5f9'; el.style.color = '#475569';
     el.textContent = 'Checking remote store...';
 
-    fetch('/oro-store/sync/sync_api.php?action=status&key=<?php echo urlencode(SYNC_PASSWORD); ?>')
+    fetch('/oro-store-demo/sync/sync_api.php?action=status&key=<?php echo urlencode(SYNC_PASSWORD); ?>')
     .then(r => r.json()).then(data => {
         if (data.success) {
             el.className = 'test-result ok';
@@ -952,7 +952,7 @@ function runDiagnose() {
     el.style.display = 'block';
     el.innerHTML = '<div style="padding:12px;background:#f8fafc;border-radius:8px;font-size:12px;color:#64748b;">Running diagnostics...</div>';
 
-    fetch('/oro-store/sync/diagnose.php')
+    fetch('/oro-store-demo/sync/diagnose.php')
     .then(r => r.json()).then(steps => {
         let html = '<div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;">';
         html += '<div style="padding:10px 14px;background:#1e293b;color:#fff;font-size:13px;font-weight:700;">Connection Diagnostics</div>';
@@ -992,7 +992,7 @@ function syncToolAction(action) {
     el.style.background = '#f1f5f9'; el.style.color = '#475569'; el.style.fontSize = '12px';
     el.textContent = 'Running ' + action + '...';
 
-    fetch('/oro-store/sync/sync_tools.php?action=' + action)
+    fetch('/oro-store-demo/sync/sync_tools.php?action=' + action)
     .then(r => r.json()).then(data => {
         if (action === 'force_sync') {
             if (data.errors && data.errors.length > 0) {
@@ -1062,7 +1062,7 @@ function installTriggers(btn) {
     el.style.background = '#f1f5f9'; el.style.color = '#475569';
     el.textContent = 'Creating sync triggers on all tables...';
 
-    fetch('/oro-store/sync/install_triggers.php')
+    fetch('/oro-store-demo/sync/install_triggers.php')
     .then(r => r.json()).then(data => {
         if (data.errors && data.errors.length > 0) {
             el.style.background = '#fef3c7'; el.style.color = '#92400e';
@@ -1086,7 +1086,7 @@ function runCleanup(btn) {
     el.style.background = '#f1f5f9'; el.style.color = '#475569';
     el.textContent = 'Syncing to Device A then wiping old data...';
 
-    fetch('/oro-store/sync/nightly_cleanup.php?run=1')
+    fetch('/oro-store-demo/sync/nightly_cleanup.php?run=1')
     .then(r => r.json()).then(data => {
         if (data.success) {
             let wiped = Object.entries(data.wiped || {}).filter(([k,v]) => v > 0).map(([k,v]) => k + ': ' + v).join(', ');
@@ -1112,7 +1112,7 @@ function remoteWipe() {
     el.style.background = '#1e293b'; el.style.color = '#94a3b8'; el.style.border = '1px solid #334155';
     el.textContent = 'Connecting to ' + ip + ' via server...';
 
-    fetch('/oro-store/sync/proxy.php?ip=' + encodeURIComponent(ip) + '&action=remote_cleanup')
+    fetch('/oro-store-demo/sync/proxy.php?ip=' + encodeURIComponent(ip) + '&action=remote_cleanup')
     .then(r => r.json()).then(data => {
         if (data.success) {
             let wiped = Object.entries(data.wiped || {}).filter(([k,v]) => v > 0).map(([k,v]) => k + ': ' + v).join(', ');
@@ -1136,6 +1136,18 @@ if (localStorage.getItem('oro_auto_sync') === '1') {
     toggleAutoSync();
 }
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Connection Status', array (
+  'Features' => 
+  array (
+    0 => 'Device-to-device sync status via ZeroTier VPN',
+    1 => 'Remote device reachability check',
+    2 => 'Sync log with push/pull counts',
+    3 => 'Manual sync trigger button',
+  ),
+));
+?>
 </body>
 </html>
 

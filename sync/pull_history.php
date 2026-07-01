@@ -112,7 +112,7 @@ if ($action === 'pull' || isset($_GET['run'])) {
 
     // Fetch history from Device A
     $for_dev = $_GET['device'] ?? LOCAL_DEVICE_ID;
-    $url = "http://$device_a_ip/oro-store/sync/pull_history.php?action=get_history&period=$period&device=$for_dev&key=" . urlencode(SYNC_PASSWORD);
+    $url = "http://$device_a_ip/oro-store-demo/sync/pull_history.php?action=get_history&period=$period&device=$for_dev&key=" . urlencode(SYNC_PASSWORD);
     $ctx = stream_context_create(['http' => ['timeout' => 30]]);
     $raw = @file_get_contents($url, false, $ctx);
 

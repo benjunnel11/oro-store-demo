@@ -4,7 +4,7 @@ require_once __DIR__ . '/../core/auth_check.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -78,7 +78,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product History - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         * {
             margin: 0;
@@ -491,5 +491,16 @@ $conn->close();
             <?php endif; ?>
         </div>
     </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Product History', array (
+  'Features' => 
+  array (
+    0 => 'Change log for a specific product',
+    1 => 'Tracks price changes, stock adjustments, and edits',
+    2 => 'Shows who made each change and when',
+  ),
+));
+?>
 </body>
 </html>

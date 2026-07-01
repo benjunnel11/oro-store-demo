@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ob_start();
 
 require_once __DIR__ . '/../core/db_connection.php';
@@ -130,7 +130,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Angkat Mode<?php echo $userStore ? ' - ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-    <link rel="stylesheet" href="/oro-store/delivery/delivery_styles.css">
+    <link rel="stylesheet" href="/oro-store-demo/delivery/delivery_styles.css">
     <style>
         /* ── Angkat-specific overrides ── */
         .angkat-mode-indicator {
@@ -216,26 +216,26 @@ $conn->close();
         .right-panel.panel-active .receipt-header p { color:#bfdbfe; }
         .right-panel.panel-active .receipt-header .receipt-store-name { color:#fff !important; }
     </style>
-    <link rel="stylesheet" href="/oro-store/core/responsive.css">
-    <script src="/oro-store/core/custom_alert.js"></script>
-    <script src="/oro-store/core/bt_print.js?v=20250627"></script>
+    <link rel="stylesheet" href="/oro-store-demo/core/responsive.css">
+    <script src="/oro-store-demo/core/custom_alert.js"></script>
+    <script src="/oro-store-demo/core/bt_print.js?v=20250627"></script>
 </head>
 <body>
 <!-- Shortcut Bar -->
 <div class="shortcut-bar">
-    <a href="/oro-store/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a>
+    <a href="/oro-store-demo/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a>
     <span class="sc-key" onclick="scEsc()"><kbd>Esc</kbd> Back</span>
     <span class="sc-key" onclick="scHome()"><kbd>Home</kbd> Switch</span>
     <span class="sc-key" onclick="scDel()"><kbd>Del</kbd> Remove</span>
     <span class="sc-key" onclick="scIns()"><kbd>Ins</kbd> Edit</span>
     <span class="sc-key sc-blue" onclick="printReceipt()"><kbd>F1</kbd> Print</span>
-    <span class="sc-key sc-green" onclick="window.open('/oro-store/transactions/gcash.php','_blank','width=600,height=700')"><kbd>F2</kbd> GCash</span>
-    <span class="sc-key sc-orange" onclick="location.href='/oro-store/delivery/delivery.php'"><kbd>F3</kbd> Delivery</span>
-    <span class="sc-key sc-purple" onclick="location.href='/oro-store/credit/credit.php'"><kbd>F4</kbd> Credit</span>
-    <span class="sc-key sc-blue" onclick="window.open('/oro-store/transactions/card_transaction.php','_blank','width=600,height=700')"><kbd>F7</kbd> ATM</span>
-    <span class="sc-key" onclick="location.href='/oro-store/delivery/delivery_details.php'"><kbd>F9</kbd> Details</span>
+    <span class="sc-key sc-green" onclick="window.open('/oro-store-demo/transactions/gcash.php','_blank','width=600,height=700')"><kbd>F2</kbd> GCash</span>
+    <span class="sc-key sc-orange" onclick="location.href='/oro-store-demo/delivery/delivery.php'"><kbd>F3</kbd> Delivery</span>
+    <span class="sc-key sc-purple" onclick="location.href='/oro-store-demo/credit/credit.php'"><kbd>F4</kbd> Credit</span>
+    <span class="sc-key sc-blue" onclick="window.open('/oro-store-demo/transactions/card_transaction.php','_blank','width=600,height=700')"><kbd>F7</kbd> ATM</span>
+    <span class="sc-key" onclick="location.href='/oro-store-demo/delivery/delivery_details.php'"><kbd>F9</kbd> Details</span>
 
-    <span class="sc-key" onclick="window.open('/oro-store/stock/add_stock.php','_blank','width=800,height=600')"><kbd>F11</kbd> Add Stock</span>
+    <span class="sc-key" onclick="window.open('/oro-store-demo/stock/add_stock.php','_blank','width=800,height=600')"><kbd>F11</kbd> Add Stock</span>
     <span class="sc-key sc-green" onclick="processAngkat()"><kbd>Enter</kbd> Process</span>
 </div>
 
@@ -369,7 +369,7 @@ $conn->close();
         cashierName:  <?php echo json_encode($currentUser['full_name']); ?>
     };
 </script>
-<script src="/oro-store/angkat/angkat_script.js"></script>
+<script src="/oro-store-demo/angkat/angkat_script.js"></script>
 <script>
 var _lastClickTime=0,_lastClickId='',_lpTimer=null;
 function handleProductTap(el){var now=Date.now(),id=el.dataset.id;if(now-_lastClickTime<400&&_lastClickId===id){simulateKey('Enter');_lastClickTime=0;_lastClickId='';}else{_lastClickTime=now;_lastClickId=id;}}
@@ -377,6 +377,19 @@ function startLongPress(idx){_lpTimer=setTimeout(function(){selectedReceiptIndex
 function cancelLongPress(){if(_lpTimer){clearTimeout(_lpTimer);_lpTimer=null;}}
 function simulateKey(key){document.dispatchEvent(new KeyboardEvent('keydown',{key:key,bubbles:true}));}
 </script>
-<script src="/oro-store/core/search_tags.js"></script>
+<script src="/oro-store-demo/core/search_tags.js"></script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Angkat Transaction', array (
+  'How It Works' => 
+  array (
+    0 => 'Angkat = consignment — give products to retailer on credit',
+    1 => 'Select products and quantities to consign',
+    2 => 'Enter retailer name and contact',
+    3 => 'Angkat charge per category auto-applied',
+    4 => 'Track what retailer sells and collects payment',
+  ),
+));
+?>
 </body>
 </html>

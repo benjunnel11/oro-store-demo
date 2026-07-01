@@ -139,7 +139,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edited Transactions</title>
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
     <style>
         .stat-card.edited {
             background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
@@ -181,7 +181,7 @@ $conn->close();
                     🏪 Store: <?php echo htmlspecialchars($userStore['store_name']); ?>
                 </div>
             <?php endif; ?>
-            <button onclick="window.location.href='/oro-store/transactions/transaction_history.php'" class="btn-close">Back to History</button>
+            <button onclick="window.location.href='/oro-store-demo/transactions/transaction_history.php'" class="btn-close">Back to History</button>
         </header>
 
         <!-- Statistics Dashboard -->
@@ -281,7 +281,7 @@ $conn->close();
                 search: search
             });
 
-            fetch(`/oro-store/transactions/edited_transactions.php?${params}`)
+            fetch(`/oro-store-demo/transactions/edited_transactions.php?${params}`)
                 .then(response => response.json())
                 .then(data => {
                     currentTransactions = data;
@@ -424,5 +424,16 @@ $conn->close();
             window.URL.revokeObjectURL(url);
         }
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Edited Transactions', array (
+  'Features' => 
+  array (
+    0 => 'View all re-edited transactions',
+    1 => 'Shows original and new transaction IDs',
+    2 => 'Tracks what changed between edits',
+  ),
+));
+?>
 </body>
 </html>

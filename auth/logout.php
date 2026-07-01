@@ -56,6 +56,6 @@ if ($conn) {
 }
 
 // Redirect to login page
-header("Location: /oro-store/auth/login.php");
+header("Location: /oro-store-demo/auth/login.php");
 exit;
 ?>

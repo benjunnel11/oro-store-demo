@@ -80,7 +80,7 @@ function setupCustomerAutocomplete() {
         if (term.length < 2) { dropdown.style.display = 'none'; autocompleteResults = []; return; }
 
         autocompleteTimeout = setTimeout(() => {
-            fetch('/oro-store/credit/credit.php?action=search_customers&search=' + encodeURIComponent(term))
+            fetch('/oro-store-demo/credit/credit.php?action=search_customers&search=' + encodeURIComponent(term))
                 .then(r => r.json())
                 .then(customers => {
                     autocompleteResults = customers;
@@ -135,7 +135,7 @@ function selectAutocompleteItem(index) {
 
 // ─── Load products ────────────────────────────────────────────────────────────
 function loadProducts() {
-    fetch('/oro-store/products/get_products.php')
+    fetch('/oro-store-demo/products/get_products.php')
         .then(r => { if (!r.ok) throw new Error('Network error'); return r.json(); })
         .then(products => {
             const list = document.getElementById('product-list');
@@ -358,7 +358,7 @@ async function completeCreditTransaction() {
     formData.append('customer_contact', customerContact);
     formData.append('customer_address', customerAddress);
 
-    fetch('/oro-store/credit/credit.php', { method: 'POST', body: formData })
+    fetch('/oro-store-demo/credit/credit.php', { method: 'POST', body: formData })
         .then(r => r.text().then(t => { try { return JSON.parse(t); } catch (e) { throw new Error('Invalid JSON response'); } }))
         .then(data => {
             if (data.success) {
@@ -433,13 +433,13 @@ document.addEventListener('keydown', function (e) {
         document.getElementById('credit-info-modal').classList.contains('active') ? printReceiptFromModal() : printReceipt();
         return;
     }
-    if (e.key === 'F2') { e.preventDefault(); window.open('/oro-store/transactions/gcash.php', '_blank', 'width=600,height=700'); return; }
-    if (e.key === 'F3') { e.preventDefault(); if (cart.length > 0) sessionStorage.setItem('deliveryCart', JSON.stringify(cart)); window.location.href = '/oro-store/delivery/delivery.php'; return; }
-    if (e.key === 'F5') { e.preventDefault(); if (cart.length > 0) sessionStorage.setItem('angkatCart', JSON.stringify(cart)); window.location.href = '/oro-store/angkat/angkat.php'; return; }
-    if (e.key === 'F7') { e.preventDefault(); window.open('/oro-store/transactions/card_transaction.php', '_blank', 'width=600,height=700'); return; }
-    if (e.key === 'F9') { e.preventDefault(); window.location.href = '/oro-store/delivery/delivery_details.php'; return; }
+    if (e.key === 'F2') { e.preventDefault(); window.open('/oro-store-demo/transactions/gcash.php', '_blank', 'width=600,height=700'); return; }
+    if (e.key === 'F3') { e.preventDefault(); if (cart.length > 0) sessionStorage.setItem('deliveryCart', JSON.stringify(cart)); window.location.href = '/oro-store-demo/delivery/delivery.php'; return; }
+    if (e.key === 'F5') { e.preventDefault(); if (cart.length > 0) sessionStorage.setItem('angkatCart', JSON.stringify(cart)); window.location.href = '/oro-store-demo/angkat/angkat.php'; return; }
+    if (e.key === 'F7') { e.preventDefault(); window.open('/oro-store-demo/transactions/card_transaction.php', '_blank', 'width=600,height=700'); return; }
+    if (e.key === 'F9') { e.preventDefault(); window.location.href = '/oro-store-demo/delivery/delivery_details.php'; return; }
 
-    if (e.key === 'F11') { e.preventDefault(); window.open('/oro-store/stock/add_stock.php', '_blank', 'width=800,height=600'); return; }
+    if (e.key === 'F11') { e.preventDefault(); window.open('/oro-store-demo/stock/add_stock.php', '_blank', 'width=800,height=600'); return; }
 
     const alertOverlay = document.getElementById('custom-alert-overlay');
     if (alertOverlay && alertOverlay.style.display !== 'none') return;
@@ -479,8 +479,8 @@ document.addEventListener('keydown', function (e) {
             e.preventDefault();
             const si = document.getElementById('cashier-search');
             if (si.value !== '') { si.value = ''; si.dispatchEvent(new Event('input')); si.focus(); }
-            else if (cart.length > 0) { customConfirm('Clear cart and return to cashier?', function(){ sessionStorage.removeItem('creditCart'); window.location.href = '/oro-store/cashier/cashier.php'; }); }
-            else window.location.href = '/oro-store/cashier/cashier.php';
+            else if (cart.length > 0) { customConfirm('Clear cart and return to cashier?', function(){ sessionStorage.removeItem('creditCart'); window.location.href = '/oro-store-demo/cashier/cashier.php'; }); }
+            else window.location.href = '/oro-store-demo/cashier/cashier.php';
         } else if (e.key === 'Home') {
             e.preventDefault();
             if (cart.length > 0) { setActivePanel('right'); selectedReceiptIndex = 0; updateReceiptSelection(); }

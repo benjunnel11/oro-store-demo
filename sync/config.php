@@ -98,7 +98,7 @@ function getRemoteConnection() {
 // Check if remote device is available (uses HTTP like the actual sync)
 function isRemoteAvailable() {
     if (!REMOTE_IP) return false;
-    $url = "http://" . REMOTE_IP . ":" . REMOTE_PORT . "/oro-store/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD);
+    $url = "http://" . REMOTE_IP . ":" . REMOTE_PORT . "/oro-store-demo/sync/sync_api.php?action=status&key=" . urlencode(SYNC_PASSWORD);
     $ctx = stream_context_create(['http' => ['timeout' => 5]]);
     $r = @file_get_contents($url, false, $ctx);
     return ($r !== false);

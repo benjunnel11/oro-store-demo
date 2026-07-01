@@ -3,7 +3,7 @@ date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 
 $env_file = __DIR__ . '/../sync/.local_env';
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <head>
 <meta charset="UTF-8">
 <title>Network Access Password</title>
-<link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+<link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
 <style>
     .cp-container{max-width:500px;margin:40px auto;padding:0 20px;}
     .cp-card{background:#fff;border-radius:10px;padding:28px;border:1px solid #e2e8f0;}
@@ -93,5 +93,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 </div>
 </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Change Network Password', array (
+  'Features' => 
+  array (
+    0 => 'Change the network access gate password',
+    1 => 'Protects the POS from unauthorized network access (piso wifi)',
+    2 => 'Stored in .local_env file, not in code',
+  ),
+));
+?>
 </body>
 </html>

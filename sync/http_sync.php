@@ -49,7 +49,7 @@ function httpSync() {
 }
 
 function syncWithDevice($conn, $remote_ip, $sync_key) {
-    $remote_url = 'http://' . $remote_ip . '/oro-store/sync/sync_api.php';
+    $remote_url = 'http://' . $remote_ip . '/oro-store-demo/sync/sync_api.php';
     $results = ['pushed' => 0, 'pulled' => 0, 'errors' => []];
 
     // 1. Check if remote is available

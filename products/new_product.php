@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ob_start(); // buffer output so PHP notices don't corrupt AJAX JSON responses
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
@@ -7,7 +7,7 @@ require_once __DIR__ . '/../core/system_logger.php';
 
 // Only admins and managers can access
 if (!isManager() && !isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -453,8 +453,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Add New Product</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -589,7 +589,7 @@ $conn->close();
 
         <!-- Page Header -->
         <div class="np-page-header">
-            <a href="/oro-store/admin/admin_products.php" class="np-back-btn" title="Back to Products">&larr;</a>
+            <a href="/oro-store-demo/admin/admin_products.php" class="np-back-btn" title="Back to Products">&larr;</a>
             <h1 class="np-page-title">Add New Product</h1>
         </div>
 
@@ -1120,7 +1120,7 @@ $conn->close();
 
         /* ── Generate random barcode ─────────────────────────────────────── */
         document.getElementById('random-btn').addEventListener('click', function() {
-            fetch('/oro-store/products/new_product.php?action=generate_barcode')
+            fetch('/oro-store-demo/products/new_product.php?action=generate_barcode')
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) alert('Error: ' + data.error);
@@ -1152,7 +1152,7 @@ $conn->close();
             const productStock = document.querySelector('input[name="stock"]').value;
             if (!barcodeValue) { alert('Please generate a barcode first'); return; }
             const params = new URLSearchParams({ barcode: barcodeValue, name: productName || 'Product', price: productPrice || '0', stock: productStock || '0' });
-            window.open('/oro-store/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
+            window.open('/oro-store-demo/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
         });
 
         /* ── Helpers ─────────────────────────────────────────────────────── */
@@ -1253,6 +1253,34 @@ $conn->close();
         if (e.target === this) closeAtsModal();
     });
     </script>
+    <?php
+    include_once __DIR__ . '/../core/page_info.php';
+    renderPageInfo('Add New Product', [
+        'Left Column' => [
+            'Product name — required, main display name',
+            'Category — searchable dropdown, click + to create new',
+            'Brand — searchable dropdown, click + to create new',
+            'Selling price — what customers pay',
+            'Discounted price — auto-fills from selling price, override if needed',
+            'Cost price — what you paid the supplier',
+            'Description — optional product notes',
+            'Barcode — scan, manually enter, or click Gen to auto-generate',
+        ],
+        'Right Column — Individual Selling' => [
+            'Enable "Can be sold individually" for per-unit selling',
+            'Select unit type (Kilo, Piece, Bottle, etc.) or add custom',
+            'Units per Pack — how many individual units in one pack',
+            'Price per Unit auto-calculates from pack price / units',
+            'Creates a linked child product automatically',
+            'Child inherits brand but gets no category (separate fee settings)',
+        ],
+        'Smart Defaults' => [
+            'Last used category, brand, unit, and pieces auto-restore',
+            'Description persists between product additions',
+            'After adding, prompts to assign product to store(s)',
+        ],
+    ]);
+    ?>
     </main>
 </body>
 </html>

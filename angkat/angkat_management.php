@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -145,7 +145,7 @@ function buildPageUrl($p) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Angkat Management - Admin Panel</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .retailer-cell {
             max-width: 180px;
@@ -291,7 +291,7 @@ function buildPageUrl($p) {
                 </div>
                 <div class="filter-group" style="flex: 0;">
                     <label>&nbsp;</label>
-                    <a href="/oro-store/angkat/angkat_management.php" class="btn btn-secondary btn-sm">Reset</a>
+                    <a href="/oro-store-demo/angkat/angkat_management.php" class="btn btn-secondary btn-sm">Reset</a>
                 </div>
             </form>
         </div>
@@ -461,7 +461,7 @@ function buildPageUrl($p) {
         document.getElementById('amDetailFooter').innerHTML = '';
         document.getElementById('angkatDetailModal').style.display = 'flex';
 
-        fetch(`/oro-store/angkat/angkat_details.php?action=get_angkat_items&angkat_id=${id}`)
+        fetch(`/oro-store-demo/angkat/angkat_details.php?action=get_angkat_items&angkat_id=${id}`)
             .then(r => r.json())
             .then(data => {
                 if (!data.length) {
@@ -571,5 +571,17 @@ function buildPageUrl($p) {
         if (e.key === 'Escape') closeAngkatDetailModal();
     });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Angkat Management', array (
+  'Features' => 
+  array (
+    0 => 'View all angkat accounts with balances',
+    1 => 'Filter: Active, Settled, All',
+    2 => 'Record collections and returns',
+    3 => 'Track total value vs amount collected',
+  ),
+));
+?>
 </body>
 </html>

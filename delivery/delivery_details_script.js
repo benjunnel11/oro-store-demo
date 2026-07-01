@@ -175,7 +175,7 @@ function processSelectedDeliveries() {
         formData.append('action', 'mark_complete');
         formData.append('delivery_id', delivery.id);
         
-        return fetch('/oro-store/delivery/delivery_details.php', {
+        return fetch('/oro-store-demo/delivery/delivery_details.php', {
             method: 'POST',
             body: formData
         }).then(response => response.json());
@@ -204,7 +204,7 @@ function processSelectedDeliveries() {
 function viewDeliveryDetails(deliveryId) {
     currentDeliveryId = deliveryId;
     
-    fetch(`/oro-store/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`)
+    fetch(`/oro-store-demo/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -292,7 +292,7 @@ function viewDeliveryDetails(deliveryId) {
 
 // Load other receipts for the same recipient
 function loadOtherReceipts(recipientName, currentTransactionId) {
-    fetch(`/oro-store/delivery/delivery_details.php?action=get_recipient_receipts&recipient_name=${encodeURIComponent(recipientName)}&current_transaction_id=${currentTransactionId}`)
+    fetch(`/oro-store-demo/delivery/delivery_details.php?action=get_recipient_receipts&recipient_name=${encodeURIComponent(recipientName)}&current_transaction_id=${currentTransactionId}`)
         .then(response => response.json())
         .then(receipts => {
             const container = document.getElementById('other-receipts-section');
@@ -454,7 +454,7 @@ function confirmLacking() {
     formData.append('item_id', currentItemId);
     formData.append('lacking_qty', lackingQty);
     
-    fetch('/oro-store/delivery/delivery_details.php', {
+    fetch('/oro-store-demo/delivery/delivery_details.php', {
         method: 'POST',
         body: formData
     })
@@ -509,7 +509,7 @@ function confirmEditQty() {
     formData.append('item_id', currentItemId);
     formData.append('new_qty', newQty);
     
-    fetch('/oro-store/delivery/delivery_details.php', {
+    fetch('/oro-store-demo/delivery/delivery_details.php', {
         method: 'POST',
         body: formData
     })
@@ -543,7 +543,7 @@ function confirmComplete() {
     formData.append('action', 'mark_complete');
     formData.append('delivery_id', currentDeliveryId);
     
-    fetch('/oro-store/delivery/delivery_details.php', {
+    fetch('/oro-store-demo/delivery/delivery_details.php', {
         method: 'POST',
         body: formData
     })
@@ -591,7 +591,7 @@ document.addEventListener('keydown', function(e) {
     // F3 - Back to Cashier
     if (e.key === 'F3') {
         e.preventDefault();
-        window.location.href = '/oro-store/cashier/cashier.php';
+        window.location.href = '/oro-store-demo/cashier/cashier.php';
         return;
     }
     
@@ -711,7 +711,7 @@ function printSelectedDeliveries() {
     }
     
     const deliveries = Array.from(multiSelectedDeliveries.values());
-    const printWindow = window.open('/oro-store/print/print_delivery_details.php', '_blank');
+    const printWindow = window.open('/oro-store-demo/print/print_delivery_details.php', '_blank');
     
     printWindow.addEventListener('load', function() {
         printWindow.postMessage({ deliveries: deliveries }, '*');
@@ -758,7 +758,7 @@ async function viewSelectedProducts() {
         const receiptsHTML = [];
         
         for (const [deliveryId, delivery] of multiSelectedDeliveries) {
-            const response = await fetch(`/oro-store/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`);
+            const response = await fetch(`/oro-store-demo/delivery/delivery_details.php?action=get_delivery&delivery_id=${deliveryId}`);
             const items = await response.json();
             
             if (items.length > 0) {

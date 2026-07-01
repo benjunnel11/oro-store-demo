@@ -16,7 +16,7 @@ if (!preg_match('/^\d+\.\d+\.\d+\.\d+$/', $target_ip)) {
     exit;
 }
 
-$url = "http://$target_ip/oro-store/sync/sync_api.php?action=$action&key=" . urlencode($sync_key);
+$url = "http://$target_ip/oro-store-demo/sync/sync_api.php?action=$action&key=" . urlencode($sync_key);
 $timeout = ($action === 'remote_cleanup') ? 60 : 10;
 
 $ctx = stream_context_create(['http' => [

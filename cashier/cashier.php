@@ -12,7 +12,7 @@ $db = new SyncDB();
 $currentUser = getCurrentUser();
 
 if ($currentUser['role'] === 'kiosk') {
-    header("Location: /oro-store/kiosk/kiosk.php");
+    header("Location: /oro-store-demo/kiosk/kiosk.php");
     exit;
 }
 
@@ -64,7 +64,7 @@ if ($isAdmin && !$currentUser['store_id']) {
         if (count($all_stores) === 1) {
             // Only one store, auto-select
             $_SESSION['admin_cashier_store'] = $all_stores[0]['id'];
-            header("Location: /oro-store/cashier/cashier.php?store=" . $all_stores[0]['id']);
+            header("Location: /oro-store-demo/cashier/cashier.php?store=" . $all_stores[0]['id']);
             exit;
         }
         // Show store picker page
@@ -96,7 +96,7 @@ if ($isAdmin && !$currentUser['store_id']) {
                 <h1>Select Store</h1>
                 <p>Choose which store to operate the cashier for</p>
                 <?php foreach ($all_stores as $s): ?>
-                <a href="/oro-store/cashier/cashier.php?store=<?php echo $s['id']; ?>" class="store-option">
+                <a href="/oro-store-demo/cashier/cashier.php?store=<?php echo $s['id']; ?>" class="store-option">
                     <div class="store-icon">&#127978;</div>
                     <div class="store-info">
                         <div class="store-name"><?php echo htmlspecialchars($s['store_name']); ?></div>
@@ -104,7 +104,7 @@ if ($isAdmin && !$currentUser['store_id']) {
                     </div>
                 </a>
                 <?php endforeach; ?>
-                <a href="/oro-store/admin/admin_panel.php" class="back-link">&larr; Back to Dashboard</a>
+                <a href="/oro-store-demo/admin/admin_panel.php" class="back-link">&larr; Back to Dashboard</a>
             </div>
         </body>
         </html>
@@ -736,9 +736,9 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Cashier<?php echo $userStore ? ' - ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
     <?php include_once __DIR__ . '/../core/pwa.php'; ?>
-    <link rel="stylesheet" href="/oro-store/cashier/cashier_styles.css">
-    <script src="/oro-store/core/cache.js"></script>
-    <script src="/oro-store/core/bt_print.js?v=20250627"></script>
+    <link rel="stylesheet" href="/oro-store-demo/cashier/cashier_styles.css">
+    <script src="/oro-store-demo/core/cache.js"></script>
+    <script src="/oro-store-demo/core/bt_print.js?v=20250627"></script>
     <style>
         /* Disable text selection and context menu on touch devices */
         .product-item-cashier, .receipt-item, .total-row, .btn-confirm, .product-list-cashier, .cart-section {
@@ -761,7 +761,7 @@ $conn->close();
     <span class="sc-key sc-purple" onclick="scF4()"><kbd>F4</kbd> Credit</span>
     <span class="sc-key sc-teal" onclick="scF5()"><kbd>F5</kbd> Angkat</span>
     <span class="sc-key sc-blue" onclick="openCardTransaction()"><kbd>F7</kbd> ATM</span>
-    <span class="sc-key" onclick="location.href='/oro-store/delivery/delivery_details.php'"><kbd>F9</kbd> Details</span>
+    <span class="sc-key" onclick="location.href='/oro-store-demo/delivery/delivery_details.php'"><kbd>F9</kbd> Details</span>
     <span class="sc-key" onclick="openAddStock()"><kbd>F11</kbd> Add Stock</span>
     <span class="sc-key" onclick="openHistoryModal()"><kbd>F12</kbd> History</span>
     <span class="sc-key" onclick="openKioskQueue()" id="kioskQueueBtn" style="background:#7c3aed;color:#e9d5ff;"><kbd>F8</kbd> Queue <span id="kioskQueueCount" style="background:#fbbf24;color:#1a202c;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:700;margin-left:2px;display:none;">0</span></span>
@@ -784,9 +784,9 @@ $conn->close();
                     <?php echo ucfirst($currentUser['role']); ?>
                 </div>
                 <?php if ($currentUser['role'] === 'admin' || $currentUser['role'] === 'super_admin'): ?>
-                    <button class="btn-panel" onclick="window.location.href='/oro-store/admin/admin_panel.php'">Admin Panel</button>
+                    <button class="btn-panel" onclick="window.location.href='/oro-store-demo/admin/admin_panel.php'">Admin Panel</button>
                 <?php elseif ($currentUser['role'] === 'manager'): ?>
-                    <button class="btn-panel" onclick="window.location.href='/oro-store/manager/manager_panel.php'">Manager Panel</button>
+                    <button class="btn-panel" onclick="window.location.href='/oro-store-demo/manager/manager_panel.php'">Manager Panel</button>
                 <?php endif; ?>
                 <button class="btn-logout" onclick="logout()">Logout</button>
             </div>
@@ -1053,7 +1053,7 @@ $conn->close();
         cashierName:  <?php echo json_encode($currentUser['full_name']); ?>
     };
 </script>
-<script src="/oro-store/cashier/cashier_script.js"></script>
+<script src="/oro-store-demo/cashier/cashier_script.js"></script>
 
 <script>
 function simulateKey(key) {
@@ -1304,7 +1304,7 @@ function loadKioskQueue() {
             updateKioskBadge(cached.length);
         }
     }
-    fetch('/oro-store/cashier/cashier.php?action=get_kiosk_orders')
+    fetch('/oro-store-demo/cashier/cashier.php?action=get_kiosk_orders')
         .then(r => r.json())
         .then(orders => {
             if (typeof OroCache !== 'undefined') OroCache.set('cashier_queue', orders, 15);
@@ -1391,7 +1391,7 @@ function processKioskOrder(orderId) {
     const fd = new FormData();
     fd.append('action', 'process_kiosk_order');
     fd.append('order_id', orderId);
-    fetch('/oro-store/cashier/cashier.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/cashier/cashier.php', { method: 'POST', body: fd })
         .then(r => r.json())
         .then(data => {
             if (!data.success) { alert('Error: ' + (data.error || 'Failed')); return; }
@@ -1440,7 +1440,7 @@ function loadGcashAccounts() {
         var cached = OroCache.get('cashier_gcash_accounts');
         if (cached) { _renderGcashAccounts(cached); return; }
     }
-    fetch('/oro-store/transactions/gcash.php?action=get_accounts')
+    fetch('/oro-store-demo/transactions/gcash.php?action=get_accounts')
         .then(r => r.json())
         .then(accounts => {
             if (typeof OroCache !== 'undefined') OroCache.set('cashier_gcash_accounts', accounts, 300);
@@ -1455,7 +1455,7 @@ function processGcashKioskOrder(orderId) {
     const fd = new FormData();
     fd.append('action', 'process_kiosk_order');
     fd.append('order_id', orderId);
-    fetch('/oro-store/cashier/cashier.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/cashier/cashier.php', { method: 'POST', body: fd })
         .then(r => r.json())
         .then(data => {
             if (!data.success) { alert('Error: ' + (data.error || 'Failed')); return; }
@@ -1511,7 +1511,7 @@ function confirmGcashProcess() {
     gfd.append('gcash_account_id', accountId);
     if (g.gcash_customer_number) gfd.append('customer_number', g.gcash_customer_number);
 
-    fetch('/oro-store/transactions/gcash.php', { method: 'POST', body: gfd })
+    fetch('/oro-store-demo/transactions/gcash.php', { method: 'POST', body: gfd })
     .then(r => r.text())
     .then(text => {
         console.log('GCash response:', text);
@@ -1523,7 +1523,7 @@ function confirmGcashProcess() {
             cfd.append('action', 'complete_kiosk_order');
             cfd.append('order_id', orderId);
             cfd.append('transaction_id', gdata.transaction_id);
-            fetch('/oro-store/cashier/cashier.php', { method: 'POST', body: cfd });
+            fetch('/oro-store-demo/cashier/cashier.php', { method: 'POST', body: cfd });
 
             closeGcashRefModal();
             closeKioskQueue();
@@ -1539,7 +1539,7 @@ function cancelKioskOrder(orderId, priorityNum) {
     const fd = new FormData();
     fd.append('action', 'cancel_kiosk_order');
     fd.append('order_id', orderId);
-    fetch('/oro-store/cashier/cashier.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/cashier/cashier.php', { method: 'POST', body: fd })
         .then(r => r.json())
         .then(data => {
             if (data.success) { if (typeof OroCache !== 'undefined') OroCache.invalidate('cashier_queue'); loadKioskQueue(); }
@@ -1549,7 +1549,7 @@ function cancelKioskOrder(orderId, priorityNum) {
 
 // Poll for kiosk orders every 30 seconds
 function pollKioskQueue() {
-    fetch('/oro-store/cashier/cashier.php?action=get_kiosk_orders')
+    fetch('/oro-store-demo/cashier/cashier.php?action=get_kiosk_orders')
         .then(r => r.json())
         .then(orders => {
             if (typeof OroCache !== 'undefined') OroCache.set('cashier_queue', orders, 15);
@@ -1562,7 +1562,7 @@ pollKioskQueue();
 
 // Cloud stock sync — pull other stores' stock every 30 seconds
 function cloudStockPull() {
-    fetch('/oro-store/sync/cloud_pull.php').then(function(){ if (typeof refreshAllStocks === 'function') refreshAllStocks(); }).catch(function(){});
+    fetch('/oro-store-demo/sync/cloud_pull.php').then(function(){ if (typeof refreshAllStocks === 'function') refreshAllStocks(); }).catch(function(){});
 }
 setInterval(cloudStockPull, 30000);
 setTimeout(cloudStockPull, 5000);
@@ -1577,5 +1577,48 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Cashier', [
+    'Keyboard Shortcuts' => [
+        ['key'=>'Esc','desc'=>'Cancel search / clear input / switch to product panel'],
+        ['key'=>'Home','desc'=>'Switch between product list and cart panel'],
+        ['key'=>'Del','desc'=>'Remove selected item from cart'],
+        ['key'=>'Ins','desc'=>'Edit quantity/price of selected cart item'],
+        ['key'=>'Enter','desc'=>'Open payment modal / confirm transaction'],
+        ['key'=>'F1','desc'=>'Print receipt via RawBT thermal printer'],
+        ['key'=>'F2','desc'=>'Open GCash transaction page'],
+        ['key'=>'F3','desc'=>'New delivery transaction'],
+        ['key'=>'F4','desc'=>'New credit transaction'],
+        ['key'=>'F5','desc'=>'New angkat transaction'],
+        ['key'=>'F7','desc'=>'New ATM/card transaction'],
+        ['key'=>'F8','desc'=>'Open/close kiosk queue modal'],
+        ['key'=>'F9','desc'=>'Go to delivery details page'],
+        ['key'=>'F11','desc'=>'Open Add Stock page'],
+        ['key'=>'F12','desc'=>'Open transaction history modal'],
+        ['key'=>'&#8593;&#8595;','desc'=>'Navigate product list or cart items'],
+    ],
+    'How It Works' => [
+        'Search products by name, brand, category, or barcode',
+        'Double-click or press Enter to add product to cart',
+        'Cart shows subtotal, profit margin, and item count',
+        'Payment modal calculates change automatically',
+        'Insufficient payment disables Print and Complete buttons',
+        'After completing, stock updates instantly without page reload',
+    ],
+    'Queue (F8)' => [
+        'Shows pending kiosk orders (product + GCash)',
+        'Process loads items into cart for normal checkout',
+        'GCash orders open a reference number modal',
+        'Queue badge updates every 30 seconds',
+    ],
+    'History (F12)' => [
+        'Shows last 100 transactions + GCash transactions',
+        'Reprint, re-edit, or void completed transactions',
+        'GCash rows shown with blue background and fee info',
+        'Filtered by current device/store',
+    ],
+]);
+?>
 </body>
 </html>

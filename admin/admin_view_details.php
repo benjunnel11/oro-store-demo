@@ -4,7 +4,7 @@ require_once __DIR__ . '/../core/auth_check.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -12,7 +12,7 @@ $currentUser = getCurrentUser();
 $productId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($productId <= 0) {
-    header("Location: /oro-store/admin/admin_stats.php");
+    header("Location: /oro-store-demo/admin/admin_stats.php");
     exit;
 }
 
@@ -24,7 +24,7 @@ $product = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$product) {
-    header("Location: /oro-store/admin/admin_stats.php");
+    header("Location: /oro-store-demo/admin/admin_stats.php");
     exit;
 }
 
@@ -156,7 +156,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['name']); ?> - Product Details</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         * {
             margin: 0;
@@ -721,5 +721,15 @@ $conn->close();
             event.target.classList.add('active');
         }
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('View Details', array (
+  'Features' => 
+  array (
+    0 => 'Detailed transaction view with all items',
+    1 => 'Shows prices, quantities, subtotals, and profit',
+  ),
+));
+?>
 </body>
 </html>

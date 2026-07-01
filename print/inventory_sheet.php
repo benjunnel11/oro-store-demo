@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 
 $store_id = isset($_GET['store']) ? intval($_GET['store']) : 0;
@@ -128,7 +128,7 @@ $conn->close();
         <button type="submit">Load</button>
     </form>
     <button class="btn-print" onclick="window.print()">Print</button>
-    <a href="/oro-store/admin/admin_products.php" style="font-size:11px;color:#6366f1;text-decoration:none;">← Products</a>
+    <a href="/oro-store-demo/admin/admin_products.php" style="font-size:11px;color:#6366f1;text-decoration:none;">← Products</a>
 </div>
 
 <div class="sheet">
@@ -186,5 +186,17 @@ $conn->close();
     </div>
 </div>
 
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Inventory Sheet', array (
+  'Features' => 
+  array (
+    0 => 'Printable inventory list for physical stock counting',
+    1 => 'Shows product name, current stock, price, and barcode',
+    2 => 'Grouped by category',
+    3 => 'Print-optimized layout',
+  ),
+));
+?>
 </body>
 </html>

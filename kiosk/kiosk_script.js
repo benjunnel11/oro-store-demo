@@ -41,7 +41,7 @@ function loadProducts() {
         if (cached) {
             _renderProducts(cached);
             // Background refresh for fresh stock data
-            fetch('/oro-store/products/get_products.php')
+            fetch('/oro-store-demo/products/get_products.php')
                 .then(r => r.json())
                 .then(products => {
                     OroCache.set('kiosk_products', products, 300);
@@ -52,7 +52,7 @@ function loadProducts() {
             return;
         }
     }
-    fetch('/oro-store/products/get_products.php')
+    fetch('/oro-store-demo/products/get_products.php')
         .then(r => { if (!r.ok) throw new Error('Network error'); return r.json(); })
         .then(products => {
             if (typeof OroCache !== 'undefined') OroCache.set('kiosk_products', products, 300);
@@ -282,7 +282,7 @@ function submitKioskOrder() {
     formData.append('items_count', itemCount);
     formData.append('payment_method', 'cash');
 
-    fetch('/oro-store/kiosk/kiosk.php', { method: 'POST', body: formData })
+    fetch('/oro-store-demo/kiosk/kiosk.php', { method: 'POST', body: formData })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -401,7 +401,7 @@ function printPriorityNumber() {
 }
 
 function openGCash() {
-    location.href = '/oro-store/transactions/gcash.php';
+    location.href = '/oro-store-demo/transactions/gcash.php';
 }
 
 // Double-tap product handler

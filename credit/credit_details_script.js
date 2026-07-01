@@ -30,7 +30,7 @@ function viewCustomerCredits(customerId) {
     currentCustomerId = customerId;
     selectedCredits.clear();
     
-    fetch(`/oro-store/credit/credit_details.php?action=get_customer_credits&customer_id=${customerId}`)
+    fetch(`/oro-store-demo/credit/credit_details.php?action=get_customer_credits&customer_id=${customerId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -106,7 +106,7 @@ function viewReceiptDetails() {
     
     const credit = currentCustomerCredits[selectedCreditIndex];
     
-    fetch(`/oro-store/credit/credit_details.php?action=get_credit_details&credit_id=${credit.id}`)
+    fetch(`/oro-store-demo/credit/credit_details.php?action=get_credit_details&credit_id=${credit.id}`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -205,7 +205,7 @@ function reprintReceipt() {
     
     const credit = currentCustomerCredits[selectedCreditIndex];
     
-    fetch(`/oro-store/credit/credit_details.php?action=get_credit_details&credit_id=${credit.id}`)
+    fetch(`/oro-store-demo/credit/credit_details.php?action=get_credit_details&credit_id=${credit.id}`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {
@@ -467,7 +467,7 @@ function markSelectedAsPaid() {
     formData.append('action', 'mark_paid');
     formData.append('credit_ids', JSON.stringify(Array.from(selectedCredits)));
     
-    fetch('/oro-store/credit/credit_details.php', {
+    fetch('/oro-store-demo/credit/credit_details.php', {
         method: 'POST',
         body: formData
     })
@@ -531,7 +531,7 @@ function confirmPartialPayment() {
     formData.append('credit_id', currentCreditForPartial.id);
     formData.append('payment_amount', paymentAmount);
     
-    fetch('/oro-store/credit/credit_details.php', {
+    fetch('/oro-store-demo/credit/credit_details.php', {
         method: 'POST',
         body: formData
     })

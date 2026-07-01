@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ob_start();
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
@@ -381,7 +381,7 @@ $conn->close();
 <body>
 
 <div class="shortcut-bar">
-    <a href="/oro-store/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:3px 12px;font-size:11px;font-weight:700;text-decoration:none;border-radius:4px;white-space:nowrap;">Back</a>
+    <a href="/oro-store-demo/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:3px 12px;font-size:11px;font-weight:700;text-decoration:none;border-radius:4px;white-space:nowrap;">Back</a>
     <span class="sc-key sc-blue"><kbd>↑↓</kbd> Nav</span>
     <span class="sc-key sc-green" onclick="handleEnter()"><kbd>Enter</kbd> Select</span>
     <span class="sc-key sc-red" onclick="handleEsc()"><kbd>Esc</kbd> Back</span>
@@ -809,7 +809,7 @@ function saveAllUpdates() {
     fd.append('invoice_number', document.getElementById('invoice-number').value);
     fd.append('notes', document.getElementById('supply-notes').value);
 
-    fetch('/oro-store/stock/add_stock.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/stock/add_stock.php', { method: 'POST', body: fd })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
@@ -821,14 +821,14 @@ function saveAllUpdates() {
                 rfd.append('action', 'return_remaining_cash');
                 rfd.append('transaction_id', stockTxId);
                 rfd.append('amount_spent', totalCost);
-                fetch('/oro-store/transactions/other_transaction.php', { method:'POST', body:rfd })
+                fetch('/oro-store-demo/transactions/other_transaction.php', { method:'POST', body:rfd })
                 .then(r=>r.json()).then(rd => {
                     sessionStorage.removeItem('stockBudget');
                     sessionStorage.removeItem('stockBudgetTransactionId');
-                    customAlert(`Stock receipt #${data.receipt_id} saved!\n\nCost: ₱${totalCost.toFixed(2)}\nBudget change returned: ₱${parseFloat(rd.register_change||0).toFixed(2)}`, 'success', function(){ window.location.href='/oro-store/cashier/cashier.php'; });
-                }).catch(() => { customAlert('Stock saved, but budget adjustment failed.', 'warning', function(){ window.location.href='/oro-store/cashier/cashier.php'; }); });
+                    customAlert(`Stock receipt #${data.receipt_id} saved!\n\nCost: ₱${totalCost.toFixed(2)}\nBudget change returned: ₱${parseFloat(rd.register_change||0).toFixed(2)}`, 'success', function(){ window.location.href='/oro-store-demo/cashier/cashier.php'; });
+                }).catch(() => { customAlert('Stock saved, but budget adjustment failed.', 'warning', function(){ window.location.href='/oro-store-demo/cashier/cashier.php'; }); });
             } else {
-                customAlert(`Stock receipt #${data.receipt_id} saved!\n\n${cart.length} products, ${totalItems} units\nTotal Cost: ₱${totalCost.toFixed(2)}`, 'success', function(){ window.location.href='/oro-store/cashier/cashier.php'; });
+                customAlert(`Stock receipt #${data.receipt_id} saved!\n\n${cart.length} products, ${totalItems} units\nTotal Cost: ₱${totalCost.toFixed(2)}`, 'success', function(){ window.location.href='/oro-store-demo/cashier/cashier.php'; });
             }
         } else {
             alert('Error: ' + data.error);
@@ -850,7 +850,7 @@ function switchTab() { switchToTab(activeTab === 'cart' ? 'history' : 'cart'); }
 
 // History
 function loadHistory() {
-    fetch('/oro-store/stock/add_stock.php?action=get_receipts')
+    fetch('/oro-store-demo/stock/add_stock.php?action=get_receipts')
     .then(r => r.json()).then(receipts => {
         const list = document.getElementById('history-list');
         if (!receipts.length) { list.innerHTML = '<div class="cart-empty"><h3>No receipts yet</h3></div>'; return; }
@@ -874,7 +874,7 @@ function loadHistory() {
 }
 
 function viewReceipt(id) {
-    fetch('/oro-store/stock/add_stock.php?action=get_receipt_items&receipt_id=' + id)
+    fetch('/oro-store-demo/stock/add_stock.php?action=get_receipt_items&receipt_id=' + id)
     .then(r => r.json()).then(items => {
         document.getElementById('receipt-title').textContent = 'Receipt #' + id;
         let totalCost = 0, totalSell = 0;
@@ -1121,7 +1121,37 @@ document.addEventListener('selectstart', function(e) {
     if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
 });
 </script>
-<script src="/oro-store/core/custom_alert.js"></script>
-<link rel="stylesheet" href="/oro-store/core/responsive.css">
+<script src="/oro-store-demo/core/custom_alert.js"></script>
+<link rel="stylesheet" href="/oro-store-demo/core/responsive.css">
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Add Stock', [
+    'Keyboard Shortcuts' => [
+        ['key'=>'Enter','desc'=>'Select product / confirm add / save receipt'],
+        ['key'=>'Esc','desc'=>'Close modal / back to product list'],
+        ['key'=>'Home','desc'=>'Switch between product list and cart'],
+        ['key'=>'Del','desc'=>'Remove selected item from cart'],
+        ['key'=>'Ins','desc'=>'Edit quantity/price of cart item'],
+        ['key'=>'Tab','desc'=>'Switch between Cart and Receipt History tabs'],
+        ['key'=>'F12','desc'=>'Close window'],
+        ['key'=>'&#8593;&#8595;','desc'=>'Navigate product list or cart'],
+    ],
+    'How It Works' => [
+        'Left panel: search and select products to restock',
+        'Double-click a product to open the add modal',
+        'Enter quantity to add and cost price per unit',
+        'Items added to cart with cost/margin calculations',
+        'Click green TOTAL COST bar to confirm and save receipt',
+        'Supplier name and invoice number are optional',
+        'Stock updates immediately after confirming',
+    ],
+    'Cart Details' => [
+        'Shows cost value per item (qty x cost price)',
+        'Total COGS, selling value, and expected margin',
+        'Long-press cart item to edit on touch devices',
+        'Receipt History tab shows past stock receipts',
+    ],
+]);
+?>
 </body>
 </html>

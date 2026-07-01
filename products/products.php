@@ -4,7 +4,7 @@ require_once __DIR__ . '/../core/auth_check.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -22,7 +22,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
 </head>
 <body>
     <h1>Product List</h1>
@@ -75,7 +75,7 @@ $conn->close();
 
         // Open add product page in new tab
         document.getElementById('add-product-btn').addEventListener('click', function() {
-            const newTab = window.open('/oro-store/products/new_product.php', '_blank');
+            const newTab = window.open('/oro-store-demo/products/new_product.php', '_blank');
             if (newTab) {
                 newTab.focus(); // Highlight the new tab
             }
@@ -85,7 +85,7 @@ $conn->close();
         document.querySelectorAll('.edit-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const productId = this.closest('.product-item').dataset.id;
-                const newTab = window.open(`/oro-store/products/edit_product.php?id=${productId}`, '_blank');
+                const newTab = window.open(`/oro-store-demo/products/edit_product.php?id=${productId}`, '_blank');
                 if (newTab) {
                     newTab.focus(); // Highlight the new tab
                 }
@@ -94,11 +94,21 @@ $conn->close();
 
         // Open transaction history in new tab
 document.getElementById('transaction-history-btn').addEventListener('click', function() {
-    const newTab = window.open('/oro-store/transactions/transaction_history.php', '_blank');
+    const newTab = window.open('/oro-store-demo/transactions/transaction_history.php', '_blank');
     if (newTab) {
         newTab.focus();
     }
 });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Products List', array (
+  'Features' => 
+  array (
+    0 => 'Simple product listing page',
+    1 => 'Shows name, price, stock, category, brand',
+  ),
+));
+?>
 </body>
 </html>

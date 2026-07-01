@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -121,7 +121,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Manage Users - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .form-grid {
             display: grid;
@@ -465,5 +465,18 @@ $conn->close();
             }
         });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('User Management', array (
+  'Features' => 
+  array (
+    0 => 'Create, edit, and delete user accounts',
+    1 => 'Roles: Super Admin, Admin, Manager, Cashier, Kiosk',
+    2 => 'Assign users to specific stores',
+    3 => 'Password reset and status toggle (active/deactivated)',
+    4 => 'Changes sync across devices via cloud shared data',
+  ),
+));
+?>
 </body>
 </html>

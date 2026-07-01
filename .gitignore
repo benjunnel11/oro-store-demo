@@ -4,3 +4,5 @@
 old/
 backups/
 node_modules/
+logs/guard/
+sync/cloud_stock_queue.json

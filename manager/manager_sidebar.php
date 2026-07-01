@@ -4,7 +4,7 @@ if (!isset($currentUser)) {
     $currentUser = getCurrentUser();
 }
 
-$_current_page = ltrim(str_replace('/oro-store/', '', $_SERVER['PHP_SELF']), '/');
+$_current_page = ltrim(str_replace('/oro-store-demo/', '', $_SERVER['PHP_SELF']), '/');
 $_current_view = $_GET['view'] ?? 'dashboard';
 
 if (isset($_SESSION['admin_cashier_store'])) {
@@ -85,18 +85,18 @@ $_mgr_alerts = $_mb['out_of_stock'] + $_mb['pending_credits'] + $_mb['pending_de
 
     <nav class="sidebar-nav">
         <div class="nav-group-label">Main</div>
-        <a href="/oro-store/manager/manager_panel.php" class="sidebar-link<?php echo ($_current_page === 'manager/manager_panel.php' && $_current_view === 'dashboard') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/manager/manager_panel.php" class="sidebar-link<?php echo ($_current_page === 'manager/manager_panel.php' && $_current_view === 'dashboard') ? ' active' : ''; ?>">
             <span class="link-icon">&#128202;</span> Dashboard
             <?php if ($_mgr_alerts > 0): ?>
                 <span class="badge-count badge-red"><?php echo $_mgr_alerts; ?></span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/cashier/cashier.php" class="sidebar-link<?php echo ($_current_page === 'cashier/cashier.php') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/cashier/cashier.php" class="sidebar-link<?php echo ($_current_page === 'cashier/cashier.php') ? ' active' : ''; ?>">
             <span class="link-icon">&#128179;</span> Open Cashier
         </a>
 
         <div class="nav-group-label">Inventory</div>
-        <a href="/oro-store/manager/manager_products.php" class="sidebar-link<?php echo ($_current_page === 'manager/manager_products.php') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/manager/manager_products.php" class="sidebar-link<?php echo ($_current_page === 'manager/manager_products.php') ? ' active' : ''; ?>">
             <span class="link-icon">&#128230;</span> Products & Stock
             <?php if ($_mb['out_of_stock'] > 0 || $_mb['low_stock'] > 0): ?>
                 <span class="badge-group">
@@ -105,12 +105,12 @@ $_mgr_alerts = $_mb['out_of_stock'] + $_mb['pending_credits'] + $_mb['pending_de
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/products/new_product.php" class="sidebar-link<?php echo ($_current_page === 'products/new_product.php') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/products/new_product.php" class="sidebar-link<?php echo ($_current_page === 'products/new_product.php') ? ' active' : ''; ?>">
             <span class="link-icon">&#10133;</span> Add Product
         </a>
 
         <div class="nav-group-label">Operations</div>
-        <a href="/oro-store/delivery/delivery_details.php" class="sidebar-link<?php echo ($_current_page === 'delivery/delivery_details.php') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/delivery/delivery_details.php" class="sidebar-link<?php echo ($_current_page === 'delivery/delivery_details.php') ? ' active' : ''; ?>">
             <span class="link-icon">&#128666;</span> Delivery Details
             <?php if ($_mb['pending_deliveries'] > 0): ?>
                 <span class="badge-group">
@@ -119,7 +119,7 @@ $_mgr_alerts = $_mb['out_of_stock'] + $_mb['pending_credits'] + $_mb['pending_de
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/credit/credit_details.php" class="sidebar-link<?php echo ($_current_page === 'credit/credit_details.php') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/credit/credit_details.php" class="sidebar-link<?php echo ($_current_page === 'credit/credit_details.php') ? ' active' : ''; ?>">
             <span class="link-icon">&#128180;</span> Credit Details
             <?php if ($_mb['pending_credits'] > 0): ?>
                 <span class="badge-group">
@@ -128,7 +128,7 @@ $_mgr_alerts = $_mb['out_of_stock'] + $_mb['pending_credits'] + $_mb['pending_de
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/angkat/angkat_details.php" class="sidebar-link<?php echo ($_current_page === 'angkat/angkat_details.php') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/angkat/angkat_details.php" class="sidebar-link<?php echo ($_current_page === 'angkat/angkat_details.php') ? ' active' : ''; ?>">
             <span class="link-icon">&#128230;</span> Angkat Details
             <?php if ($_mb['active_angkat'] > 0): ?>
                 <span class="badge-group">
@@ -139,7 +139,7 @@ $_mgr_alerts = $_mb['out_of_stock'] + $_mb['pending_credits'] + $_mb['pending_de
         </a>
 
         <div class="nav-group-label">People</div>
-        <a href="/oro-store/manager/manager_attendance.php" class="sidebar-link<?php echo ($_current_view === 'attendance') ? ' active' : ''; ?>">
+        <a href="/oro-store-demo/manager/manager_attendance.php" class="sidebar-link<?php echo ($_current_view === 'attendance') ? ' active' : ''; ?>">
             <span class="link-icon">&#128197;</span> Attendance
             <?php if ($_mb['employees'] > 0): ?>
                 <span class="badge-count badge-blue"><?php echo $_mb['employees']; ?></span>
@@ -154,7 +154,7 @@ $_mgr_alerts = $_mb['out_of_stock'] + $_mb['pending_credits'] + $_mb['pending_de
             <div class="sidebar-user-role">Manager<?php echo isset($userStore) && $userStore ? ' &middot; ' . htmlspecialchars($userStore['store_code']) : ''; ?></div>
         </div>
     </div>
-    <a href="/oro-store/auth/logout.php" class="sidebar-logout">
+    <a href="/oro-store-demo/auth/logout.php" class="sidebar-logout">
         <span>&#x2716;</span> Logout
     </a>
 </aside>
@@ -190,7 +190,7 @@ function toggleSidebar() {
     var ms = document.getElementById('conn-ms');
     function checkConnection() {
         var t0 = performance.now();
-        fetch('/oro-store/core/ping.php?_=' + Date.now(), { cache: 'no-store' })
+        fetch('/oro-store-demo/core/ping.php?_=' + Date.now(), { cache: 'no-store' })
         .then(function(r) { return r.text(); })
         .then(function() {
             var latency = Math.round(performance.now() - t0);

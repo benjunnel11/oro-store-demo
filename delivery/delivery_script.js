@@ -112,7 +112,7 @@ function setupRecipientAutocomplete() {
         }
         
         autocompleteTimeout = setTimeout(() => {
-            fetch(`/oro-store/delivery/delivery.php?action=search_customers&search=${encodeURIComponent(searchTerm)}`)
+            fetch(`/oro-store-demo/delivery/delivery.php?action=search_customers&search=${encodeURIComponent(searchTerm)}`)
                 .then(response => response.json())
                 .then(customers => {
                     autocompleteResults = customers;
@@ -216,7 +216,7 @@ function selectAutocompleteItem(index) {
 
 // Load products
 function loadProducts() {
-    fetch('/oro-store/products/get_products.php')
+    fetch('/oro-store-demo/products/get_products.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -375,7 +375,7 @@ function confirmQuantity() {
     }
 
     // Fetch delivery fee for this product
-    fetch(`/oro-store/delivery/delivery.php?action=get_product_delivery_info&product_id=${currentSelectedProduct.id}`)
+    fetch(`/oro-store-demo/delivery/delivery.php?action=get_product_delivery_info&product_id=${currentSelectedProduct.id}`)
     .then(r => r.json())
     .then(feeData => {
         const deliveryFee = feeData.fee || 0;
@@ -651,7 +651,7 @@ async function completeDeliveryTransaction() {
         formData.append('recipient_address', recipientAddress);
     }
 
-    fetch('/oro-store/delivery/delivery.php', {
+    fetch('/oro-store-demo/delivery/delivery.php', {
         method: 'POST',
         body: formData
     })
@@ -783,13 +783,13 @@ document.addEventListener('keydown', function(e) {
         return;
     }
     
-    if (e.key === 'F2') { e.preventDefault(); window.open('/oro-store/transactions/gcash.php', '_blank', 'width=600,height=700'); return; }
-    if (e.key === 'F4') { e.preventDefault(); window.location.href = '/oro-store/credit/credit.php'; return; }
-    if (e.key === 'F5') { e.preventDefault(); window.location.href = '/oro-store/angkat/angkat.php'; return; }
-    if (e.key === 'F7') { e.preventDefault(); window.open('/oro-store/transactions/card_transaction.php', '_blank', 'width=600,height=700'); return; }
-    if (e.key === 'F9') { e.preventDefault(); window.location.href = '/oro-store/delivery/delivery_details.php'; return; }
+    if (e.key === 'F2') { e.preventDefault(); window.open('/oro-store-demo/transactions/gcash.php', '_blank', 'width=600,height=700'); return; }
+    if (e.key === 'F4') { e.preventDefault(); window.location.href = '/oro-store-demo/credit/credit.php'; return; }
+    if (e.key === 'F5') { e.preventDefault(); window.location.href = '/oro-store-demo/angkat/angkat.php'; return; }
+    if (e.key === 'F7') { e.preventDefault(); window.open('/oro-store-demo/transactions/card_transaction.php', '_blank', 'width=600,height=700'); return; }
+    if (e.key === 'F9') { e.preventDefault(); window.location.href = '/oro-store-demo/delivery/delivery_details.php'; return; }
 
-    if (e.key === 'F11') { e.preventDefault(); window.open('/oro-store/stock/add_stock.php', '_blank', 'width=800,height=600'); return; }
+    if (e.key === 'F11') { e.preventDefault(); window.open('/oro-store-demo/stock/add_stock.php', '_blank', 'width=800,height=600'); return; }
     
     const alertOverlay = document.getElementById('custom-alert-overlay');
     if (alertOverlay && alertOverlay.style.display !== 'none') return;
@@ -875,10 +875,10 @@ document.addEventListener('keydown', function(e) {
             } else if (cart.length > 0) {
                 customConfirm('Clear cart and return to cashier?', function(){
                     sessionStorage.removeItem('deliveryCart');
-                    window.location.href = '/oro-store/cashier/cashier.php';
+                    window.location.href = '/oro-store-demo/cashier/cashier.php';
                 });
             } else {
-                window.location.href = '/oro-store/cashier/cashier.php';
+                window.location.href = '/oro-store-demo/cashier/cashier.php';
             }
         } else if (e.key === 'Home') {
             e.preventDefault();

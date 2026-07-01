@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ob_start();
 
 require_once __DIR__ . '/../core/db_connection.php';
@@ -317,7 +317,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Delivery Mode<?php echo $userStore ? ' - ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-    <link rel="stylesheet" href="/oro-store/delivery/delivery_styles.css">
+    <link rel="stylesheet" href="/oro-store-demo/delivery/delivery_styles.css">
     <style>
 .shortcut-bar { display:flex; flex-wrap:wrap; gap:4px; padding:6px 10px; background:#1a202c; border-bottom:2px solid #2d3748; z-index:999; justify-content:center; }
 .sc-key { display:inline-flex; align-items:center; gap:4px; font-size:10px; color:#a0aec0; background:#2d3748; padding:3px 8px; border-radius:4px; white-space:nowrap; cursor:pointer; transition:background .12s; }
@@ -344,26 +344,26 @@ $conn->close();
 .right-panel.panel-active .receipt-header p { color:#bfdbfe; }
 .right-panel.panel-active .receipt-header .receipt-store-name { color:#fff !important; }
     </style>
-    <link rel="stylesheet" href="/oro-store/core/responsive.css">
-    <script src="/oro-store/core/custom_alert.js"></script>
-    <script src="/oro-store/core/bt_print.js?v=20250627"></script>
+    <link rel="stylesheet" href="/oro-store-demo/core/responsive.css">
+    <script src="/oro-store-demo/core/custom_alert.js"></script>
+    <script src="/oro-store-demo/core/bt_print.js?v=20250627"></script>
 </head>
 <body>
 <!-- Shortcut Bar -->
 <div class="shortcut-bar">
-    <a href="/oro-store/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a>
+    <a href="/oro-store-demo/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a>
     <span class="sc-key" onclick="scEsc()"><kbd>Esc</kbd> Back</span>
     <span class="sc-key" onclick="scHome()"><kbd>Home</kbd> Switch</span>
     <span class="sc-key" onclick="scDel()"><kbd>Del</kbd> Remove</span>
     <span class="sc-key" onclick="scIns()"><kbd>Ins</kbd> Edit</span>
     <span class="sc-key sc-blue" onclick="printReceipt()"><kbd>F1</kbd> Print</span>
-    <span class="sc-key sc-green" onclick="window.open('/oro-store/transactions/gcash.php','_blank','width=600,height=700')"><kbd>F2</kbd> GCash</span>
-    <span class="sc-key sc-purple" onclick="location.href='/oro-store/credit/credit.php'"><kbd>F4</kbd> Credit</span>
-    <span class="sc-key sc-teal" onclick="location.href='/oro-store/angkat/angkat.php'"><kbd>F5</kbd> Angkat</span>
-    <span class="sc-key sc-blue" onclick="window.open('/oro-store/transactions/card_transaction.php','_blank','width=600,height=700')"><kbd>F7</kbd> ATM</span>
-    <span class="sc-key" onclick="location.href='/oro-store/delivery/delivery_details.php'"><kbd>F9</kbd> Details</span>
+    <span class="sc-key sc-green" onclick="window.open('/oro-store-demo/transactions/gcash.php','_blank','width=600,height=700')"><kbd>F2</kbd> GCash</span>
+    <span class="sc-key sc-purple" onclick="location.href='/oro-store-demo/credit/credit.php'"><kbd>F4</kbd> Credit</span>
+    <span class="sc-key sc-teal" onclick="location.href='/oro-store-demo/angkat/angkat.php'"><kbd>F5</kbd> Angkat</span>
+    <span class="sc-key sc-blue" onclick="window.open('/oro-store-demo/transactions/card_transaction.php','_blank','width=600,height=700')"><kbd>F7</kbd> ATM</span>
+    <span class="sc-key" onclick="location.href='/oro-store-demo/delivery/delivery_details.php'"><kbd>F9</kbd> Details</span>
 
-    <span class="sc-key" onclick="window.open('/oro-store/stock/add_stock.php','_blank','width=800,height=600')"><kbd>F11</kbd> Add Stock</span>
+    <span class="sc-key" onclick="window.open('/oro-store-demo/stock/add_stock.php','_blank','width=800,height=600')"><kbd>F11</kbd> Add Stock</span>
     <span class="sc-key sc-green" onclick="openDeliveryInfoModal()"><kbd>Enter</kbd> Process</span>
 </div>
 <div class="cashier-container">
@@ -472,7 +472,7 @@ $conn->close();
         cashierName:  <?php echo json_encode($currentUser['full_name']); ?>
     };
 </script>
-<script src="/oro-store/delivery/delivery_script.js"></script>
+<script src="/oro-store-demo/delivery/delivery_script.js"></script>
 
 <!-- ══ Panel helpers + shortcut bar handlers ══════════════════════════════ -->
 <script>
@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getProductInfo(productId) {
         if (_feeCache[productId] !== undefined) return Promise.resolve(_feeCache[productId]);
-        return fetch('/oro-store/delivery/delivery.php?action=get_product_delivery_info&product_id=' + productId)
+        return fetch('/oro-store-demo/delivery/delivery.php?action=get_product_delivery_info&product_id=' + productId)
             .then(r => r.json())
             .then(d => {
                 _feeCache[productId] = { fee: d.fee || 0, category: d.category || '' };
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getHalfPackInfo(productId) {
         if (_halfPackCache[productId] !== undefined) return Promise.resolve(_halfPackCache[productId]);
-        return fetch('/oro-store/delivery/delivery.php?action=get_halfpack_info&product_id=' + productId)
+        return fetch('/oro-store-demo/delivery/delivery.php?action=get_halfpack_info&product_id=' + productId)
             .then(r => r.json())
             .then(d => { _halfPackCache[productId] = d; return d; })
             .catch(() => {
@@ -884,6 +884,20 @@ function startLongPress(idx){_lpTimer=setTimeout(function(){selectedReceiptIndex
 function cancelLongPress(){if(_lpTimer){clearTimeout(_lpTimer);_lpTimer=null;}}
 function simulateKey(key){document.dispatchEvent(new KeyboardEvent('keydown',{key:key,bubbles:true}));}
 </script>
-<script src="/oro-store/core/search_tags.js"></script>
+<script src="/oro-store-demo/core/search_tags.js"></script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Delivery Transaction', array (
+  'How It Works' => 
+  array (
+    0 => 'Create a delivery sale — products delivered to customer',
+    1 => 'Select products and quantities',
+    2 => 'Enter delivery address and customer details',
+    3 => 'Delivery fee per category auto-applied',
+    4 => 'Transaction saved as pending delivery',
+    5 => 'Receipt printable via RawBT',
+  ),
+));
+?>
 </body>
 </html>

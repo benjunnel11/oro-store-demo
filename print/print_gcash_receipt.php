@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print GCash Receipt</title>
-    <link rel="stylesheet" href="/oro-store/print/print_receipt.css">
+    <link rel="stylesheet" href="/oro-store-demo/print/print_receipt.css">
 </head>
 <body>
     <div class="no-print instructions">
@@ -161,7 +161,7 @@
                 formData.append('total', receiptData.total);
                 formData.append('reference', receiptData.reference);
 
-                fetch('/oro-store/transactions/gcash.php', {
+                fetch('/oro-store-demo/transactions/gcash.php', {
                     method: 'POST',
                     body: formData
                 })
@@ -204,7 +204,7 @@
                 formData.append('total', receiptData.total);
                 formData.append('reference', receiptData.reference);
 
-                fetch('/oro-store/transactions/gcash.php', {
+                fetch('/oro-store-demo/transactions/gcash.php', {
                     method: 'POST',
                     body: formData
                 })

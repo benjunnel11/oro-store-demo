@@ -49,7 +49,7 @@ function changeWeek(delta) {
     console.log('Navigating to week:', weekStartStr);
     
     // Reload page with new week
-    window.location.href = '/oro-store/payroll/payroll.php?week=' + weekStartStr;
+    window.location.href = '/oro-store-demo/payroll/payroll.php?week=' + weekStartStr;
 }
 
 // Format date for SQL (YYYY-MM-DD)
@@ -182,7 +182,7 @@ function selectDate(year, month, day) {
         isNavigating = true;
         const weekStartStr = formatDateForSQL(selectedMonday);
         console.log('Switching to week:', weekStartStr);
-        window.location.href = '/oro-store/payroll/payroll.php?week=' + weekStartStr;
+        window.location.href = '/oro-store-demo/payroll/payroll.php?week=' + weekStartStr;
         return;
     }
     
@@ -238,7 +238,7 @@ function createNewRole() {
     formData.append('action', 'add_role');
     formData.append('role_name', roleName);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -273,7 +273,7 @@ document.getElementById('add-employee-form').addEventListener('submit', function
     formData.append('daily_salary', document.getElementById('employee-salary').value);
     formData.append('year_end_bonus', document.getElementById('employee-bonus').value);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -302,7 +302,7 @@ document.getElementById('bonus-deduction-form').addEventListener('submit', funct
     formData.append('action', 'update_bonus_deduction');
     formData.append('deduction', deduction);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -334,7 +334,7 @@ function markAttendance(employeeId, type) {
     formData.append('date', dateStr);
     formData.append('attendance_type', type);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -355,7 +355,7 @@ function openEditModal(employeeId) {
     formData.append('action', 'get_employee');
     formData.append('employee_id', employeeId);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -402,7 +402,7 @@ document.getElementById('edit-employee-form').addEventListener('submit', functio
     formData.append('daily_salary', document.getElementById('edit-employee-salary').value);
     formData.append('year_end_bonus', document.getElementById('edit-employee-bonus').value);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -438,7 +438,7 @@ document.getElementById('cash-advance-form').addEventListener('submit', function
     formData.append('week_start', document.getElementById('ca-week-start').value);
     formData.append('notes', document.getElementById('ca-notes').value);
     
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -462,7 +462,7 @@ function removeEmployee(employeeId, employeeName) {
     formData.append('action', 'remove_employee');
     formData.append('employee_id', employeeId);
 
-    fetch('/oro-store/payroll/payroll.php', {
+    fetch('/oro-store-demo/payroll/payroll.php', {
         method: 'POST',
         body: formData
     })
@@ -495,7 +495,7 @@ function timeIn(employeeId) {
     fd1.append('date', dateStr);
     fd1.append('attendance_type', 'whole_day');
 
-    fetch('/oro-store/payroll/payroll.php', { method: 'POST', body: fd1 })
+    fetch('/oro-store-demo/payroll/payroll.php', { method: 'POST', body: fd1 })
         .then(r => r.json())
         .then(d => {
             if (!d.success) { alert('Error: ' + (d.error || 'Failed')); return; }
@@ -506,7 +506,7 @@ function timeIn(employeeId) {
             fd2.append('date', dateStr);
             fd2.append('time_in', timeStr);
             fd2.append('time_out', '');
-            return fetch('/oro-store/payroll/payroll.php', { method: 'POST', body: fd2 });
+            return fetch('/oro-store-demo/payroll/payroll.php', { method: 'POST', body: fd2 });
         })
         .then(r => r ? r.json() : null)
         .then(d => {
@@ -539,7 +539,7 @@ function timeOut(employeeId) {
     fd1.append('date', dateStr);
     fd1.append('attendance_type', 'whole_day');
 
-    fetch('/oro-store/payroll/payroll.php', { method: 'POST', body: fd1 })
+    fetch('/oro-store-demo/payroll/payroll.php', { method: 'POST', body: fd1 })
         .then(r => r.json())
         .then(d => {
             if (!d.success) { alert('Error: ' + (d.error || 'Failed')); return; }
@@ -549,7 +549,7 @@ function timeOut(employeeId) {
             fd2.append('date', dateStr);
             fd2.append('time_in', existingIn);
             fd2.append('time_out', timeStr);
-            return fetch('/oro-store/payroll/payroll.php', { method: 'POST', body: fd2 });
+            return fetch('/oro-store-demo/payroll/payroll.php', { method: 'POST', body: fd2 });
         })
         .then(r => r ? r.json() : null)
         .then(d => {
@@ -573,7 +573,7 @@ if (otForm) {
         formData.append('work_hours', workHours);
         formData.append('overtime_pay', otPay);
 
-        fetch('/oro-store/payroll/payroll.php', { method: 'POST', body: formData })
+        fetch('/oro-store-demo/payroll/payroll.php', { method: 'POST', body: formData })
             .then(r => r.json())
             .then(d => {
                 if (d.success) { alert('✓ Overtime settings updated!'); location.reload(); }
@@ -607,7 +607,7 @@ document.querySelectorAll('.week-day[data-emp]').forEach(day => {
         formData.append('time_in', timeIn || '');
         formData.append('time_out', timeOut || '');
 
-        fetch('/oro-store/payroll/payroll.php', { method: 'POST', body: formData })
+        fetch('/oro-store-demo/payroll/payroll.php', { method: 'POST', body: formData })
             .then(r => r.json())
             .then(d => {
                 if (d.success) location.reload();

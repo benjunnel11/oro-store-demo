@@ -1,6 +1,6 @@
 Options -Indexes
 
-# Cache static assets — Hermit/browser will store these locally
+# Cache static assets
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/css "access plus 7 days"
@@ -28,19 +28,48 @@ Options -Indexes
 </IfModule>
 
 # Block sensitive files
-<FilesMatch "\.(sql|log|bak|ini|sh|md|htpasswd)$">
+<FilesMatch "\.(sql|log|bak|ini|sh|md|htpasswd|env)$">
     Require all denied
 </FilesMatch>
 
-# Allow bat file download
-<Files "setup_cloud_sync_task.bat">
-    Require all granted
+# Block credential files
+<FilesMatch "^(db_config|config|cloud_config)\.php$">
+    Require all denied
+</FilesMatch>
+
+<Files ".local_env">
+    Require all denied
 </Files>
 
-<FilesMatch "^(db_config|config)\.php$">
+<Files ".cloud_env">
     Require all denied
-</FilesMatch>
+</Files>
 
 <Files ".main_server">
     Require all denied
 </Files>
+
+# Block direct access to setup scripts
+<FilesMatch "^(seed_demo|inject_page_info)\.php$">
+    Require all denied
+</FilesMatch>
+
+# Block logs directory
+<IfModule mod_rewrite.c>
+    RewriteRule ^logs/ - [F,L]
+</IfModule>
+
+# Block bots and scrapers
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_USER_AGENT} (bot|crawl|spider|scraper|curl|wget|python|java|libwww) [NC]
+    RewriteCond %{HTTP_USER_AGENT} !Googlebot [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# Prevent clickjacking
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

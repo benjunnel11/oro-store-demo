@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load products
 function loadProducts() {
     console.log('📦 Loading products from server...');
-    fetch('/oro-store/products/get_products.php')
+    fetch('/oro-store-demo/products/get_products.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -466,7 +466,7 @@ function completeCreditTransaction() {
         formData.append('customer_address', customerAddress);
     }
 
-    fetch('/oro-store/credit/credit.php', {
+    fetch('/oro-store-demo/credit/credit.php', {
         method: 'POST',
         body: formData
     })
@@ -572,7 +572,7 @@ function printReceiptFromModal() {
         cashierName: STORE_INFO.cashierName
     };
 
-    const receiptWindow = window.open('/oro-store/print/print_receipt.php', '_blank', 'width=400,height=600');
+    const receiptWindow = window.open('/oro-store-demo/print/print_receipt.php', '_blank', 'width=400,height=600');
     
     if (receiptWindow) {
         receiptWindow.addEventListener('load', function() {
@@ -606,13 +606,13 @@ document.addEventListener('keydown', function(e) {
         if (cart.length > 0) {
             sessionStorage.setItem('creditCart', JSON.stringify(cart));
         }
-        window.location.href = '/oro-store/cashier/cashier.php';
+        window.location.href = '/oro-store-demo/cashier/cashier.php';
         return;
     }
     
     if (e.key === 'F6') {
         e.preventDefault();
-        window.location.href = '/oro-store/credit/credit_details.php';
+        window.location.href = '/oro-store-demo/credit/credit_details.php';
         return;
     }
     
@@ -721,7 +721,7 @@ function setupCustomerAutocomplete() {
         }
         
         debounceTimer = setTimeout(() => {
-            fetch(`/oro-store/credit/credit.php?action=search_customers&search=${encodeURIComponent(query)}`)
+            fetch(`/oro-store-demo/credit/credit.php?action=search_customers&search=${encodeURIComponent(query)}`)
                 .then(response => response.json())
                 .then(customers => {
                     if (customers.length === 0) {

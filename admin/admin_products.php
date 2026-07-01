@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
@@ -6,7 +6,7 @@ require_once __DIR__ . '/../sync/sync_helper.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -479,7 +479,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Product Management - Admin Panel</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <style>
         .store-info-box {
@@ -733,8 +733,8 @@ $conn->close();
                 <p>Multi-store inventory overview</p>
             </div>
             <div style="display:flex;gap:8px;">
-                <a href="/oro-store/stock/add_stock.php" class="btn btn-success btn-sm">&#128230; Add Stock</a>
-                <a href="/oro-store/products/new_product.php" class="btn btn-primary btn-sm">&#10133; New Product</a>
+                <a href="/oro-store-demo/stock/add_stock.php" class="btn btn-success btn-sm">&#128230; Add Stock</a>
+                <a href="/oro-store-demo/products/new_product.php" class="btn btn-primary btn-sm">&#10133; New Product</a>
             </div>
         </div>
 
@@ -776,7 +776,7 @@ $conn->close();
                 <div class="stat-value" style="font-size:16px;">&#8369;<?php echo number_format($inv['total_retail'], 0); ?></div>
                 <div style="font-size:11px;color:#16a34a;">Margin: &#8369;<?php echo number_format($inv['total_retail'] - $inv['total_value'], 0); ?></div>
             </div>
-            <a href="/oro-store/stock/add_stock.php" target="_blank" class="stat-card" style="text-decoration:none;">
+            <a href="/oro-store-demo/stock/add_stock.php" target="_blank" class="stat-card" style="text-decoration:none;">
                 <div class="stat-icon orange">&#128666;</div>
                 <div class="stat-label">This Month Supply</div>
                 <div class="stat-value" style="font-size:16px;">&#8369;<?php echo number_format($inv['month_supply_cost'], 0); ?></div>
@@ -805,7 +805,7 @@ $conn->close();
                 <div style="display:flex;align-items:center;gap:10px;">
                     <input type="text" id="search-products" placeholder="Search products..." onkeyup="searchAllProducts()" style="padding:9px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;width:280px;">
                     <?php if ($stock_filter !== 'all'): ?>
-                        <a href="/oro-store/admin/admin_products.php" class="btn btn-secondary btn-sm">Clear filter</a>
+                        <a href="/oro-store-demo/admin/admin_products.php" class="btn btn-secondary btn-sm">Clear filter</a>
                     <?php endif; ?>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;">
@@ -1346,7 +1346,7 @@ $conn->close();
             document.getElementById('sh-body').innerHTML = 'Loading...';
             document.getElementById('stock-history-modal').classList.add('active');
 
-            fetch('/oro-store/stock/add_stock.php?action=get_receipts')
+            fetch('/oro-store-demo/stock/add_stock.php?action=get_receipts')
             .then(r => r.json()).then(receipts => {
                 if (!receipts.length) {
                     document.getElementById('sh-body').innerHTML = '<p style="text-align:center;color:#94a3b8;padding:20px;">No receipts yet</p>';
@@ -1377,7 +1377,7 @@ $conn->close();
             document.getElementById('sh-title').textContent = 'Receipt #' + id;
             document.getElementById('sh-body').innerHTML = 'Loading...';
 
-            fetch('/oro-store/stock/add_stock.php?action=get_receipt_items&receipt_id=' + id)
+            fetch('/oro-store-demo/stock/add_stock.php?action=get_receipt_items&receipt_id=' + id)
             .then(r => r.json()).then(items => {
                 let totalCost = 0, totalSell = 0;
                 let rows = items.map(it => {
@@ -1667,7 +1667,7 @@ $conn->close();
                 const barcodeValue = document.getElementById('global-barcode').value;
                 if (!barcodeValue) { alert('Please generate a barcode first'); return; }
                 const params = new URLSearchParams({ barcode: barcodeValue, name: document.getElementById('global-product-name').value || 'Product', price: document.getElementById('global-price-new').value || '0', stock: document.getElementById('global-stock').value || '0' });
-                window.open('/oro-store/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
+                window.open('/oro-store-demo/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
             });
         }
 
@@ -1837,7 +1837,7 @@ $conn->close();
         function printBarcodeFromModal() {
             const el = document.getElementById('barcode-modal');
             const params = new URLSearchParams({ barcode: el.dataset.barcode, name: el.dataset.name, price: el.dataset.price, stock: '0' });
-            window.open('/oro-store/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
+            window.open('/oro-store-demo/print/print_barcode_label.php?' + params.toString(), '_blank', 'width=500,height=600');
         }
 
         // Close modals on Escape key
@@ -1935,5 +1935,29 @@ $conn->close();
             if (e.target === this) closeAtsModal();
         });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Product Management', [
+    'Overview' => [
+        'Stats bar shows total products, in stock, out of stock, cost/retail value, and margin',
+        'Products table shows name, category, brand, barcode, individual unit status',
+        'Store-specific stock and pricing shown per store column',
+        'Search filters products by name',
+    ],
+    'Actions' => [
+        'Edit (pencil) — update name, category, brand, barcode, pricing, individual settings',
+        'Add to Store — assign product to stores with initial stock',
+        'Store Edit — change price/stock for a specific store',
+        'Delete — soft-delete product (can be restored)',
+        'Receipt History — view past stock receipts',
+    ],
+    'Edit Modal' => [
+        'Category and Brand have searchable autocomplete dropdowns',
+        'Individual selling: set unit type, units per pack, per-unit price',
+        'Child product stock shown if individual selling is enabled',
+        'Changes update default product info; store-specific prices stay unchanged',
+    ],
+]);
+?>
 </body>
 </html>

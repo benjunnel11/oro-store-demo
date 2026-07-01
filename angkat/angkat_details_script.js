@@ -48,7 +48,7 @@ function getStatusColor(status) {
 function viewAngkatDetails(angkatId) {
     currentAngkatId = angkatId;
 
-    fetch(`/oro-store/angkat/angkat_details.php?action=get_angkat_items&angkat_id=${angkatId}`)
+    fetch(`/oro-store-demo/angkat/angkat_details.php?action=get_angkat_items&angkat_id=${angkatId}`)
         .then(r => { if (!r.ok) throw new Error('Network error'); return r.json(); })
         .then(data => {
             currentAngkatItems = data;
@@ -383,7 +383,7 @@ function saveSettlement() {
     formData.append('angkat_id', currentAngkatId);
     formData.append('settlements', JSON.stringify(settlements));
 
-fetch('/oro-store/angkat/angkat_details.php', { method: 'POST', body: formData })
+fetch('/oro-store-demo/angkat/angkat_details.php', { method: 'POST', body: formData })
     .then(r => r.text())
     .then(text => {
         console.log('Raw response:', text);
@@ -444,7 +444,7 @@ function confirmPayment() {
     if (reference) fd.append('reference', reference);
     if (notes)     fd.append('notes', notes);
 
-    fetch('/oro-store/angkat/angkat_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/angkat/angkat_details.php', { method: 'POST', body: fd })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -470,7 +470,7 @@ function confirmComplete() {
     fd.append('action', 'mark_complete');
     fd.append('angkat_id', currentAngkatId);
 
-    fetch('/oro-store/angkat/angkat_details.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/angkat/angkat_details.php', { method: 'POST', body: fd })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -505,8 +505,8 @@ document.addEventListener('keydown', function (e) {
     const completeOpen = document.getElementById('complete-modal').classList.contains('active');
     const detailsOpen  = document.getElementById('angkat-details-modal').classList.contains('active');
 
-    if (e.key === 'F8') { e.preventDefault(); window.location.href = '/oro-store/angkat/angkat.php'; return; }
-    if (e.key === 'F3') { e.preventDefault(); window.location.href = '/oro-store/cashier/cashier.php'; return; }
+    if (e.key === 'F8') { e.preventDefault(); window.location.href = '/oro-store-demo/angkat/angkat.php'; return; }
+    if (e.key === 'F3') { e.preventDefault(); window.location.href = '/oro-store-demo/cashier/cashier.php'; return; }
 
     if (paymentOpen) {
         if (e.key === 'Enter')  { e.preventDefault(); confirmPayment(); }

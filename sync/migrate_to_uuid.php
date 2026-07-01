@@ -2,7 +2,7 @@
 // sync/migrate_to_uuid.php
 // IMPORTANT: BACKUP YOUR DATABASE BEFORE RUNNING THIS
 // In phpMyAdmin: Export > Quick > SQL > Go
-// Access via: http://localhost/oro-store/sync/migrate_to_uuid.php
+// Access via: http://localhost/oro-store-demo/sync/migrate_to_uuid.php
 
 require_once 'config.php';
 

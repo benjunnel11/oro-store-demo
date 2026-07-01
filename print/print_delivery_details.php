@@ -198,7 +198,7 @@
 
             for (const delivery of deliveriesData) {
                 try {
-                    const response = await fetch(`/oro-store/delivery/delivery_details.php?action=get_delivery&delivery_id=${delivery.id}`);
+                    const response = await fetch(`/oro-store-demo/delivery/delivery_details.php?action=get_delivery&delivery_id=${delivery.id}`);
                     const items = await response.json();
 
                     if (items.length > 0) {

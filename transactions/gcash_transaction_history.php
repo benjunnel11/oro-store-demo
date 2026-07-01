@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
@@ -6,7 +6,7 @@ require_once __DIR__ . '/../sync/sync_helper.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -237,8 +237,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GCash Transaction History - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-    <link rel="stylesheet" href="/oro-store/transactions/gcash_transaction_history_style.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/transactions/gcash_transaction_history_style.css">
 </head>
 <body>
     <?php include_once __DIR__ . '/../admin/admin_sidebar.php'; ?>
@@ -605,7 +605,7 @@ $conn->close();
         modal.style.display = 'flex';
         content.innerHTML = 'Loading...';
         
-        fetch(`/oro-store/transactions/gcash.php?action=get_gcash_details&id=${transactionId}`)
+        fetch(`/oro-store-demo/transactions/gcash.php?action=get_gcash_details&id=${transactionId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.transaction) {
@@ -795,5 +795,17 @@ $conn->close();
         });
     }
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('GCash History', array (
+  'Features' => 
+  array (
+    0 => 'All GCash transactions: Cash In, Cash Out, Send, Bank Transfer',
+    1 => 'Filter by date range and transaction type',
+    2 => 'Shows amount, fee, total, reference number, account name',
+    3 => 'Wallet balance calculation (net of all transactions)',
+  ),
+));
+?>
 </body>
 </html>

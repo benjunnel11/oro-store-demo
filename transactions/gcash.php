@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
@@ -437,18 +437,18 @@ $conn->close();
             .input-row{flex-direction:column;}
         }
     </style>
-    <link rel="stylesheet" href="/oro-store/core/responsive.css">
-    <script src="/oro-store/core/custom_alert.js"></script>
+    <link rel="stylesheet" href="/oro-store-demo/core/responsive.css">
+    <script src="/oro-store-demo/core/custom_alert.js"></script>
 </head>
 <body>
 
 <div class="shortcut-bar">
-    <?php if (!$isKiosk): ?><a href="/oro-store/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a><?php endif; ?>
+    <?php if (!$isKiosk): ?><a href="/oro-store-demo/cashier/cashier.php" style="background:#2563eb;color:#fff;padding:6px 16px;font-size:13px;font-weight:700;text-decoration:none;border-radius:6px;white-space:nowrap;">← Cashier</a><?php endif; ?>
     <?php if (!$isKiosk): ?>
     <span class="sc-key sc-green" onclick="submitTransaction()"><kbd>Enter</kbd> Submit</span>
     <span class="sc-key sc-blue" onclick="printGCashReceipt()"><kbd>F1</kbd> Print</span>
     <?php endif; ?>
-    <span class="sc-key sc-red" onclick="<?php echo $isKiosk ? "location.href='/oro-store/kiosk/kiosk.php'" : 'window.close()'; ?>"><kbd>Esc</kbd> <?php echo $isKiosk ? 'Back' : 'Close'; ?></span>
+    <span class="sc-key sc-red" onclick="<?php echo $isKiosk ? "location.href='/oro-store-demo/kiosk/kiosk.php'" : 'window.close()'; ?>"><kbd>Esc</kbd> <?php echo $isKiosk ? 'Back' : 'Close'; ?></span>
     <?php if (!$isKiosk): ?>
     <span class="sc-key" onclick="resetForm()"><kbd>Del</kbd> Clear</span>
     <span class="sc-key" onclick="toggleHistory()"><kbd>F12</kbd> History</span>
@@ -760,7 +760,7 @@ function submitTransaction() {
         fd.append('total_profit', fee);
         fd.append('items_count', 1);
         fd.append('payment_method', 'gcash_' + currentType);
-        fetch('/oro-store/kiosk/kiosk.php', { method: 'POST', body: fd })
+        fetch('/oro-store-demo/kiosk/kiosk.php', { method: 'POST', body: fd })
         .then(r => r.json()).then(data => {
             if (data.success) {
                 showKioskPriority(data.priority_number);
@@ -775,7 +775,7 @@ function submitTransaction() {
     fd.append('type', currentType); fd.append('amount', amount); fd.append('fee', fee); fd.append('total', total); fd.append('reference', ref);
     fd.append('gcash_account_id', document.getElementById('gcash-account').value);
     if (customerNum) fd.append('customer_number', customerNum);
-    fetch('/oro-store/transactions/gcash.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/transactions/gcash.php', { method: 'POST', body: fd })
     .then(r => r.text()).then(text => {
         const data = JSON.parse(text);
         if (data.success) { if (typeof OroCache !== 'undefined') OroCache.invalidatePrefix('gcash_history'); customAlert(`${isEditMode?'Transaction Edited':'Transaction Complete'}!\nID: #${data.transaction_id}`, 'success', function(){ window.close(); }); }
@@ -791,7 +791,7 @@ function toggleKioskAccount() {
     fd.append('action', 'toggle_kiosk_account');
     fd.append('account_id', sel.value);
     fd.append('store_id', '<?php echo intval($_my_store_id); ?>');
-    fetch('/oro-store/transactions/gcash.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/transactions/gcash.php', { method: 'POST', body: fd })
     .then(r => r.json()).then(data => {
         if (data.success) { showToast('Kiosk visibility toggled for this store', 'success'); setTimeout(() => location.reload(), 800); }
         else showToast('Error', 'error');
@@ -812,7 +812,7 @@ function printGCashReceipt() {
     if (!amount || amount <= 0) { showToast('Enter amount', 'error'); return; }
     if (!/^\d+$/.test(ref)) { showToast('Enter reference', 'error'); return; }
     const fee = calcFee(amount);
-    const w = window.open('/oro-store/print/print_gcash_receipt.php', '_blank', 'width=400,height=600');
+    const w = window.open('/oro-store-demo/print/print_gcash_receipt.php', '_blank', 'width=400,height=600');
     if (w) w.addEventListener('load', () => w.postMessage({ type: currentType, amount, fee, total: amount + fee, reference: ref, feePercent: feePct, date: new Date().toLocaleString() }, '*'));
 }
 
@@ -837,7 +837,7 @@ function submitSend() {
     const fd = new FormData();
     fd.append('action', 'send_gcash'); fd.append('transfer_type', sendType);
     fd.append('amount', amount); fd.append('destination', dest); fd.append('notes', notes);
-    fetch('/oro-store/transactions/gcash.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/transactions/gcash.php', { method: 'POST', body: fd })
     .then(r => r.json()).then(data => {
         if (data.success) {
             if (typeof OroCache !== 'undefined') OroCache.invalidatePrefix('gcash_history');
@@ -882,7 +882,7 @@ function _renderHistoryList(data) {
 function loadHistory() {
     const acctId = document.getElementById('gcash-account').value;
     const cacheKey = 'gcash_history_' + (acctId || 'all');
-    const url = '/oro-store/transactions/gcash.php?action=get_gcash_transactions' + (acctId ? '&account_id=' + acctId : '');
+    const url = '/oro-store-demo/transactions/gcash.php?action=get_gcash_transactions' + (acctId ? '&account_id=' + acctId : '');
 
     if (typeof OroCache !== 'undefined') {
         var cached = OroCache.get(cacheKey);
@@ -905,7 +905,7 @@ function loadHistory() {
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 function viewDetail(id) {
-    fetch(`/oro-store/transactions/gcash.php?action=get_gcash_details&id=${id}`).then(r => r.json()).then(data => {
+    fetch(`/oro-store-demo/transactions/gcash.php?action=get_gcash_details&id=${id}`).then(r => r.json()).then(data => {
         selectedTx = data.transaction; const t = data.transaction;
         const isSend = t.transaction_type === 'send_gcash' || t.transaction_type === 'bank_transfer';
         const typeLabel = isSend ? (t.transaction_type === 'send_gcash' ? 'Send GCash' : 'Bank Transfer') : (t.transaction_type === 'cash_in' ? 'Cash In' : 'Cash Out');
@@ -952,7 +952,7 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'F1') { e.preventDefault(); printGCashReceipt(); }
     else if (e.key === 'F12' && !_isKiosk) { e.preventDefault(); toggleHistory(); }
     else if (e.key === 'Delete') { e.preventDefault(); resetForm(); }
-    else if (e.key === 'Escape') { e.preventDefault(); <?php echo $isKiosk ? "location.href='/oro-store/kiosk/kiosk.php';" : 'window.close();'; ?> }
+    else if (e.key === 'Escape') { e.preventDefault(); <?php echo $isKiosk ? "location.href='/oro-store-demo/kiosk/kiosk.php';" : 'window.close();'; ?> }
     else if (e.key === 'Enter' && (document.activeElement.id === 'reference' || document.activeElement.tagName === 'BODY')) { e.preventDefault(); submitTransaction(); }
 });
 document.getElementById('amount').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('reference').focus(); document.getElementById('reference').select(); } });
@@ -1010,20 +1010,20 @@ function showKioskPriority(num) {
         if (seconds <= 0) {
             clearInterval(_gcashKioskTimer);
             _gcashKioskTimer = null;
-            location.href = '/oro-store/kiosk/kiosk.php';
+            location.href = '/oro-store-demo/kiosk/kiosk.php';
         }
     }, 1000);
 }
 
 function closeKioskPriority() {
     if (_gcashKioskTimer) { clearInterval(_gcashKioskTimer); _gcashKioskTimer = null; }
-    location.href = '/oro-store/kiosk/kiosk.php';
+    location.href = '/oro-store-demo/kiosk/kiosk.php';
 }
 </script>
 
 <?php if ($isKiosk): ?>
-<script src="/oro-store/core/cache.js"></script>
-<script src="/oro-store/core/bt_print.js"></script>
+<script src="/oro-store-demo/core/cache.js"></script>
+<script src="/oro-store-demo/core/bt_print.js"></script>
 <!-- Kiosk Priority Modal -->
 <div id="kiosk-priority-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:9999;align-items:center;justify-content:center;">
     <div style="background:#fff;border-radius:20px;padding:40px 50px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:420px;width:90%;">
@@ -1086,7 +1086,7 @@ function closeKioskPriority() {
             if (el) el.textContent = seconds;
             if (seconds <= 0) {
                 clearInterval(_countdownTimer);
-                location.href = '/oro-store/kiosk/kiosk.php';
+                location.href = '/oro-store-demo/kiosk/kiosk.php';
             }
         }, 1000);
     }
@@ -1103,5 +1103,36 @@ function closeKioskPriority() {
 </script>
 <?php endif; ?>
 
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('GCash Transactions', [
+    'Transaction Types' => [
+        'Cash In — customer deposits cash, gets GCash credit',
+        'Cash Out — customer withdraws GCash to cash',
+        'Send GCash — transfer to another GCash number',
+        'Bank Transfer — send to a bank account',
+    ],
+    'How It Works' => [
+        'Select a GCash account from the dropdown',
+        'Enter amount — fee auto-calculates based on min fee settings',
+        'Enter reference number (required for cash out)',
+        'Total = Amount + Fee shown before confirming',
+        'Transaction saves to database and prints receipt',
+        'Wallet balance tracks net cash in/out over time',
+    ],
+    'Kiosk Mode' => [
+        'Fee controls and history are hidden',
+        'Store GCash number displayed for Cash Out',
+        'Customer number field is required',
+        'Submitted as queue order — cashier processes it',
+        'Inactivity timer: 10s idle then 10s countdown to redirect',
+    ],
+    'Account Management' => [
+        'Toggle kiosk visibility per store with the monitor icon',
+        'Each store can show a different account on its kiosk',
+        'History filtered by current device/store',
+    ],
+]);
+?>
 </body>
 </html>

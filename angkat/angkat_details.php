@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/sync_helper.php';
@@ -449,7 +449,7 @@ $conn->close();
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Angkat Details<?php echo $userStore ? ' — ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-<link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+<link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
 <style>
     /* ── Page Layout ── */
     .cd-container {
@@ -991,10 +991,10 @@ else { ?>
 .main-content{margin-left:0 !important;padding-top:56px !important;}</style>
 <div class="cashier-topnav">
     <span class="nav-title"><?php echo htmlspecialchars($currentUser['full_name']); ?> &middot; Cashier</span>
-    <a href="/oro-store/cashier/cashier.php">Cashier</a>
-    <a href="/oro-store/credit/credit_details.php">Credit</a>
-    <a href="/oro-store/delivery/delivery_details.php">Delivery</a>
-    <a href="/oro-store/angkat/angkat_details.php" class="active">Angkat</a>
+    <a href="/oro-store-demo/cashier/cashier.php">Cashier</a>
+    <a href="/oro-store-demo/credit/credit_details.php">Credit</a>
+    <a href="/oro-store-demo/delivery/delivery_details.php">Delivery</a>
+    <a href="/oro-store-demo/angkat/angkat_details.php" class="active">Angkat</a>
 </div>
 <?php }
 ?>
@@ -1006,8 +1006,8 @@ else { ?>
         <div class="cd-header">
             <h1>📦 Angkat Details<?php echo $userStore ? ' <span style="font-size:14px;font-weight:500;color:#64748b">— ' . htmlspecialchars($userStore['store_name']) . '</span>' : ''; ?></h1>
             <div class="cd-header-right">
-                <button class="btn btn-secondary" onclick="location.href='/oro-store/angkat/angkat.php'">+ New Angkat</button>
-                <button class="btn btn-primary" onclick="location.href='/oro-store/cashier/cashier.php'">← Cashier</button>
+                <button class="btn btn-secondary" onclick="location.href='/oro-store-demo/angkat/angkat.php'">+ New Angkat</button>
+                <button class="btn btn-primary" onclick="location.href='/oro-store-demo/cashier/cashier.php'">← Cashier</button>
             </div>
         </div>
 
@@ -1836,5 +1836,17 @@ function deleteFee(id, name) {
 }
 loadFees();
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Angkat Details', array (
+  'Features' => 
+  array (
+    0 => 'Detailed view of all angkat orders by retailer',
+    1 => 'Select orders for batch operations',
+    2 => 'Print selected orders via thermal printer',
+    3 => 'Status tags: Active, Settled, Cancelled',
+  ),
+));
+?>
 </body>
 </html>

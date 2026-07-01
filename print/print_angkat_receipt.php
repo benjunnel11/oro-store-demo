@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print Angkat Receipt - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/print/print_receipt.css">
+    <link rel="stylesheet" href="/oro-store-demo/print/print_receipt.css">
 </head>
 <body>
     <div class="no-print instructions">

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
 if (!isManager()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -132,8 +132,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-    <link rel="stylesheet" href="/oro-store/payroll/payroll_styles.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/payroll/payroll_styles.css">
 </head>
 <body>
 <?php include_once __DIR__ . '/../manager/manager_sidebar.php'; ?>
@@ -342,7 +342,7 @@ $conn->close();
     </div>
 </main>
 
-<script src="/oro-store/payroll/payroll_script.js"></script>
+<script src="/oro-store-demo/payroll/payroll_script.js"></script>
 <script>
     const weekStartStr = '<?php echo $week_start_str; ?>';
     initializePayroll(weekStartStr);
@@ -484,7 +484,7 @@ $conn->close();
             return false;
         }
 
-        fetch('/oro-store/manager/manager_attendance.php', {
+        fetch('/oro-store-demo/manager/manager_attendance.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=add_employee&name=${encodeURIComponent(name)}&role_id=${role_id}&day_off=${day_off}&start_date=${start_date}&daily_salary=${salary}&year_end_bonus=${bonus}`
@@ -508,8 +508,19 @@ $conn->close();
         const y = current.getFullYear();
         const m = String(current.getMonth() + 1).padStart(2, '0');
         const d = String(current.getDate()).padStart(2, '0');
-        window.location.href = '/oro-store/manager/manager_attendance.php?week=' + y + '-' + m + '-' + d;
+        window.location.href = '/oro-store-demo/manager/manager_attendance.php?week=' + y + '-' + m + '-' + d;
     }
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Attendance', array (
+  'Features' => 
+  array (
+    0 => 'Employee time-in and time-out recording',
+    1 => 'Daily attendance log for the store',
+    2 => 'Late/absent tracking',
+  ),
+));
+?>
 </body>
 </html>

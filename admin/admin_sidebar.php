@@ -4,7 +4,7 @@ if (!isset($currentUser)) {
     $currentUser = getCurrentUser();
 }
 
-$_current_page = ltrim(str_replace('/oro-store/', '', $_SERVER['PHP_SELF']), '/');
+$_current_page = ltrim(str_replace('/oro-store-demo/', '', $_SERVER['PHP_SELF']), '/');
 $_is_super = ($currentUser['role'] ?? '') === 'super_admin';
 $_is_store_admin = !$_is_super && !empty($currentUser['store_id']);
 $_on_own_device = isOnOwnDevice();
@@ -120,20 +120,20 @@ function sidebarActive($page) {
 
     <nav class="sidebar-nav">
         <div class="nav-group-label">Main</div>
-        <a href="/oro-store/admin/admin_panel.php" class="sidebar-link<?php echo sidebarActive('admin/admin_panel.php'); ?>">
+        <a href="/oro-store-demo/admin/admin_panel.php" class="sidebar-link<?php echo sidebarActive('admin/admin_panel.php'); ?>">
             <span class="link-icon">&#128202;</span> Dashboard
             <?php if ($_total_alerts > 0): ?>
                 <span class="badge-count badge-red"><?php echo $_total_alerts; ?></span>
             <?php endif; ?>
         </a>
         <?php if ($_on_own_device): ?>
-        <a href="/oro-store/cashier/cashier.php" class="sidebar-link<?php echo sidebarActive('cashier/cashier.php'); ?>">
+        <a href="/oro-store-demo/cashier/cashier.php" class="sidebar-link<?php echo sidebarActive('cashier/cashier.php'); ?>">
             <span class="link-icon">&#128179;</span> Open Cashier
         </a>
         <?php endif; ?>
 
         <div class="nav-group-label">Inventory</div>
-        <a href="/oro-store/admin/admin_products.php" class="sidebar-link<?php echo sidebarActive('admin/admin_products.php'); ?>">
+        <a href="/oro-store-demo/admin/admin_products.php" class="sidebar-link<?php echo sidebarActive('admin/admin_products.php'); ?>">
             <span class="link-icon">&#128230;</span> Products
             <?php if ($_b['out_of_stock'] > 0 || $_b['low_stock'] > 0): ?>
                 <span class="badge-group">
@@ -142,18 +142,18 @@ function sidebarActive($page) {
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/products/new_product.php" class="sidebar-link<?php echo sidebarActive('products/new_product.php'); ?>">
+        <a href="/oro-store-demo/products/new_product.php" class="sidebar-link<?php echo sidebarActive('products/new_product.php'); ?>">
             <span class="link-icon">&#10133;</span> Add Product
         </a>
         <?php if (!$_is_store_admin): ?>
-        <a href="/oro-store/admin/manage_stores.php" class="sidebar-link<?php echo sidebarActive('admin/manage_stores.php'); ?>">
+        <a href="/oro-store-demo/admin/manage_stores.php" class="sidebar-link<?php echo sidebarActive('admin/manage_stores.php'); ?>">
             <span class="link-icon">&#127978;</span> Stores
         </a>
         <?php endif; ?>
-        <a href="/oro-store/print/inventory_sheet.php" class="sidebar-link<?php echo sidebarActive('print/inventory_sheet.php'); ?>">
+        <a href="/oro-store-demo/print/inventory_sheet.php" class="sidebar-link<?php echo sidebarActive('print/inventory_sheet.php'); ?>">
             <span class="link-icon">&#128203;</span> Inventory Sheet
         </a>
-        <a href="/oro-store/stock/stock_transfer.php" class="sidebar-link<?php echo sidebarActive('stock/stock_transfer.php'); ?>">
+        <a href="/oro-store-demo/stock/stock_transfer.php" class="sidebar-link<?php echo sidebarActive('stock/stock_transfer.php'); ?>">
             <span class="link-icon">&#128260;</span> Stock Transfer
             <?php if ($_b['today_transfers'] > 0): ?>
                 <span class="badge-count badge-blue"><?php echo $_b['today_transfers']; ?></span>
@@ -167,19 +167,19 @@ function sidebarActive($page) {
         <?php endif; ?>
 
         <div class="nav-group-label">Sales</div>
-        <a href="/oro-store/transactions/transaction_history.php" class="sidebar-link<?php echo sidebarActive('transactions/transaction_history.php'); ?>">
+        <a href="/oro-store-demo/transactions/transaction_history.php" class="sidebar-link<?php echo sidebarActive('transactions/transaction_history.php'); ?>">
             <span class="link-icon">&#128195;</span> Transactions
             <?php if ($_b['today_transactions'] > 0): ?>
                 <span class="badge-count badge-blue"><?php echo $_b['today_transactions']; ?></span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/transactions/gcash_transaction_history.php" class="sidebar-link<?php echo sidebarActive('transactions/gcash_transaction_history.php'); ?>">
+        <a href="/oro-store-demo/transactions/gcash_transaction_history.php" class="sidebar-link<?php echo sidebarActive('transactions/gcash_transaction_history.php'); ?>">
             <span class="link-icon">&#128176;</span> GCash
         </a>
-        <a href="/oro-store/transactions/card_transaction_history.php" class="sidebar-link<?php echo sidebarActive('transactions/card_transaction_history.php'); ?>">
+        <a href="/oro-store-demo/transactions/card_transaction_history.php" class="sidebar-link<?php echo sidebarActive('transactions/card_transaction_history.php'); ?>">
             <span class="link-icon">&#128179;</span> ATM
         </a>
-        <a href="/oro-store/credit/credit_management.php" class="sidebar-link<?php echo sidebarActive('credit/credit_management.php'); ?>">
+        <a href="/oro-store-demo/credit/credit_management.php" class="sidebar-link<?php echo sidebarActive('credit/credit_management.php'); ?>">
             <span class="link-icon">&#128180;</span> Credit
             <?php if ($_b['pending_credits'] > 0): ?>
                 <span class="badge-group">
@@ -188,10 +188,10 @@ function sidebarActive($page) {
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/credit/credit_details.php" class="sidebar-link<?php echo sidebarActive('credit/credit_details.php'); ?>">
+        <a href="/oro-store-demo/credit/credit_details.php" class="sidebar-link<?php echo sidebarActive('credit/credit_details.php'); ?>">
             <span class="link-icon">&#128203;</span> Credit Details
         </a>
-        <a href="/oro-store/delivery/delivery_management.php" class="sidebar-link<?php echo sidebarActive('delivery/delivery_management.php'); ?>">
+        <a href="/oro-store-demo/delivery/delivery_management.php" class="sidebar-link<?php echo sidebarActive('delivery/delivery_management.php'); ?>">
             <span class="link-icon">&#128666;</span> Delivery
             <?php if ($_b['pending_deliveries'] > 0): ?>
                 <span class="badge-group">
@@ -200,10 +200,10 @@ function sidebarActive($page) {
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/delivery/delivery_details.php" class="sidebar-link<?php echo sidebarActive('delivery/delivery_details.php'); ?>">
+        <a href="/oro-store-demo/delivery/delivery_details.php" class="sidebar-link<?php echo sidebarActive('delivery/delivery_details.php'); ?>">
             <span class="link-icon">&#128203;</span> Delivery Details
         </a>
-        <a href="/oro-store/angkat/angkat_management.php" class="sidebar-link<?php echo sidebarActive('angkat/angkat_management.php'); ?>">
+        <a href="/oro-store-demo/angkat/angkat_management.php" class="sidebar-link<?php echo sidebarActive('angkat/angkat_management.php'); ?>">
             <span class="link-icon">&#128230;</span> Angkat
             <?php if ($_b['active_angkat'] > 0): ?>
                 <span class="badge-group">
@@ -212,53 +212,53 @@ function sidebarActive($page) {
                 </span>
             <?php endif; ?>
         </a>
-        <a href="/oro-store/angkat/angkat_details.php" class="sidebar-link<?php echo sidebarActive('angkat/angkat_details.php'); ?>">
+        <a href="/oro-store-demo/angkat/angkat_details.php" class="sidebar-link<?php echo sidebarActive('angkat/angkat_details.php'); ?>">
             <span class="link-icon">&#128203;</span> Angkat Details
         </a>
 
         <div class="nav-group-label">People</div>
         <?php if (!$_is_store_admin): ?>
-        <a href="/oro-store/admin/manage_users.php" class="sidebar-link<?php echo sidebarActive('admin/manage_users.php'); ?>">
+        <a href="/oro-store-demo/admin/manage_users.php" class="sidebar-link<?php echo sidebarActive('admin/manage_users.php'); ?>">
             <span class="link-icon">&#128101;</span> Users
         </a>
         <?php endif; ?>
-        <a href="/oro-store/payroll/payroll.php" class="sidebar-link<?php echo sidebarActive('payroll/payroll.php'); ?>">
+        <a href="/oro-store-demo/payroll/payroll.php" class="sidebar-link<?php echo sidebarActive('payroll/payroll.php'); ?>">
             <span class="link-icon">&#128188;</span> Payroll
         </a>
-        <a href="/oro-store/payroll/payroll_summary.php" class="sidebar-link<?php echo sidebarActive('payroll/payroll_summary.php'); ?>">
+        <a href="/oro-store-demo/payroll/payroll_summary.php" class="sidebar-link<?php echo sidebarActive('payroll/payroll_summary.php'); ?>">
             <span class="link-icon">&#128203;</span> Payroll Summary
         </a>
 
         <div class="nav-group-label">Reports</div>
-        <a href="/oro-store/admin/daily_summary.php" class="sidebar-link<?php echo sidebarActive('admin/daily_summary.php'); ?>">
+        <a href="/oro-store-demo/admin/daily_summary.php" class="sidebar-link<?php echo sidebarActive('admin/daily_summary.php'); ?>">
             <span class="link-icon">&#128203;</span> Daily Summary
         </a>
-        <a href="/oro-store/admin/admin_stats.php" class="sidebar-link<?php echo sidebarActive('admin/admin_stats.php'); ?>">
+        <a href="/oro-store-demo/admin/admin_stats.php" class="sidebar-link<?php echo sidebarActive('admin/admin_stats.php'); ?>">
             <span class="link-icon">&#128200;</span> Statistics
         </a>
-        <a href="/oro-store/admin/activity_log.php" class="sidebar-link<?php echo sidebarActive('admin/activity_log.php'); ?>">
+        <a href="/oro-store-demo/admin/activity_log.php" class="sidebar-link<?php echo sidebarActive('admin/activity_log.php'); ?>">
             <span class="link-icon">&#128203;</span> Activity Log
         </a>
 
         <?php if (!$_is_store_admin): ?>
         <div class="nav-group-label">System</div>
-        <a href="/oro-store/admin/connection.php" class="sidebar-link<?php echo sidebarActive('admin/connection.php'); ?>">
+        <a href="/oro-store-demo/admin/connection.php" class="sidebar-link<?php echo sidebarActive('admin/connection.php'); ?>">
             <span class="link-icon">&#128279;</span> Connection
         </a>
-        <a href="/oro-store/sync/cloud_status.php" class="sidebar-link<?php echo sidebarActive('sync/cloud_status.php'); ?>">
+        <a href="/oro-store-demo/sync/cloud_status.php" class="sidebar-link<?php echo sidebarActive('sync/cloud_status.php'); ?>">
             <span class="link-icon">&#9729;</span> Cloud Sync
         </a>
-        <a href="/oro-store/admin/change_db_password.php" class="sidebar-link<?php echo sidebarActive('admin/change_db_password.php'); ?>">
+        <a href="/oro-store-demo/admin/change_db_password.php" class="sidebar-link<?php echo sidebarActive('admin/change_db_password.php'); ?>">
             <span class="link-icon">&#128274;</span> DB Password
         </a>
-        <a href="/oro-store/admin/change_network_password.php" class="sidebar-link<?php echo sidebarActive('admin/change_network_password.php'); ?>">
+        <a href="/oro-store-demo/admin/change_network_password.php" class="sidebar-link<?php echo sidebarActive('admin/change_network_password.php'); ?>">
             <span class="link-icon">&#127760;</span> Network Password
         </a>
-        <a href="/oro-store/admin/reset_data.php" class="sidebar-link<?php echo sidebarActive('admin/reset_data.php'); ?>">
+        <a href="/oro-store-demo/admin/reset_data.php" class="sidebar-link<?php echo sidebarActive('admin/reset_data.php'); ?>">
             <span class="link-icon">&#9888;</span> Reset Data
         </a>
         <?php if ($_is_super): ?>
-        <a href="/oro-store/admin/branch_wipe.php" class="sidebar-link<?php echo sidebarActive('admin/branch_wipe.php'); ?>">
+        <a href="/oro-store-demo/admin/branch_wipe.php" class="sidebar-link<?php echo sidebarActive('admin/branch_wipe.php'); ?>">
             <span class="link-icon">&#128274;</span> Branch Wipe
         </a>
         <?php endif; ?>
@@ -272,7 +272,7 @@ function sidebarActive($page) {
             <div class="sidebar-user-role"><?php echo $_is_store_admin ? 'Store Admin — ' . htmlspecialchars($currentUser['store_name']) : ($_is_super ? 'Super Admin' : 'Administrator'); ?></div>
         </div>
     </div>
-    <a href="/oro-store/auth/logout.php" class="sidebar-logout" onclick="this.classList.add('logging-out')">
+    <a href="/oro-store-demo/auth/logout.php" class="sidebar-logout" onclick="this.classList.add('logging-out')">
         <span>&#x2716;</span> Logout
     </a>
 </aside>
@@ -314,7 +314,7 @@ function toggleSidebar() {
 
     function checkConnection() {
         var t0 = performance.now();
-        fetch('/oro-store/core/ping.php?_=' + Date.now(), { cache: 'no-store' })
+        fetch('/oro-store-demo/core/ping.php?_=' + Date.now(), { cache: 'no-store' })
         .then(function(r) { return r.text(); })
         .then(function() {
             var latency = Math.round(performance.now() - t0);
@@ -339,7 +339,7 @@ function toggleSidebar() {
 // Background sync on ALL admin pages — every 30 seconds
 (function(){
     function bgSync(){
-        fetch('/oro-store/sync/cloud_pull.php').catch(function(){});
+        fetch('/oro-store-demo/sync/cloud_pull.php').catch(function(){});
     }
     setTimeout(bgSync, 5000);
     setInterval(bgSync, 30000);

@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -123,7 +123,7 @@ function buildQueryString($page_num) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Credit Management - Admin Panel</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .status-unpaid {
             background: #fee2e2;
@@ -309,7 +309,7 @@ function buildQueryString($page_num) {
                 <?php if ($filter_status !== 'all' || !empty($filter_date_from) || !empty($filter_date_to) || !empty($filter_search) || $filter_store > 0): ?>
                     <div class="filter-group" style="flex: 0 0 auto; min-width: auto;">
                         <label>&nbsp;</label>
-                        <a href="/oro-store/credit/credit_management.php" class="btn btn-secondary">Clear</a>
+                        <a href="/oro-store-demo/credit/credit_management.php" class="btn btn-secondary">Clear</a>
                     </div>
                 <?php endif; ?>
             </form>
@@ -505,7 +505,7 @@ function buildQueryString($page_num) {
         footer.style.display = 'none';
         body.innerHTML = '<div style="padding:30px;text-align:center;color:#94a3b8;">Loading...</div>';
 
-        fetch(`/oro-store/credit/credit_details.php?action=get_credit_details&credit_id=${creditId}`)
+        fetch(`/oro-store-demo/credit/credit_details.php?action=get_credit_details&credit_id=${creditId}`)
             .then(r => r.json())
             .then(data => {
                 if (data.error) { body.innerHTML = '<p style="color:#dc2626;">Error: ' + data.error + '</p>'; return; }
@@ -595,7 +595,7 @@ function buildQueryString($page_num) {
 
     function markCreditPaid() {
         if (!currentCreditId || !confirm('Mark this credit as fully paid?')) return;
-        fetch('/oro-store/credit/credit_details.php', {
+        fetch('/oro-store-demo/credit/credit_details.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'action=mark_paid&credit_ids=' + encodeURIComponent(JSON.stringify([currentCreditId]))
@@ -610,5 +610,18 @@ function buildQueryString($page_num) {
     function fmt(n) { return parseFloat(n || 0).toLocaleString('en', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
     function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Credit Management', array (
+  'Features' => 
+  array (
+    0 => 'View all credit accounts with outstanding balances',
+    1 => 'Filter: Unpaid, Partial, Paid, All',
+    2 => 'Record payments against credit balances',
+    3 => 'Track payment history per customer',
+    4 => 'Total outstanding amount shown at top',
+  ),
+));
+?>
 </body>
 </html>

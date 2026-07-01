@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/config.php';
 
-if (!isSuperAdmin()) { header("Location: /oro-store/admin/admin_panel.php"); exit; }
+if (!isSuperAdmin()) { header("Location: /oro-store-demo/admin/admin_panel.php"); exit; }
 $currentUser = getCurrentUser();
 
 // Get all stores with device assignments
@@ -46,7 +46,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Branch Data Wipe - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <?php include_once __DIR__ . '/../core/pwa.php'; ?>
     <style>
         .wipe-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px; margin-bottom:20px; }
@@ -196,7 +196,7 @@ $conn->close();
 
 <?php if (empty($stores)): ?>
 <div class="wipe-card" style="text-align:center;padding:30px;color:#94a3b8;">
-    No branch devices configured. Assign devices to stores in <a href="/oro-store/admin/manage_stores.php" style="color:#6366f1;">Manage Stores</a>.
+    No branch devices configured. Assign devices to stores in <a href="/oro-store-demo/admin/manage_stores.php" style="color:#6366f1;">Manage Stores</a>.
 </div>
 <?php else: ?>
 <?php foreach ($stores as $store):
@@ -248,7 +248,7 @@ $conn->close();
 
 <script>
 function proxyFetch(ip, action) {
-    return fetch('/oro-store/sync/proxy.php?ip=' + encodeURIComponent(ip) + '&action=' + encodeURIComponent(action))
+    return fetch('/oro-store-demo/sync/proxy.php?ip=' + encodeURIComponent(ip) + '&action=' + encodeURIComponent(action))
         .then(r => r.json());
 }
 
@@ -333,5 +333,16 @@ document.addEventListener('DOMContentLoaded', function() {
     <?php endforeach; ?>
 });
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Branch Wipe', array (
+  'Features' => 
+  array (
+    0 => 'Remote wipe data on a branch device',
+    1 => 'Super admin only — clears branch transaction data',
+    2 => 'Preserves product catalog and user accounts',
+  ),
+));
+?>
 </body>
 </html>

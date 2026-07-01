@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/network_auth.php';
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/system_logger.php';
@@ -110,13 +110,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Redirect based on role
             if ($user['role'] === 'admin' || $user['role'] === 'super_admin') {
-                header("Location: /oro-store/admin/admin_panel.php");
+                header("Location: /oro-store-demo/admin/admin_panel.php");
             } elseif ($user['role'] === 'manager') {
-                header("Location: /oro-store/manager/manager_panel.php");
+                header("Location: /oro-store-demo/manager/manager_panel.php");
             } elseif ($user['role'] === 'kiosk') {
-                header("Location: /oro-store/kiosk/kiosk.php");
+                header("Location: /oro-store-demo/kiosk/kiosk.php");
             } else {
-                header("Location: /oro-store/cashier/cashier.php");
+                header("Location: /oro-store-demo/cashier/cashier.php");
             }
             exit;
 
@@ -244,9 +244,50 @@ $conn->close();
             <button type="submit" class="btn-login">Login</button>
         </form>
 
+        <div style="margin-top:20px;background:#f0f4ff;border:1px solid #c7d2fe;border-radius:12px;padding:16px;text-align:left;">
+            <div style="font-size:11px;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;text-align:center;">Demo Credentials</div>
+            <div style="font-size:12px;color:#475569;line-height:2;">
+                <div style="display:flex;justify-content:space-between;padding:4px 8px;background:#fff;border-radius:6px;margin-bottom:4px;cursor:pointer;transition:background .15s;" onclick="fillLogin('demo_admin')">
+                    <span><strong style="color:#7c3aed;">Super Admin</strong></span>
+                    <span style="font-family:monospace;color:#334155;">demo_admin</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:4px 8px;background:#fff;border-radius:6px;margin-bottom:4px;cursor:pointer;transition:background .15s;" onclick="fillLogin('demo_manager')">
+                    <span><strong style="color:#2563eb;">Manager</strong></span>
+                    <span style="font-family:monospace;color:#334155;">demo_manager</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:4px 8px;background:#fff;border-radius:6px;margin-bottom:4px;cursor:pointer;transition:background .15s;" onclick="fillLogin('demo_cashier')">
+                    <span><strong style="color:#16a34a;">Cashier</strong></span>
+                    <span style="font-family:monospace;color:#334155;">demo_cashier</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding:4px 8px;background:#fff;border-radius:6px;cursor:pointer;transition:background .15s;" onclick="fillLogin('demo_kiosk')">
+                    <span><strong style="color:#ea580c;">Kiosk</strong></span>
+                    <span style="font-family:monospace;color:#334155;">demo_kiosk</span>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:8px;font-size:11px;color:#94a3b8;">Password for all: <strong style="color:#334155;">demo123</strong> &mdash; Click a role to auto-fill</div>
+        </div>
+
         <div class="login-footer">
             <p>&copy; 2026 Oro Store. All rights reserved.</p>
         </div>
     </div>
+    <script>
+    function fillLogin(username) {
+        document.querySelector('input[name="username"]').value = username;
+        document.querySelector('input[name="password"]').value = 'demo123';
+    }
+    </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Login', array (
+  'Features' => 
+  array (
+    0 => 'Username + password authentication',
+    1 => 'Rate limiting: 5 failed attempts = 15 minute lockout',
+    2 => 'Role-based redirect after login (admin/manager/cashier/kiosk)',
+    3 => 'Session timeout: 30 min for admin, 3 hours for cashier',
+  ),
+));
+?>
 </body>
 </html>

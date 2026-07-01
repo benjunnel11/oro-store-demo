@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
 
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -55,7 +55,7 @@ if (!isOnOwnDevice()) {
                 <div><span class="label">Assigned store</span><span class="val"><?php echo htmlspecialchars($currentUser['store_name']); ?></span></div>
                 <div><span class="label">This device</span><span class="val"><?php echo $__dev_id; ?></span></div>
             </div>
-            <a href="/oro-store/auth/logout.php" class="btn">Logout</a>
+            <a href="/oro-store-demo/auth/logout.php" class="btn">Logout</a>
         </div>
     </body>
     </html>
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             'category' => $exp_category, 'amount' => $exp_amount, 'description' => $exp_desc
         ]);
     }
-    header("Location: /oro-store/admin/admin_panel.php");
+    header("Location: /oro-store-demo/admin/admin_panel.php");
     exit;
 }
 
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             'type' => $adj_type, 'amount' => $adj_amount, 'diff' => $diff, 'reason' => $adj_reason
         ]);
     }
-    header("Location: /oro-store/admin/admin_panel.php");
+    header("Location: /oro-store-demo/admin/admin_panel.php");
     exit;
 }
 
@@ -283,7 +283,7 @@ if ($hour < 12) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Panel - Oro Store</title>
     <?php include_once __DIR__ . '/../core/pwa.php'; ?>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
 
         /* ── Welcome banner ── */
@@ -567,7 +567,7 @@ if ($hour < 12) {
     <?php if ($out_of_stock_count > 0 || $low_stock_count > 0 || $pending_credits > 0 || $pending_deliveries > 0): ?>
         <div class="alerts-row">
             <?php if ($out_of_stock_count > 0): ?>
-                <a href="/oro-store/admin/admin_products.php" class="alert-card danger">
+                <a href="/oro-store-demo/admin/admin_products.php" class="alert-card danger">
                     <span class="alert-icon">&#9888;</span>
                     <div class="alert-text">
                         <?php echo $out_of_stock_count; ?> Out of Stock
@@ -576,7 +576,7 @@ if ($hour < 12) {
                 </a>
             <?php endif; ?>
             <?php if ($low_stock_count > 0): ?>
-                <a href="/oro-store/admin/admin_products.php" class="alert-card warning">
+                <a href="/oro-store-demo/admin/admin_products.php" class="alert-card warning">
                     <span class="alert-icon">&#128230;</span>
                     <div class="alert-text">
                         <?php echo $low_stock_count; ?> Low Stock
@@ -585,7 +585,7 @@ if ($hour < 12) {
                 </a>
             <?php endif; ?>
             <?php if ($pending_credits > 0): ?>
-                <a href="/oro-store/credit/credit.php" class="alert-card info">
+                <a href="/oro-store-demo/credit/credit.php" class="alert-card info">
                     <span class="alert-icon">&#128180;</span>
                     <div class="alert-text">
                         <?php echo $pending_credits; ?> Unpaid Credits
@@ -594,7 +594,7 @@ if ($hour < 12) {
                 </a>
             <?php endif; ?>
             <?php if ($pending_deliveries > 0): ?>
-                <a href="/oro-store/delivery/delivery.php" class="alert-card warning">
+                <a href="/oro-store-demo/delivery/delivery.php" class="alert-card warning">
                     <span class="alert-icon">&#128666;</span>
                     <div class="alert-text">
                         <?php echo $pending_deliveries; ?> Pending Deliveries
@@ -740,7 +740,7 @@ if ($hour < 12) {
     <div class="activity-section" style="margin-bottom:24px;">
         <div class="activity-header">
             <h3>Recent Stock Receipts</h3>
-            <a href="/oro-store/stock/add_stock.php" class="view-all-link" target="_blank">+ Add Stock</a>
+            <a href="/oro-store-demo/stock/add_stock.php" class="view-all-link" target="_blank">+ Add Stock</a>
         </div>
         <div class="activity-list">
             <?php foreach ($recent_receipts as $r): ?>
@@ -817,7 +817,7 @@ if ($hour < 12) {
         </div>
 
         <div class="activity-footer">
-            <a href="/oro-store/admin/activity_log.php" class="view-all-link">View All Activity &#8594;</a>
+            <a href="/oro-store-demo/admin/activity_log.php" class="view-all-link">View All Activity &#8594;</a>
         </div>
     </div>
 
@@ -912,5 +912,37 @@ function adjTypeChanged() {
 }
 </script>
 
+
+
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Admin Dashboard', [
+    'Overview' => [
+        'Today\'s sales, revenue, profit, and transaction count',
+        'GCash wallet balance and fee earnings',
+        'Out of stock and low stock product alerts',
+        'Pending credits, deliveries, and angkat balances',
+    ],
+    'Sidebar Navigation' => [
+        'Products — manage all products, prices, stock, brands, categories',
+        'Add Product — create new products with individual selling options',
+        'Stores — manage multi-store setup and device assignments',
+        'Transactions — full sales history with void/re-edit',
+        'GCash / ATM — payment service transaction history',
+        'Credit / Delivery / Angkat — track outstanding balances',
+        'Users — manage accounts and roles',
+        'Payroll — employee attendance and salary management',
+        'Daily Summary — end-of-day sales report',
+        'Statistics — charts and analytics',
+        'Activity Log — all system actions with timestamps',
+    ],
+    'System' => [
+        'Connection signal shows server latency in real-time',
+        'Cloud Sync pushes/pulls stock and shared data every 30 seconds',
+        'Badge counts (red/orange) cached for 30 seconds between pages',
+        'DB Password and Network Password can be changed from sidebar',
+    ],
+]);
+?>
 </body>
 </html>

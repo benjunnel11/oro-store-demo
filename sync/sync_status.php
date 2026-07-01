@@ -1,6 +1,6 @@
 <?php
 // sync/sync_status.php
-// View at: http://localhost/oro-store/sync/sync_status.php
+// View at: http://localhost/oro-store-demo/sync/sync_status.php
 require_once 'config.php';
 
 $local = getLocalConnection();

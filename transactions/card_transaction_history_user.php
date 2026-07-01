@@ -250,7 +250,7 @@ ob_end_clean();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATM Card Transaction History<?php echo $userStore ? ' - ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-    <link rel="stylesheet" href="/oro-store/style.css">
+    <link rel="stylesheet" href="/oro-store-demo/style.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -977,7 +977,7 @@ ob_end_clean();
             formData.append('customer_name', customerName);
             formData.append('amount', amount);
             
-            fetch('/oro-store/transactions/card_transaction_history_user.php', {
+            fetch('/oro-store-demo/transactions/card_transaction_history_user.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1032,7 +1032,7 @@ ob_end_clean();
             formData.append('action', 'settle_transactions');
             formData.append('notes', notes);
             
-            fetch('/oro-store/transactions/card_transaction_history_user.php', {
+            fetch('/oro-store-demo/transactions/card_transaction_history_user.php', {
                 method: 'POST',
                 body: formData
             })
@@ -1113,5 +1113,15 @@ ob_end_clean();
             }
         });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('ATM History (User)', array (
+  'Features' => 
+  array (
+    0 => 'User-specific ATM transaction history',
+    1 => 'Filtered by current logged-in user',
+  ),
+));
+?>
 </body>
 </html>

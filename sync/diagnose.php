@@ -58,7 +58,7 @@ $results[] = $step3;
 // Step 4: Sync API
 $step4 = ['step' => 'Sync API', 'desc' => 'Can we reach the sync endpoint?', 'status' => 'fail', 'detail' => ''];
 $sync_pass = defined('SYNC_PASSWORD') ? SYNC_PASSWORD : '';
-$url = "http://$remote/oro-store/sync/sync_api.php?action=status&key=" . urlencode($sync_pass);
+$url = "http://$remote/oro-store-demo/sync/sync_api.php?action=status&key=" . urlencode($sync_pass);
 $ctx = stream_context_create(['http' => ['timeout' => 5, 'ignore_errors' => true]]);
 $raw = @file_get_contents($url, false, $ctx);
 if ($raw) {

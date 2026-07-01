@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 date_default_timezone_set('Asia/Manila');
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
@@ -10,7 +10,7 @@ $db = new SyncDB();
 
 // Only managers and admins can access
 if (!isManager() && !isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -292,7 +292,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Manager Panel - <?php echo htmlspecialchars($userStore['store_name']); ?></title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
 </head>
 <body>
     <?php include_once __DIR__ . '/../manager/manager_sidebar.php'; ?>
@@ -333,7 +333,7 @@ $conn->close();
                 </a>
                 <?php endif; ?>
                 <?php if ($stats['lacking_deliveries'] > 0): ?>
-                <a href="/oro-store/delivery/delivery_details.php" style="flex:1;min-width:180px;padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;color:#991b1b;font-weight:600;font-size:14px;text-decoration:none;display:flex;align-items:center;gap:10px;">
+                <a href="/oro-store-demo/delivery/delivery_details.php" style="flex:1;min-width:180px;padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;color:#991b1b;font-weight:600;font-size:14px;text-decoration:none;display:flex;align-items:center;gap:10px;">
                     <span style="font-size:22px;">&#128666;</span>
                     <span><?php echo $stats['lacking_deliveries']; ?> Lacking Deliveries<br><span style="font-size:11px;font-weight:400;">Items missing</span></span>
                 </a>
@@ -449,19 +449,19 @@ $conn->close();
                     <a href="?view=products" style="background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
                         <div style="font-size:28px;margin-bottom:6px;">&#128230;</div>Products & Stock
                     </a>
-                    <a href="/oro-store/products/new_product.php" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
+                    <a href="/oro-store-demo/products/new_product.php" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
                         <div style="font-size:28px;margin-bottom:6px;">&#10133;</div>Add Product
                     </a>
-                    <a href="/oro-store/cashier/cashier.php" style="background:linear-gradient(135deg,#4facfe,#00f2fe);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
+                    <a href="/oro-store-demo/cashier/cashier.php" style="background:linear-gradient(135deg,#4facfe,#00f2fe);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
                         <div style="font-size:28px;margin-bottom:6px;">&#128179;</div>Open Cashier
                     </a>
-                    <a href="/oro-store/delivery/delivery.php" style="background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
+                    <a href="/oro-store-demo/delivery/delivery.php" style="background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
                         <div style="font-size:28px;margin-bottom:6px;">&#128666;</div>Deliveries
                     </a>
                     <a href="?view=attendance" style="background:linear-gradient(135deg,#fa709a,#fee140);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
                         <div style="font-size:28px;margin-bottom:6px;">&#128197;</div>Attendance
                     </a>
-                    <a href="/oro-store/credit/credit.php" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
+                    <a href="/oro-store-demo/credit/credit.php" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);color:#fff;padding:18px;border-radius:12px;text-align:center;text-decoration:none;font-weight:700;font-size:14px;">
                         <div style="font-size:28px;margin-bottom:6px;">&#128180;</div>Credits
                     </a>
                 </div>
@@ -522,7 +522,7 @@ $conn->close();
             <div class="content-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 class="section-title" style="margin: 0;">Add Product to Store</h2>
-                    <a href="/oro-store/stock/add_stock.php" class="nav-btn primary">📦 Add Stocks</a>
+                    <a href="/oro-store-demo/stock/add_stock.php" class="nav-btn primary">📦 Add Stocks</a>
                 </div>
                 <div class="search-box">
                     <input type="text" id="search-available" placeholder="🔍 Search products to add..." onkeyup="searchAvailableProducts()">
@@ -826,5 +826,17 @@ $conn->close();
             if (e.target === this) closeAddProductModal();
         });
     </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Manager Dashboard', array (
+  'Features' => 
+  array (
+    0 => 'Store-specific dashboard for assigned manager',
+    1 => 'Sales stats, stock alerts, pending deliveries/credits',
+    2 => 'Quick access to cashier, products, and reports',
+    3 => 'Limited to own store data only',
+  ),
+));
+?>
 </body>
 </html>

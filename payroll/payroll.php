@@ -1,11 +1,11 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
 
 // Only admins can access
 if (!isAdmin()) {
-    header("Location: /oro-store/cashier/cashier.php");
+    header("Location: /oro-store-demo/cashier/cashier.php");
     exit;
 }
 
@@ -506,8 +506,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Payroll Management - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
-    <link rel="stylesheet" href="/oro-store/payroll/payroll_styles.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/payroll/payroll_styles.css">
 </head>
 <body>
 <?php include_once __DIR__ . '/../admin/admin_sidebar.php'; ?>
@@ -1068,7 +1068,7 @@ $conn->close();
         </div>
     </div>
 
-    <script src="/oro-store/payroll/payroll_script.js"></script>
+    <script src="/oro-store-demo/payroll/payroll_script.js"></script>
     <script>
         // Initialize on page load with PHP data
         const weekStartStr = '<?php echo $week_start_str; ?>';
@@ -1104,7 +1104,7 @@ $conn->close();
         function restoreEmployee(employeeId, name) {
             if (!confirm('Restore "' + name + '" back to active?')) return;
 
-            fetch('/oro-store/payroll/payroll.php', {
+            fetch('/oro-store-demo/payroll/payroll.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: 'action=restore_employee&employee_id=' + employeeId
@@ -1120,5 +1120,17 @@ $conn->close();
         }
     </script>
 </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Payroll', array (
+  'Features' => 
+  array (
+    0 => 'Employee attendance tracking (time in/out)',
+    1 => 'Daily wage calculation based on hours worked',
+    2 => 'Cash advance recording and deduction',
+    3 => 'Overtime and holiday pay computation',
+  ),
+));
+?>
 </body>
 </html>

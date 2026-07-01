@@ -6,7 +6,7 @@ require_once __DIR__ . '/cloud_config.php';
 require_once __DIR__ . '/cloud_stock_sync.php';
 require_once __DIR__ . '/config.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 
 $device = LOCAL_DEVICE_ID;
@@ -124,7 +124,7 @@ $conn->close();
 <head>
 <meta charset="UTF-8">
 <title>Cloud Stock Sync Status</title>
-<link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+<link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
 <style>
     .cs-container{max-width:1100px;margin:0 auto;padding:24px 20px;}
     .cs-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
@@ -182,7 +182,7 @@ $conn->close();
     <h2>Actions</h2>
     <a href="?action=push_all" class="btn btn-blue">Push All Local Stock to Cloud</a>
     <a href="?action=pull" class="btn btn-green">Pull Other Stores from Cloud</a>
-    <a href="/oro-store/sync/setup_cloud_sync_task.bat" download class="btn" style="background:#334155;color:#fff;">Download Auto-Sync Installer (.bat)</a>
+    <a href="/oro-store-demo/sync/setup_cloud_sync_task.bat" download class="btn" style="background:#334155;color:#fff;">Download Auto-Sync Installer (.bat)</a>
     <a href="?action=flush" class="btn btn-yellow">Flush Queued Pushes</a>
     <a href="?" class="btn" style="background:#e2e8f0;color:#334155;">Refresh</a>
 </div>
@@ -415,7 +415,7 @@ var _countdown = _syncInterval;
 
 function autoSync() {
     document.getElementById('auto-sync-status').textContent = 'Syncing...';
-    fetch('/oro-store/sync/cloud_pull.php')
+    fetch('/oro-store-demo/sync/cloud_pull.php')
         .then(function(r) { return r.text(); })
         .then(function(text) {
             try {

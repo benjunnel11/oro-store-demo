@@ -1,9 +1,9 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../core/system_logger.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 $currentUser = getCurrentUser();
 
 // Define data categories and their tables
@@ -362,7 +362,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Reset Data - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .warning-banner { background:linear-gradient(135deg,#dc2626,#991b1b); color:#fff; padding:20px 24px; border-radius:12px; margin-bottom:24px; }
         .warning-banner h2 { font-size:20px; margin-bottom:6px; }
@@ -557,7 +557,7 @@ function executeReset() {
     fd.append('confirm_text', document.getElementById('modal-input').value);
     if (!isResetAll && !isSafeWipe) fd.append('category', currentCategory);
 
-    fetch('/oro-store/admin/reset_data.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/admin/reset_data.php', { method: 'POST', body: fd })
     .then(r => r.json())
     .then(data => {
         if (data.success) {
@@ -574,7 +574,7 @@ function executeReset() {
             globalResult.textContent = data.message;
 
             if (isResetAll) {
-                setTimeout(() => { window.location.href = '/oro-store/auth/login.php'; }, 2000);
+                setTimeout(() => { window.location.href = '/oro-store-demo/auth/login.php'; }, 2000);
             } else if (isSafeWipe) {
                 setTimeout(() => location.reload(), 2000);
             } else {
@@ -595,5 +595,17 @@ function executeReset() {
     });
 }
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Reset Data', array (
+  'Features' => 
+  array (
+    0 => 'Safe Wipe: clear transactions, keep products and settings',
+    1 => 'Full Reset: delete everything except super admin accounts',
+    2 => 'Preserves store configuration and device settings',
+    3 => 'Requires confirmation before executing',
+  ),
+));
+?>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/sync_helper.php';
@@ -119,7 +119,7 @@ if ($_td_q) { while ($r = $_td_q->fetch_assoc()) $_taken_devs[$r['device_id']] =
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Manage Stores</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .header-actions {
             display: flex;
@@ -405,5 +405,17 @@ if ($_td_q) { while ($r = $_td_q->fetch_assoc()) $_taken_devs[$r['device_id']] =
         });
     </script>
     </main>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Store Management', array (
+  'Features' => 
+  array (
+    0 => 'Add and edit store locations',
+    1 => 'Set store name, code, address, and device ID',
+    2 => 'Device ID links the store to a physical device',
+    3 => 'Active/inactive status toggle',
+  ),
+));
+?>
 </body>
 </html>

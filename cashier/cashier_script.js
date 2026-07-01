@@ -28,7 +28,7 @@ function updateProductStocks(soldItems) {
 }
 
 function refreshAllStocks() {
-    fetch('/oro-store/products/get_products.php')
+    fetch('/oro-store-demo/products/get_products.php')
         .then(function(r) { return r.json(); })
         .then(function(products) {
             products.forEach(function(p) {
@@ -88,7 +88,7 @@ function getHalfPackInfo(productId) {
     if (_halfPackCache[productId] !== undefined) {
         return Promise.resolve(_halfPackCache[productId]);
     }
-    return fetch('/oro-store/cashier/cashier.php?action=get_halfpack_info&product_id=' + productId)
+    return fetch('/oro-store-demo/cashier/cashier.php?action=get_halfpack_info&product_id=' + productId)
         .then(r => r.json())
         .then(d => { _halfPackCache[productId] = d; return d; })
         .catch(() => {
@@ -141,9 +141,9 @@ function scIns() {
         if (items[selectedReceiptIndex]) openEditModal(parseInt(items[selectedReceiptIndex].dataset.index));
     }
 }
-function scF3() { if (cart.length > 0) sessionStorage.setItem('deliveryCart', JSON.stringify(cart)); location.href = '/oro-store/delivery/delivery.php'; }
-function scF4() { if (cart.length > 0) sessionStorage.setItem('creditCart', JSON.stringify(cart)); location.href = '/oro-store/credit/credit.php'; }
-function scF5() { if (cart.length > 0) sessionStorage.setItem('angkatCart', JSON.stringify(cart)); location.href = '/oro-store/angkat/angkat.php'; }
+function scF3() { if (cart.length > 0) sessionStorage.setItem('deliveryCart', JSON.stringify(cart)); location.href = '/oro-store-demo/delivery/delivery.php'; }
+function scF4() { if (cart.length > 0) sessionStorage.setItem('creditCart', JSON.stringify(cart)); location.href = '/oro-store-demo/credit/credit.php'; }
+function scF5() { if (cart.length > 0) sessionStorage.setItem('angkatCart', JSON.stringify(cart)); location.href = '/oro-store-demo/angkat/angkat.php'; }
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
@@ -225,7 +225,7 @@ function updateProductSelection() {
 
 // Open ATM Card Transaction window
 function openCardTransaction() {
-    const cardWindow = window.open('/oro-store/transactions/card_transaction.php', '_blank', 'width=600,height=700');
+    const cardWindow = window.open('/oro-store-demo/transactions/card_transaction.php', '_blank', 'width=600,height=700');
     if (cardWindow) {
         cardWindow.focus();
     }
@@ -247,7 +247,7 @@ function updateReceiptSelection() {
 
 
 function openOtherTransaction() {
-    const otherWindow = window.open('/oro-store/transactions/other_transaction.php', '_blank', 'width=1000,height=700');
+    const otherWindow = window.open('/oro-store-demo/transactions/other_transaction.php', '_blank', 'width=1000,height=700');
     if (otherWindow) {
         otherWindow.focus();
     }
@@ -519,7 +519,7 @@ async function completeTransaction() {
             formData.append('change_amount', 0);
         }
 
-        fetch('/oro-store/cashier/cashier.php', {
+        fetch('/oro-store-demo/cashier/cashier.php', {
             method: 'POST',
             body: formData
         })
@@ -634,7 +634,7 @@ async function completeTransaction() {
     formData.append('amount_paid', amountPaid);
     formData.append('change_amount', change);
 
-    fetch('/oro-store/cashier/cashier.php', {
+    fetch('/oro-store-demo/cashier/cashier.php', {
         method: 'POST',
         body: formData
     })
@@ -656,7 +656,7 @@ async function completeTransaction() {
                 kfd.append('action', 'complete_kiosk_order');
                 kfd.append('order_id', _activeKioskOrderId);
                 kfd.append('transaction_id', data.transaction_id);
-                fetch('/oro-store/cashier/cashier.php', { method: 'POST', body: kfd });
+                fetch('/oro-store-demo/cashier/cashier.php', { method: 'POST', body: kfd });
                 _activeKioskOrderId = null;
                 sessionStorage.removeItem('_activeKioskOrderId');
             }
@@ -782,7 +782,7 @@ function loadTransactionHistory() {
             allTransactions = cached;
             displayTransactions(cached);
             setupHistorySearch();
-            fetch('/oro-store/cashier/cashier.php?action=get_transactions')
+            fetch('/oro-store-demo/cashier/cashier.php?action=get_transactions')
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     OroCache.set('cashier_history', data, 30);
@@ -795,7 +795,7 @@ function loadTransactionHistory() {
             return;
         }
     }
-    fetch('/oro-store/cashier/cashier.php?action=get_transactions')
+    fetch('/oro-store-demo/cashier/cashier.php?action=get_transactions')
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (typeof OroCache !== 'undefined') OroCache.set('cashier_history', data, 30);
@@ -958,8 +958,8 @@ function displayTransactions(transactions) {
 function reprintTransaction(transactionId) {
     // Fetch transaction details
     Promise.all([
-        fetch(`/oro-store/cashier/cashier.php?action=get_transaction_details&transaction_id=${transactionId}`).then(r => r.json()),
-        fetch(`/oro-store/cashier/cashier.php?action=get_transactions`).then(r => r.json())
+        fetch(`/oro-store-demo/cashier/cashier.php?action=get_transaction_details&transaction_id=${transactionId}`).then(r => r.json()),
+        fetch(`/oro-store-demo/cashier/cashier.php?action=get_transactions`).then(r => r.json())
     ])
     .then(([items, transactions]) => {
         const transaction = transactions.find(t => t.id === transactionId);
@@ -1027,8 +1027,8 @@ function reprintTransaction(transactionId) {
 function reEditTransaction(transactionId) {
     // Fetch transaction details
     Promise.all([
-        fetch(`/oro-store/cashier/cashier.php?action=get_transaction_details&transaction_id=${transactionId}`).then(r => r.json()),
-        fetch(`/oro-store/cashier/cashier.php?action=get_transactions`).then(r => r.json())
+        fetch(`/oro-store-demo/cashier/cashier.php?action=get_transaction_details&transaction_id=${transactionId}`).then(r => r.json()),
+        fetch(`/oro-store-demo/cashier/cashier.php?action=get_transactions`).then(r => r.json())
     ])
     .then(([items, transactions]) => {
         const transaction = transactions.find(t => t.id === transactionId);
@@ -1073,13 +1073,13 @@ function reEditTransaction(transactionId) {
         // Redirect based on payment method
         if (transaction.payment_method === 'delivery') {
             alert('✏️ RE-EDIT MODE\n\nRedirecting to Delivery page...');
-            window.location.href = '/oro-store/delivery/delivery.php';
+            window.location.href = '/oro-store-demo/delivery/delivery.php';
         } else if (transaction.payment_method === 'credit') {
             alert('✏️ RE-EDIT MODE\n\nRedirecting to Credit page...');
-            window.location.href = '/oro-store/credit/credit.php';
+            window.location.href = '/oro-store-demo/credit/credit.php';
         } else if (transaction.payment_method === 'angkat') {
             alert('✏️ RE-EDIT MODE\n\nRedirecting to Angkat page...');
-            window.location.href = '/oro-store/angkat/angkat.php';
+            window.location.href = '/oro-store-demo/angkat/angkat.php';
         } else {
             // For cash/gcash transactions, stay on cashier page
             isReEditMode = true;
@@ -1130,7 +1130,7 @@ function voidTransaction(transactionId, transactionNumber) {
     const fd = new FormData();
     fd.append('action', 'void_transaction');
     fd.append('transaction_id', transactionId);
-    fetch('/oro-store/cashier/cashier.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/cashier/cashier.php', { method: 'POST', body: fd })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
@@ -1368,7 +1368,7 @@ window.addEventListener('message', function(event) {
 
 // Open GCash window
 function openGCash() {
-    const gcashWindow = window.open('/oro-store/transactions/gcash.php', '_blank', 'width=600,height=700');
+    const gcashWindow = window.open('/oro-store-demo/transactions/gcash.php', '_blank', 'width=600,height=700');
     if (gcashWindow) {
         gcashWindow.focus();
     }
@@ -1376,7 +1376,7 @@ function openGCash() {
 
 // Open Add Stock window
 function openAddStock() {
-    const addStockWindow = window.open('/oro-store/stock/add_stock.php', '_blank', 'width=800,height=600');
+    const addStockWindow = window.open('/oro-store-demo/stock/add_stock.php', '_blank', 'width=800,height=600');
     if (addStockWindow) {
         addStockWindow.focus();
     }
@@ -1391,7 +1391,7 @@ function printReceiptFromModal() {
 function logout() {
     var msg = cart.length > 0 ? 'You have items in your cart. Are you sure you want to logout?' : 'Are you sure you want to logout?';
     customConfirm(msg, function(){
-        window.location.href = '/oro-store/auth/logout.php';
+        window.location.href = '/oro-store-demo/auth/logout.php';
     });
 }
 
@@ -1436,7 +1436,7 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'F5') { e.preventDefault(); scF5(); return; }
     if (e.key === 'F7') { e.preventDefault(); openCardTransaction(); return; }
     if (e.key === 'F8') { e.preventDefault(); if (typeof openKioskQueue === 'function') openKioskQueue(); return; }
-    if (e.key === 'F9') { e.preventDefault(); window.location.href = '/oro-store/delivery/delivery_details.php'; return; }
+    if (e.key === 'F9') { e.preventDefault(); window.location.href = '/oro-store-demo/delivery/delivery_details.php'; return; }
     if (e.key === 'F11') { e.preventDefault(); openAddStock(); return; }
     if (e.key === 'F12') { e.preventDefault(); openHistoryModal(); return; }
     const quantityModalOpen = document.getElementById('quantity-modal').classList.contains('active');

@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/sync_helper.php';
 require_once __DIR__ . '/../core/system_logger.php';
 
-if (!isAdmin()) { header("Location: /oro-store/cashier/cashier.php"); exit; }
+if (!isAdmin()) { header("Location: /oro-store-demo/cashier/cashier.php"); exit; }
 
 $currentUser = getCurrentUser();
 $db = new SyncDB();
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $other_devs = $conn->query("SELECT device_ip FROM stores WHERE device_id IS NOT NULL AND device_id != '$local_dev' AND device_ip IS NOT NULL AND device_ip != '' AND status = 'active'");
             if ($other_devs) {
                 while ($od = $other_devs->fetch_assoc()) {
-                    $api_url = "http://{$od['device_ip']}/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD);
+                    $api_url = "http://{$od['device_ip']}/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD);
                     // Reduce source on remote
                     $ctx = stream_context_create(['http' => ['method'=>'POST','timeout'=>5,'header'=>"Content-Type: application/json\r\n",'content'=>json_encode(['action'=>'set_stock','product_id'=>$product_id,'store_id'=>$from_store_id,'stock'=>$new_from])]]);
                     @file_get_contents($api_url, false, $ctx);
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $other_devs = $conn->query("SELECT device_ip FROM stores WHERE device_id IS NOT NULL AND device_id != '$local_dev' AND device_ip IS NOT NULL AND device_ip != '' AND status = 'active'");
             if ($other_devs) {
                 while ($od = $other_devs->fetch_assoc()) {
-                    $api_url = "http://{$od['device_ip']}/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD);
+                    $api_url = "http://{$od['device_ip']}/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD);
                     $ctx = stream_context_create(['http' => ['method' => 'POST', 'timeout' => 10, 'header' => "Content-Type: application/json\r\n", 'content' => json_encode($transfer_data)]]);
                     @file_get_contents($api_url, false, $ctx);
                 }
@@ -211,7 +211,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stock Transfer - Oro Store</title>
-    <link rel="stylesheet" href="/oro-store/admin/admin_layout.css">
+    <link rel="stylesheet" href="/oro-store-demo/admin/admin_layout.css">
     <style>
         .transfer-panel { display:flex; gap:0; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; height:52vh; margin-bottom:20px; background:#fff; }
         .tp-left { flex:3; display:flex; flex-direction:column; border-right:1px solid #e2e8f0; }
@@ -400,7 +400,7 @@ document.getElementById('product_search').addEventListener('input', function() {
     if (q.length < 1) { document.getElementById('product_list').innerHTML = '<div class="tp-cart-empty">Type to search products</div>'; return; }
 
     searchTimeout = setTimeout(() => {
-        fetch(`/oro-store/stock/stock_transfer.php?action=search_products&store_id=${storeId}&q=${encodeURIComponent(q)}`)
+        fetch(`/oro-store-demo/stock/stock_transfer.php?action=search_products&store_id=${storeId}&q=${encodeURIComponent(q)}`)
         .then(r => r.json()).then(products => {
             productResults = products;
             selectedProductIdx = 0;
@@ -535,7 +535,7 @@ function submitTransfer() {
     fd.append('items', JSON.stringify(cart.map(c => ({ id: c.id, quantity: c.quantity }))));
     fd.append('notes', document.getElementById('transfer_notes').value);
 
-    fetch('/oro-store/stock/stock_transfer.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/stock/stock_transfer.php', { method: 'POST', body: fd })
     .then(r => r.json()).then(data => {
         if (data.success) {
             showAlert(data.message + ' (Batch: ' + data.batch_id + ')', 'success');
@@ -596,5 +596,18 @@ function showAlert(msg, type) {
 // Auto-load products if source store is pre-selected
 if (document.getElementById('from_store').value) onStoreChange();
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Stock Transfer', array (
+  'Features' => 
+  array (
+    0 => 'Transfer stock between stores',
+    1 => 'Select source and destination store',
+    2 => 'Pick products and quantities to transfer',
+    3 => 'Stock deducted from source, added to destination',
+    4 => 'Transfer receipt saved for audit trail',
+  ),
+));
+?>
 </body>
 </html>

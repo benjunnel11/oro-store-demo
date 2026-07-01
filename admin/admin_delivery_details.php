@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../core/db_connection.php';
 require_once __DIR__ . '/../core/auth_check.php';
 require_once __DIR__ . '/../sync/sync_helper.php';
@@ -400,8 +400,8 @@ tbody tr:hover .row-arrow{transform:translateX(4px);color:var(--accent)}
     <?php endif; ?>
   </div>
   <div class="topbar-actions">
-    <button class="btn btn-secondary" onclick="location.href='/oro-store/delivery/delivery.php'">+ New Delivery</button>
-    <button class="btn btn-primary" onclick="location.href='/oro-store/cashier/cashier.php'">← Cashier</button>
+    <button class="btn btn-secondary" onclick="location.href='/oro-store-demo/delivery/delivery.php'">+ New Delivery</button>
+    <button class="btn btn-primary" onclick="location.href='/oro-store-demo/cashier/cashier.php'">← Cashier</button>
   </div>
 </div>
 
@@ -832,5 +832,15 @@ document.addEventListener('keydown', e => {
 /* ── Initial render ── */
 sortTable(5);
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Admin Delivery Details', array (
+  'Features' => 
+  array (
+    0 => 'Admin view of all delivery details across stores',
+    1 => 'Same as Delivery Details but with multi-store visibility',
+  ),
+));
+?>
 </body>
 </html>

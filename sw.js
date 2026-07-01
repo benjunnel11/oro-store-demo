@@ -1,9 +1,9 @@
 const CACHE_NAME = 'oro-store-v1';
 const PRECACHE = [
-    '/oro-store/auth/login.php',
-    '/oro-store/style.css',
-    '/oro-store/admin/admin_layout.css',
-    '/oro-store/cashier/cashier_styles.css'
+    '/oro-store-demo/auth/login.php',
+    '/oro-store-demo/style.css',
+    '/oro-store-demo/admin/admin_layout.css',
+    '/oro-store-demo/cashier/cashier_styles.css'
 ];
 
 self.addEventListener('install', e => {

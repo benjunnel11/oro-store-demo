@@ -160,7 +160,7 @@ pass("5 bulk sales completed | Stock now: $after_bulk");
 logSim("\n--- SIM 7: Device B Operations ---");
 if ($device_b_ip) {
     // Check Device B product stock
-    $r_raw = @file_get_contents("http://$device_b_ip/oro-store/sync/pull_stock.php?key=" . urlencode(SYNC_PASSWORD),
+    $r_raw = @file_get_contents("http://$device_b_ip/oro-store-demo/sync/pull_stock.php?key=" . urlencode(SYNC_PASSWORD),
         false, stream_context_create(['http' => ['timeout' => 10]]));
     $r_data = $r_raw ? json_decode($r_raw, true) : null;
     if ($r_data && !empty($r_data['success'])) {
@@ -172,7 +172,7 @@ if ($device_b_ip) {
     }
 
     // Test cross-device stock transfer
-    $b_stock_before_r = @file_get_contents("http://$device_b_ip/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
+    $b_stock_before_r = @file_get_contents("http://$device_b_ip/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
         false, stream_context_create(['http' => ['method' => 'POST', 'timeout' => 10, 'header' => "Content-Type: application/json\r\n",
             'content' => json_encode(['action' => 'receive_stock', 'product_id' => $product['id'], 'store_id' => 3, 'quantity' => 2, 'price' => $product['price'], 'purchase_price' => $product['purchase_price']])]]));
     $b_result = json_decode($b_stock_before_r, true);
@@ -180,7 +180,7 @@ if ($device_b_ip) {
         pass("Sent 2 units to Device B (new stock: {$b_result['new_stock']})");
 
         // Revert
-        @file_get_contents("http://$device_b_ip/oro-store/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
+        @file_get_contents("http://$device_b_ip/oro-store-demo/sync/stock_transfer_api.php?key=" . urlencode(SYNC_PASSWORD),
             false, stream_context_create(['http' => ['method' => 'POST', 'timeout' => 10, 'header' => "Content-Type: application/json\r\n",
                 'content' => json_encode(['action' => 'reduce_stock', 'product_id' => $product['id'], 'store_id' => 3, 'quantity' => 2])]]));
         pass("Reverted Device B stock");
@@ -189,7 +189,7 @@ if ($device_b_ip) {
     }
 
     // Test sync
-    $sync_r = @file_get_contents("http://127.0.0.1/oro-store/sync/http_sync.php?run=1", false,
+    $sync_r = @file_get_contents("http://127.0.0.1/oro-store-demo/sync/http_sync.php?run=1", false,
         stream_context_create(['http' => ['timeout' => 30]]));
     $sync_d = json_decode($sync_r, true);
     if ($sync_d) {

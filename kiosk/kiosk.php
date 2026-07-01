@@ -148,7 +148,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kiosk<?php echo $userStore ? ' - ' . htmlspecialchars($userStore['store_name']) : ''; ?></title>
-    <link rel="stylesheet" href="/oro-store/cashier/cashier_styles.css">
+    <link rel="stylesheet" href="/oro-store-demo/cashier/cashier_styles.css">
     <style>
         .kiosk-mode-bar {
             background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
@@ -206,9 +206,9 @@ $conn->close();
         .btn-print-priority { background:#7c3aed; color:#fff; }
         .btn-close-priority { background:#f1f5f9; color:#334155; border:1px solid #e2e8f0 !important; }
     </style>
-    <link rel="stylesheet" href="/oro-store/core/responsive.css">
-    <script src="/oro-store/core/custom_alert.js"></script>
-    <script src="/oro-store/core/bt_print.js?v=20250627"></script>
+    <link rel="stylesheet" href="/oro-store-demo/core/responsive.css">
+    <script src="/oro-store-demo/core/custom_alert.js"></script>
+    <script src="/oro-store-demo/core/bt_print.js?v=20250627"></script>
 </head>
 <body>
 <div class="shortcut-bar">
@@ -331,9 +331,9 @@ const STORE_INFO = {
     storeAddress: <?php echo json_encode($userStore ? ($userStore['address'] ?? '') : ''); ?>
 };
 </script>
-<script src="/oro-store/core/cache.js"></script>
-<script src="/oro-store/kiosk/kiosk_script.js?v=20250627"></script>
-<script src="/oro-store/core/search_tags.js"></script>
+<script src="/oro-store-demo/core/cache.js"></script>
+<script src="/oro-store-demo/kiosk/kiosk_script.js?v=20250627"></script>
+<script src="/oro-store-demo/core/search_tags.js"></script>
 
 <!-- Logout Modal -->
 <div class="logout-modal" id="logout-modal">
@@ -377,10 +377,10 @@ function confirmLogout() {
     var fd = new FormData();
     fd.append('action', 'verify_kiosk_password');
     fd.append('password', pw);
-    fetch('/oro-store/kiosk/kiosk.php', { method: 'POST', body: fd })
+    fetch('/oro-store-demo/kiosk/kiosk.php', { method: 'POST', body: fd })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            if (data.success) { location.href = '/oro-store/auth/logout.php'; }
+            if (data.success) { location.href = '/oro-store-demo/auth/logout.php'; }
             else { document.getElementById('logout-error').style.display = 'block'; document.getElementById('logout-password').value = ''; document.getElementById('logout-password').focus(); }
         });
 }
@@ -394,7 +394,7 @@ document.addEventListener('keydown', function(e) {
 // ── Queue count polling ──
 function pad3(n) { return String(n).padStart(3, '0'); }
 function updateQueueCount() {
-    fetch('/oro-store/kiosk/kiosk.php?action=queue_count')
+    fetch('/oro-store-demo/kiosk/kiosk.php?action=queue_count')
         .then(function(r) { return r.json(); })
         .then(function(data) {
             var pe = document.getElementById('kq-product-count');
@@ -420,5 +420,35 @@ function updateQueueCount() {
 updateQueueCount();
 setInterval(updateQueueCount, 5000);
 </script>
+<?php
+include_once __DIR__ . '/../core/page_info.php';
+renderPageInfo('Kiosk', [
+    'Keyboard Shortcuts' => [
+        ['key'=>'F2','desc'=>'Open GCash Cash In / Cash Out'],
+        ['key'=>'Enter','desc'=>'Add selected product / confirm quantity'],
+        ['key'=>'Esc','desc'=>'Clear search / close modals'],
+        ['key'=>'Home','desc'=>'Switch between product list and cart'],
+        ['key'=>'&#8593;&#8595;','desc'=>'Navigate product list or cart'],
+    ],
+    'How It Works' => [
+        'Customer selects products and adds to cart',
+        'Submit creates a kiosk order with a priority number',
+        'Receipt auto-prints via RawBT thermal printer',
+        'Priority modal shows order number and auto-redirects after 10 seconds',
+        'Queue display shows waiting orders and "Now Serving" number',
+    ],
+    'GCash (F2)' => [
+        'Cash In or Cash Out with fee calculation',
+        'Customer enters their GCash number',
+        'Cash Out shows the store GCash number to send to',
+        'Submitted as a kiosk queue order for cashier to process',
+    ],
+    'Security' => [
+        'Logout requires password verification',
+        'Zoom, right-click, text selection, and dev tools are disabled',
+        'Inactivity timeout redirects back to kiosk home',
+    ],
+]);
+?>
 </body>
 </html>
