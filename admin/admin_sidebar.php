@@ -242,9 +242,11 @@ function sidebarActive($page) {
 
         <?php if (!$_is_store_admin): ?>
         <div class="nav-group-label">System</div>
+        <?php if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'): ?>
         <a href="/oro-store-demo/admin/connection.php" class="sidebar-link<?php echo sidebarActive('admin/connection.php'); ?>">
             <span class="link-icon">&#128279;</span> Connection
         </a>
+        <?php endif; ?>
         <a href="/oro-store-demo/sync/cloud_status.php" class="sidebar-link<?php echo sidebarActive('sync/cloud_status.php'); ?>">
             <span class="link-icon">&#9729;</span> Cloud Sync
         </a>

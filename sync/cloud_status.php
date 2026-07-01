@@ -18,41 +18,8 @@ $store_id = $store ? $store['id'] : 0;
 $store_name = $store ? $store['store_name'] : 'Unknown';
 
 // Action handlers
-// POST: Save local credentials
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cloud_action']) && $_POST['cloud_action'] === 'save_local') {
-    $local_data = json_encode([
-        'db_host' => trim($_POST['l_db_host'] ?? '127.0.0.1'),
-        'db_user' => trim($_POST['l_db_user'] ?? 'root'),
-        'db_pass' => trim($_POST['l_db_pass'] ?? ''),
-        'db_name' => trim($_POST['l_db_name'] ?? 'product_db'),
-        'device_id' => trim($_POST['l_device_id'] ?? 'DEVICE_A'),
-        'remote_ip' => trim($_POST['l_remote_ip'] ?? ''),
-        'remote_port' => trim($_POST['l_remote_port'] ?? '80'),
-        'sync_user' => trim($_POST['l_sync_user'] ?? 'sync_user'),
-        'sync_pass' => trim($_POST['l_sync_pass'] ?? '')
-    ]);
-    $saved = file_put_contents(__DIR__ . '/.local_env', $local_data) !== false;
-    header("Location: ?msg=" . ($saved ? 'local_saved' : 'save_failed'));
-    exit;
-}
-
-// POST: Save cloud credentials
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cloud_action']) && $_POST['cloud_action'] === 'save_credentials') {
-    $saved = saveCloudCredentials(
-        trim($_POST['cloud_host'] ?? ''),
-        trim($_POST['cloud_user'] ?? ''),
-        trim($_POST['cloud_pass'] ?? ''),
-        trim($_POST['cloud_name'] ?? 'oro_cloud_stock'),
-        intval($_POST['cloud_port'] ?? 4000)
-    );
-    header("Location: ?msg=" . ($saved ? 'credentials_saved' : 'save_failed'));
-    exit;
-}
-
 $action = $_GET['action'] ?? '';
 $message = '';
-if (isset($_GET['msg']) && $_GET['msg'] === 'credentials_saved') $message = 'Cloud credentials saved! Refresh to test connection.';
-if (isset($_GET['msg']) && $_GET['msg'] === 'local_saved') $message = 'Local credentials saved! Restart the page for changes to take effect.';
 if (isset($_GET['msg']) && $_GET['msg'] === 'save_failed') $message = 'Failed to save credentials.';
 
 if ($action === 'push_all') {
@@ -187,100 +154,7 @@ $conn->close();
     <a href="?" class="btn" style="background:#e2e8f0;color:#334155;">Refresh</a>
 </div>
 
-<div class="card">
-    <h2>Cloud Database Credentials</h2>
-    <form method="POST" style="max-width:500px;">
-        <input type="hidden" name="cloud_action" value="save_credentials">
-        <div style="margin-bottom:10px;">
-            <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Host</label>
-            <input type="text" name="cloud_host" value="<?php echo htmlspecialchars(CLOUD_DB_HOST); ?>" placeholder="gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-        </div>
-        <div style="display:flex;gap:10px;margin-bottom:10px;">
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Port</label>
-                <input type="number" name="cloud_port" value="<?php echo CLOUD_DB_PORT; ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-            <div style="flex:2;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Database Name</label>
-                <input type="text" name="cloud_name" value="<?php echo htmlspecialchars(CLOUD_DB_NAME); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-        </div>
-        <div style="margin-bottom:10px;">
-            <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Username</label>
-            <input type="text" name="cloud_user" value="<?php echo htmlspecialchars(CLOUD_DB_USER); ?>" placeholder="username.root" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-        </div>
-        <div style="margin-bottom:14px;">
-            <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Password</label>
-            <div class="pw-wrap">
-                <input type="password" name="cloud_pass" id="pw-cloud" value="<?php echo htmlspecialchars(CLOUD_DB_PASS); ?>" placeholder="Enter password">
-                <button type="button" class="pw-toggle" onclick="togglePw('pw-cloud',this)">👁</button>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-blue">Save Cloud Credentials</button>
-    </form>
-</div>
 
-<?php
-$_le = [];
-if (file_exists(__DIR__ . '/.local_env')) $_le = json_decode(file_get_contents(__DIR__ . '/.local_env'), true) ?: [];
-?>
-<div class="card">
-    <h2>Local Device & Database Credentials</h2>
-    <form method="POST" style="max-width:500px;">
-        <input type="hidden" name="cloud_action" value="save_local">
-        <div style="display:flex;gap:10px;margin-bottom:10px;">
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Device ID</label>
-                <input type="text" name="l_device_id" value="<?php echo htmlspecialchars($_le['device_id'] ?? 'DEVICE_A'); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">DB Host</label>
-                <input type="text" name="l_db_host" value="<?php echo htmlspecialchars($_le['db_host'] ?? '127.0.0.1'); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-        </div>
-        <div style="display:flex;gap:10px;margin-bottom:10px;">
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">DB Username</label>
-                <input type="text" name="l_db_user" value="<?php echo htmlspecialchars($_le['db_user'] ?? 'root'); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">DB Password</label>
-                <div class="pw-wrap">
-                    <input type="password" name="l_db_pass" id="pw-db" value="<?php echo htmlspecialchars($_le['db_pass'] ?? ''); ?>">
-                    <button type="button" class="pw-toggle" onclick="togglePw('pw-db',this)">👁</button>
-                </div>
-            </div>
-        </div>
-        <div style="margin-bottom:10px;">
-            <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">DB Name</label>
-            <input type="text" name="l_db_name" value="<?php echo htmlspecialchars($_le['db_name'] ?? 'product_db'); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-        </div>
-        <div style="display:flex;gap:10px;margin-bottom:10px;">
-            <div style="flex:2;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Remote Device IP</label>
-                <input type="text" name="l_remote_ip" value="<?php echo htmlspecialchars($_le['remote_ip'] ?? ''); ?>" placeholder="10.219.18.250" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Remote Port</label>
-                <input type="text" name="l_remote_port" value="<?php echo htmlspecialchars($_le['remote_port'] ?? '80'); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-        </div>
-        <div style="display:flex;gap:10px;margin-bottom:14px;">
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Sync Username</label>
-                <input type="text" name="l_sync_user" value="<?php echo htmlspecialchars($_le['sync_user'] ?? 'sync_user'); ?>" style="width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;outline:none;">
-            </div>
-            <div style="flex:1;">
-                <label style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:4px;">Sync Password</label>
-                <div class="pw-wrap">
-                    <input type="password" name="l_sync_pass" id="pw-sync" value="<?php echo htmlspecialchars($_le['sync_pass'] ?? ''); ?>">
-                    <button type="button" class="pw-toggle" onclick="togglePw('pw-sync',this)">👁</button>
-                </div>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-blue">Save Local Credentials</button>
-    </form>
-</div>
 
 <div class="card">
     <h2>Stock Comparison (Local vs Cloud)</h2>
