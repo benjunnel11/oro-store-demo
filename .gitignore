@@ -6,3 +6,5 @@ backups/
 node_modules/
 logs/guard/
 sync/cloud_stock_queue.json
+sync/.local_env
+sync/.cloud_env
